@@ -1,5 +1,7 @@
 package com.my.account;
 
+import com.my.logger.Log;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,7 +17,10 @@ import javax.annotation.PostConstruct;
 import java.util.Collections;
 
 public class UserService implements UserDetailsService {
-	
+
+	@Log
+	Logger logger;
+
 	@Autowired
 	private AccountRepository accountRepository;
 	
