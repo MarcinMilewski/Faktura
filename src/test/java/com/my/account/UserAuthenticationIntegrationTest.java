@@ -22,7 +22,7 @@ public class UserAuthenticationIntegrationTest extends WebSecurityConfigurationA
     @Test
     public void requiresAuthentication() throws Exception {
         mockMvc.perform(get("/account/current"))
-                .andExpect(redirectedUrl("http://localhost/signin"));
+                .andExpect(redirectedUrl("http://localhost/signIn"));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class UserAuthenticationIntegrationTest extends WebSecurityConfigurationA
     public void userAuthenticationFails() throws Exception {
         final String username = "user";
         mockMvc.perform(post("/authenticate").param("username", username).param("password", "invalid"))
-                .andExpect(redirectedUrl("/signin?error=1"))
+                .andExpect(redirectedUrl("/signIn?error=1"))
                 .andExpect(new ResultMatcher() {
                     public void match(MvcResult mvcResult) throws Exception {
                         HttpSession session = mvcResult.getRequest().getSession();

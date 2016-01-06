@@ -11,7 +11,7 @@ import javax.persistence.PersistenceException;
 
 @Repository
 @Transactional(readOnly = true)
-public class AccountRepository {
+public class AccountRepository{
 	
 	@PersistenceContext
 	private EntityManager entityManager;
