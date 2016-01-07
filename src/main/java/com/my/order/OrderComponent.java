@@ -1,9 +1,7 @@
 package com.my.order;
 
 import com.my.account.Account;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Setter;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
@@ -33,9 +31,9 @@ public abstract class OrderComponent implements Serializable{
     @JoinColumn
     private OrderComponent parent;
 
-    @Setter(AccessLevel.NONE)
-    @Column(nullable = false)
-    private OrderState orderState;
+//    @Setter(AccessLevel.NONE)
+//    @Column(nullable = false)
+//    private OrderState state;
 
     @Transient
     public boolean isLeaf() {

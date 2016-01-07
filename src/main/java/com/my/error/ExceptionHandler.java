@@ -21,4 +21,6 @@ class ExceptionHandler {
 		modelAndView.addObject("errorMessage", Throwables.getRootCause(exception));
 		return modelAndView;
 	}
+
+
 }

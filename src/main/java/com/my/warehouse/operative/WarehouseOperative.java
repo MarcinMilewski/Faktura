@@ -1,4 +1,4 @@
-package com.my.commodity;
+package com.my.warehouse.operative;
 
 import com.my.warehouse.Warehouse;
 import lombok.Data;
@@ -11,19 +11,20 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-@Table(name="COMMODITY")
-public class Commodity implements Serializable {
+@Table(name="WAREHOUSE_OPERATOR")
+public class WarehouseOperative implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", updatable = false, nullable = false)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
 
     @ManyToOne
-    @JoinColumn(name="warehouse_id")
+    @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
-
-
 }
