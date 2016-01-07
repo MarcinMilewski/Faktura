@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 @Entity
 @DiscriminatorValue("OC")
 public class OrderCommodity extends OrderComponent  {
+
     private Commodity commodity;
 
     private Integer amount;

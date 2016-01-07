@@ -1,5 +1,6 @@
 package com.my.order.state;
 
+import com.my.order.OrderComponent;
 import lombok.Data;
 import org.hibernate.annotations.DiscriminatorOptions;
 
@@ -21,6 +22,9 @@ public abstract class OrderState implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", updatable = false, nullable = false)
     private Long id;
+
+    @OneToOne(mappedBy = "state")
+    private OrderComponent orderComponent;
 
     public abstract void cancel();
 

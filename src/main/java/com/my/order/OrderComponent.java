@@ -1,6 +1,7 @@
 package com.my.order;
 
 import com.my.account.Account;
+import com.my.order.state.OrderState;
 import lombok.Data;
 import org.hibernate.annotations.DiscriminatorOptions;
 
@@ -31,9 +32,9 @@ public abstract class OrderComponent implements Serializable{
     @JoinColumn
     private OrderComponent parent;
 
-//    @Setter(AccessLevel.NONE)
-//    @Column(nullable = false)
-//    private OrderState state;
+    @OneToOne
+    @JoinColumn(name = "orderComponent_id")
+    private OrderState state;
 
     @Transient
     public boolean isLeaf() {
