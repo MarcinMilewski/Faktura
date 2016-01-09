@@ -5,6 +5,9 @@ import lombok.Data;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import java.util.Date;
 
 /**
  * Created by marcin on 07.01.16.
@@ -15,7 +18,15 @@ import javax.persistence.Entity;
 public class Order extends OrderComponent{
     private Long totalPrice;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Account customer;
+
+    private Date purchaseDate;
+
+    private Date sendDate;
+
+    private Date receivedDate;
 
     @Override
     public void add(OrderComponent orderComponent) {

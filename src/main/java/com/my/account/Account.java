@@ -1,8 +1,11 @@
 package com.my.account;
 
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.my.order.Order;
+import com.my.order.OrderComponent;
+
+import javax.persistence.*;
+import java.util.List;
 
 @SuppressWarnings("serial")
 @Entity
@@ -23,6 +26,9 @@ public class Account implements java.io.Serializable {
 	private String password;
 
 	private String role = "ROLE_USER";
+
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+	private List<Order> orders;
 
     protected Account() {
 
