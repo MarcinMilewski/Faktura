@@ -17,8 +17,11 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#" th:href="@{/}">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li th:if="${#authorization.expression('isAuthenticated()')}">
+                    <a href="/order" th:href="@{/order}">
+                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Zamowienia
+                    </a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li th:if="${#authorization.expression('!isAuthenticated()')}">

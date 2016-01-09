@@ -1,6 +1,5 @@
 package com.my.config;
 
-import com.my.Application;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,12 +13,13 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackageClasses = Application.class)
+@EnableJpaRepositories("com.my")
 class JpaConfig implements TransactionManagementConfigurer {
 
     @Value("${dataSource.driverClassName}")
@@ -40,18 +40,23 @@ class JpaConfig implements TransactionManagementConfigurer {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean configureEntityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactoryBean.setDataSource(configureDataSource());
-        entityManagerFactoryBean.setPackagesToScan("com.my");
-        entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+    public EntityManager entityManager() {
+        return entityManagerFactory().getObject().createEntityManager();
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactory.setDataSource(configureDataSource());
+        entityManagerFactory.setPackagesToScan("com.my");
+        entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
         Properties jpaProperties = new Properties();
         jpaProperties.put(org.hibernate.cfg.Environment.DIALECT, dialect);
         jpaProperties.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, hbm2ddlAuto);
-        entityManagerFactoryBean.setJpaProperties(jpaProperties);
+        entityManagerFactory.setJpaProperties(jpaProperties);
 
-        return entityManagerFactoryBean;
+        return entityManagerFactory;
     }
 
     @Bean
@@ -59,3 +64,5 @@ class JpaConfig implements TransactionManagementConfigurer {
         return new JpaTransactionManager();
     }
 }
+
+
