@@ -24,5 +24,4 @@ public class Invoice {
     @Lob
     private String content;
 
-
 }

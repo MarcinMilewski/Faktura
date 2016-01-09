@@ -2,6 +2,7 @@ package com.my.executor;
 
 import com.my.account.UserService;
 import com.my.config.SpringContext;
+import com.my.order.Order;
 import com.my.order.OrderComponent;
 
 import java.io.Serializable;
@@ -48,4 +49,7 @@ public class OrderExecutor implements Serializable{
 
     }
 
+    public void createInvoice(Order order) {
+
+    }
 }
