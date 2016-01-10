@@ -1,5 +1,6 @@
-package com.my.item;
+package com.my.item.controller;
 
+import com.my.item.Item;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.math.BigDecimal;

@@ -11,7 +11,7 @@ import java.util.List;
  * Created by marcin on 07.01.16.
  */
 @Entity
-@Table(name="ORDER_STATE")
+@Table(name="WAREHOUSE")
 public class Warehouse implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

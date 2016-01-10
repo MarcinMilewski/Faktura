@@ -11,43 +11,43 @@
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
-    <form class="form-narrow form-horizontal" method="post" th:action="@{/items}" th:object="${itemForm}">
+    <form class="form-narrow form-horizontal" method="post" th:action="@{/admin/items}" th:object="${itemForm}">
         <fieldset>
-        <legend>Add item</legend>
-        <div class="form-group">
-            <label for="name" class="col-lg-2 control-label">Name</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="price" class="col-lg-2 control-label">Price</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="price" placeholder="Price" th:field="*{price}"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="amount" class="col-lg-2 control-label">Amount</label>
-            <div class="col-lg-10">
-                <input type="text" class="form-control" id="amount" placeholder="Amount" th:field="*{amount}"/>
-            </div>
-        </div>
+            <legend>Add item</legend>
             <div class="form-group">
-                <label for="amount" class="col-lg-2 control-label">Warehouse</label>
+                <label for="name" class="col-lg-2 control-label">Name</label>
                 <div class="col-lg-10">
-                    <select th:field="*{warehouseId}">
-                        <option th:each="warehouse : ${/dictionaries/warehouses}"
-                                th:value="${warehouse.id}"
-                                th:text="#{${'warehouse ' + }}">Wireframe</option>
-                    </select>
+                    <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}" />
                 </div>
             </div>
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <button type="submit" class="btn btn-default">Add</button>
+            <div class="form-group">
+                <label for="price" class="col-lg-2 control-label">Price</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="price" placeholder="Price" th:field="*{price}"/>
+                </div>
             </div>
-        </div>
-    </fieldset>
+            <div class="form-group">
+                <label for="amount" class="col-lg-2 control-label">Amount</label>
+                <div class="col-lg-10">
+                    <input type="text" class="form-control" id="amount" placeholder="Amount" th:field="*{amount}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="wh" class="col-lg-2 control-label">Warehouse</label>
+                <div class="col-lg-10">
+
+                    <select class="form-control" id="wh" th:field="*{warehouseId}">
+                        <option th:each="w : ${warehouse}" th:text="${w.name}" th:value="${w.id}"></option>
+                    </select>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <button type="submit" class="btn btn-default">Add</button>
+                </div>
+            </div>
+        </fieldset>
     </form>
     <form class="form-narrow form-horizontal" method="request" th:action="@{/items/all}">
         <fieldset>

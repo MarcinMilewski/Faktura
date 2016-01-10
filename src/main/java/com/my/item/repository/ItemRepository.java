@@ -1,5 +1,6 @@
-package com.my.item;
+package com.my.item.repository;
 
+import com.my.item.Item;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

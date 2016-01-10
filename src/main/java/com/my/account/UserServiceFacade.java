@@ -1,6 +1,10 @@
 package com.my.account;
 
 import com.my.logger.Log;
+import com.my.warehouse.Warehouse;
+import com.my.warehouse.WarehouseRepository;
+import com.my.warehouse.operative.WarehouseOperative;
+import com.my.warehouse.operative.WarehouseOperativeRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -15,7 +19,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class UserServiceFacade implements UserDetailsService {
 
@@ -24,12 +30,31 @@ public class UserServiceFacade implements UserDetailsService {
 
 	@Autowired
 	private AccountRepository accountRepository;
+	@Autowired
+	private WarehouseRepository warehouseRepository;
+	@Autowired
+	private WarehouseOperativeRepository warehouseOperativeRepository;
 	
 	@PostConstruct	
 	protected void initialize() {
+		Account account = new Account("operator", "operator", "ROLE_OPERATIVE");
 		accountRepository.create(new Account("customer", "demo", "ROLE_USER"));
 		accountRepository.create(new Account("admin", "admin", "ROLE_ADMIN"));
-		accountRepository.create(new Account("operator", "operator", "ROLE_OPERATIVE"));
+		accountRepository.create(account);
+		account = accountRepository.findByEmail("operator");
+
+		Warehouse warehouse = new Warehouse();
+		warehouse.setName("magazyn1");
+		warehouseRepository.save(warehouse);
+		warehouse = warehouseRepository.findByName("magazyn1");
+
+		WarehouseOperative warehouseOperative = new WarehouseOperative();
+		warehouseOperative.setFirstName("Pan");
+		warehouseOperative.setLastName("Magazynier");
+		warehouseOperative.setAccount(account);
+		warehouseOperative.setWarehouse(warehouse);
+		warehouseOperativeRepository.save(warehouseOperative);
+
 	}
 	
 	@Override
