@@ -3,13 +3,15 @@ package com.my.item;
 import com.my.warehouse.Warehouse;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * Created by Marcin on 09.01.2016.
  */
 @Entity
 @Table(name = "ITEM")
-public class Item {
+public class Item implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", updatable = false, nullable = false)
@@ -19,7 +21,7 @@ public class Item {
     private String name;
 
     @Column(name="PRICE", updatable = true, nullable = false)
-    private Float price;
+    private BigDecimal price;
 
     @Column(name="AMOUNT",updatable = true, nullable = false)
     private Integer amount;
@@ -30,7 +32,7 @@ public class Item {
 
     public Item(){}
 
-    public Item(String name, Float price, Integer amount) {
+    public Item(String name, BigDecimal price, Integer amount) {
         this.name = name;
         this.price = price;
         this.amount = amount;
@@ -52,11 +54,11 @@ public class Item {
         this.name = name;
     }
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

@@ -2,6 +2,8 @@ package com.my.item;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Marcin on 09.01.2016.
  */
@@ -11,7 +13,7 @@ public class ItemForm {
     private String name;
 
     @NotBlank
-    private float price;
+    private BigDecimal price;
 
     @NotBlank
     private int amount;
@@ -25,11 +27,11 @@ public class ItemForm {
         this.name = name;
     }
 
-    public float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
