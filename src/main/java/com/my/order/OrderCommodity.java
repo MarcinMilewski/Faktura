@@ -1,7 +1,6 @@
 package com.my.order;
 
 import com.my.account.Account;
-import com.my.item.Item;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -15,19 +14,10 @@ import java.math.BigDecimal;
 @DiscriminatorValue("OC")
 public class OrderCommodity extends OrderComponent  {
 
-    private Item commodity;
 
     private Integer amount;
 
     private BigDecimal price;
-
-    public Item getCommodity() {
-        return commodity;
-    }
-
-    public void setCommodity(Item commodity) {
-        this.commodity = commodity;
-    }
 
     public Integer getAmount() {
         return amount;
