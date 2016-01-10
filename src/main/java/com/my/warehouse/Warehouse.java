@@ -1,6 +1,6 @@
 package com.my.warehouse;
 
-import com.my.commodity.Commodity;
+import com.my.item.Item;
 import com.my.warehouse.operative.WarehouseOperative;
 import lombok.Data;
 
@@ -24,7 +24,7 @@ public class Warehouse implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
-    private List<Commodity> commodities;
+    private List<Item> commodities;
 
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
     private List<WarehouseOperative> warehouseOperatives;

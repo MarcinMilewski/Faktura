@@ -1,8 +1,8 @@
 package com.my.item;
 
+import com.my.warehouse.Warehouse;
 import lombok.Data;
 
-import javax.annotation.Generated;
 import javax.persistence.*;
 
 /**
@@ -26,6 +26,10 @@ public class Item {
     @Column(name="AMOUNT",updatable = true, nullable = false)
     private Integer amount;
 
+    @ManyToOne
+    @JoinColumn(name="warehouse_id")
+    private Warehouse warehouse;
+
     public Item(){}
 
     public Item(String name, Float price, Integer amount) {
@@ -34,27 +38,4 @@ public class Item {
         this.amount = amount;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
 }
