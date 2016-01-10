@@ -32,6 +32,16 @@
                 <input type="text" class="form-control" id="amount" placeholder="Amount" th:field="*{amount}"/>
             </div>
         </div>
+            <div class="form-group">
+                <label for="amount" class="col-lg-2 control-label">Warehouse</label>
+                <div class="col-lg-10">
+                    <select th:field="*{warehouseId}">
+                        <option th:each="warehouse : ${/dictionaries/warehouses}"
+                                th:value="${warehouse.id}"
+                                th:text="#{${'warehouse ' + }}">Wireframe</option>
+                    </select>
+                </div>
+            </div>
         <div class="form-group">
             <div class="col-lg-offset-2 col-lg-10">
                 <button type="submit" class="btn btn-default">Add</button>

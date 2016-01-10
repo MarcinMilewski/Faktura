@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import javax.annotation.PostConstruct;
 import java.util.Collections;
 
-public class UserService implements UserDetailsService {
+public class UserServiceFacade implements UserDetailsService {
 
 	@Log
 	Logger logger;

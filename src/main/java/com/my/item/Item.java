@@ -27,7 +27,7 @@ public class Item implements Serializable{
     private Integer amount;
 
     @ManyToOne
-    @JoinColumn(name="warehouse_id")
+    @JoinColumn(name="warehouse_id", nullable = false)
     private Warehouse warehouse;
 
     public Item(){}

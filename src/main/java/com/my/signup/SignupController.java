@@ -2,7 +2,7 @@ package com.my.signup;
 
 import com.my.account.Account;
 import com.my.account.AccountRepository;
-import com.my.account.UserService;
+import com.my.account.UserServiceFacade;
 import com.my.support.web.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class SignupController {
 	private AccountRepository accountRepository;
 	
 	@Autowired
-	private UserService userService;
+	private UserServiceFacade userServiceFacade;
 	
 	@RequestMapping(value = "signup")
 	public String signup(Model model) {
@@ -39,7 +39,7 @@ public class SignupController {
 		}
 		Account account = signupForm.createAccount();
 		accountRepository.create(signupForm.createAccount());
-		userService.signIn(account);
+		userServiceFacade.signIn(account);
         // see /WEB-INF/i18n/messages.properties and /WEB-INF/views/homeSignedIn.html
         MessageHelper.addSuccessAttribute(ra, "signup.success");
 		return "redirect:/";

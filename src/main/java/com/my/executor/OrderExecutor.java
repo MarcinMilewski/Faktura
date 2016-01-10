@@ -1,6 +1,6 @@
 package com.my.executor;
 
-import com.my.account.UserService;
+import com.my.account.UserServiceFacade;
 import com.my.config.SpringContext;
 import com.my.order.OrderSummary;
 import com.my.order.OrderComponent;
@@ -13,11 +13,11 @@ import java.io.Serializable;
 public class OrderExecutor implements Serializable{
     private static OrderExecutor instance = null;
 
-    private UserService userService;
+    private UserServiceFacade userServiceFacade;
 
 
     private OrderExecutor() {
-        userService = (UserService) SpringContext.getApplicationContext().getBean(UserService.class);
+        userServiceFacade = (UserServiceFacade) SpringContext.getApplicationContext().getBean(UserServiceFacade.class);
 
     }
 

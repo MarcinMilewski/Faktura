@@ -18,10 +18,10 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserServiceTest {
+public class UserServiceFacadeTest {
 
 	@InjectMocks
-	private UserService userService = new UserService();
+	private UserServiceFacade userServiceFacade = new UserServiceFacade();
 
 	@Mock
 	private AccountRepository accountRepositoryMock;
@@ -32,7 +32,7 @@ public class UserServiceTest {
 	@Test
 	public void shouldInitializeWithTwoDemoUsers() {
 		// act
-		userService.initialize();
+		userServiceFacade.initialize();
 		// assert
 		verify(accountRepositoryMock, times(2)).create(any(Account.class));
 	}
@@ -45,7 +45,7 @@ public class UserServiceTest {
 
 		when(accountRepositoryMock.findByEmail("customer@example.com")).thenReturn(null);
 		// act
-		userService.loadUserByUsername("customer@example.com");
+		userServiceFacade.loadUserByUsername("customer@example.com");
 	}
 
 	@Test
@@ -55,7 +55,7 @@ public class UserServiceTest {
 		when(accountRepositoryMock.findByEmail("customer@example.com")).thenReturn(demoUser);
 
 		// act
-		UserDetails userDetails = userService.loadUserByUsername("customer@example.com");
+		UserDetails userDetails = userServiceFacade.loadUserByUsername("customer@example.com");
 
 		// assert
 		assertThat(demoUser.getEmail()).isEqualTo(userDetails.getUsername());

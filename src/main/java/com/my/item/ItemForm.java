@@ -18,6 +18,8 @@ public class ItemForm {
     @NotBlank
     private int amount;
 
+    @NotBlank
+    private Long warehouseId;
 
     public String getName() {
         return name;
@@ -47,4 +49,11 @@ public class ItemForm {
         return new Item(name,price,amount);
     }
 
+    public Long getWarehouseId() {
+        return warehouseId;
+    }
+
+    public void setWarehouseId(Long warehouseId) {
+        this.warehouseId = warehouseId;
+    }
 }

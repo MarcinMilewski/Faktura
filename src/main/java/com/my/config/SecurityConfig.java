@@ -1,9 +1,5 @@
 package com.my.config;
 
-import java.util.regex.Pattern;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,15 +9,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 
-import com.my.account.UserService;
+import com.my.account.UserServiceFacade;
 
 @Configuration
 @EnableWebMvcSecurity
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
-    public UserService userService() {
-        return new UserService();
+    public UserServiceFacade userService() {
+        return new UserServiceFacade();
     }
 
     @Bean
@@ -47,6 +43,9 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/", "/favicon.ico", "/resources/**", "/signup").permitAll()
+                .antMatchers("/admin/**").hasRole("ROLE_ADMIN")
+                .antMatchers("/customer/**").hasRole("ROLE_USER")
+                .antMatchers("/operative/**").hasRole("ROLE_OPERATIVE")
                 .anyRequest().authenticated()
                 .and()
             .formLogin()

@@ -1,7 +1,7 @@
 package com.my.customer;
 
 import com.my.account.Account;
-import com.my.account.UserService;
+import com.my.account.UserServiceFacade;
 import com.my.order.OrderSummary;
 import com.my.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,18 @@ public class CustomerController {
     private OrderService orderService;
 
     @Autowired
-    private UserService userService;
+    private UserServiceFacade userServiceFacade;
 
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public List<OrderSummary> getUserOrders() {
-        Account logged = userService.getLoggedUser();
+        Account logged = userServiceFacade.getLoggedUser();
         return orderService.getRepository().findByCustomerId(logged.getId());
     }
+
+    @RequestMapping(value = "/order/pay", method = RequestMethod.GET)
+    public List<OrderSummary> pay() {
+        Account logged = userServiceFacade.getLoggedUser();
+        return orderService.getRepository().findByCustomerId(logged.getId());
+    }
+
 }
