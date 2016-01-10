@@ -41,21 +41,21 @@ public class UserServiceTest {
 	public void shouldThrowExceptionWhenUserNotFound() {
 		// arrange
 		thrown.expect(UsernameNotFoundException.class);
-		thrown.expectMessage("user not found");
+		thrown.expectMessage("customer not found");
 
-		when(accountRepositoryMock.findByEmail("user@example.com")).thenReturn(null);
+		when(accountRepositoryMock.findByEmail("customer@example.com")).thenReturn(null);
 		// act
-		userService.loadUserByUsername("user@example.com");
+		userService.loadUserByUsername("customer@example.com");
 	}
 
 	@Test
 	public void shouldReturnUserDetails() {
 		// arrange
-		Account demoUser = new Account("user@example.com", "demo", "ROLE_USER");
-		when(accountRepositoryMock.findByEmail("user@example.com")).thenReturn(demoUser);
+		Account demoUser = new Account("customer@example.com", "demo", "ROLE_USER");
+		when(accountRepositoryMock.findByEmail("customer@example.com")).thenReturn(demoUser);
 
 		// act
-		UserDetails userDetails = userService.loadUserByUsername("user@example.com");
+		UserDetails userDetails = userService.loadUserByUsername("customer@example.com");
 
 		// assert
 		assertThat(demoUser.getEmail()).isEqualTo(userDetails.getUsername());

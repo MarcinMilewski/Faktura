@@ -26,7 +26,7 @@ public class UserService implements UserDetailsService {
 	
 	@PostConstruct	
 	protected void initialize() {
-		accountRepository.create(new Account("user", "demo", "ROLE_USER"));
+		accountRepository.create(new Account("customer", "demo", "ROLE_USER"));
 		accountRepository.create(new Account("admin", "admin", "ROLE_ADMIN"));
 	}
 	
@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Account account = accountRepository.findByEmail(username);
 		if(account == null) {
-			throw new UsernameNotFoundException("user not found");
+			throw new UsernameNotFoundException("customer not found");
 		}
 		return createUser(account);
 	}
