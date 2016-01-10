@@ -3,6 +3,7 @@ package com.my.account;
 import com.my.logger.Log;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -56,8 +57,15 @@ public class UserServiceFacade implements UserDetailsService {
 	}
 
 	public Account getLoggedUser() {
-		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		Account logged = accountRepository.findByEmail(principal.getUsername());
-		return logged;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetails = null;
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			userDetails = (UserDetails) auth.getPrincipal();
+			if (userDetails.getUsername() != null) {
+				Account logged = accountRepository.findByEmail(userDetails.getUsername());
+				return logged;
+			}
+		}
+		return null;
 	}
 }
