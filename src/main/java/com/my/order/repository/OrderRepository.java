@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 /**
  * Created by marcin on 09.01.16.
  */
-//extends CrudRepository<OrderComponent, Long>
 @Repository
 public interface OrderRepository extends CrudRepository<OrderComponent,Long> {
 

@@ -1,9 +1,11 @@
 package com.my.order;
 
 import com.my.account.Account;
+import com.my.item.Item;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import java.math.BigDecimal;
 
 /**
@@ -12,8 +14,10 @@ import java.math.BigDecimal;
 
 @Entity
 @DiscriminatorValue("OC")
-public class OrderCommodity extends OrderComponent  {
+public class OrderItem extends OrderComponent  {
 
+    @OneToOne
+    private Item item;
 
     private Integer amount;
 

@@ -3,6 +3,9 @@ package com.my.account;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.my.order.Order;
 import com.my.order.OrderComponent;
+import com.my.warehouse.operative.WarehouseOperative;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,8 +30,12 @@ public class Account implements java.io.Serializable {
 
 	private String role = "ROLE_USER";
 
-	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
+	@LazyCollection(LazyCollectionOption.FALSE)
+	@OneToMany(mappedBy = "customer")
 	private List<Order> orders;
+
+	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+	private WarehouseOperative warehouseOperative;
 
     protected Account() {
 
@@ -78,5 +85,13 @@ public class Account implements java.io.Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public WarehouseOperative getWarehouseOperative() {
+		return warehouseOperative;
+	}
+
+	public void setWarehouseOperative(WarehouseOperative warehouseOperative) {
+		this.warehouseOperative = warehouseOperative;
 	}
 }

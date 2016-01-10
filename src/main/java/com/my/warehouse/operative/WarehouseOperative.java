@@ -1,5 +1,6 @@
 package com.my.warehouse.operative;
 
+import com.my.account.Account;
 import com.my.warehouse.Warehouse;
 
 import javax.persistence.*;
@@ -25,6 +26,10 @@ public class WarehouseOperative implements Serializable{
     @ManyToOne
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
+
+    @OneToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     public Long getId() {
         return id;
@@ -56,5 +61,13 @@ public class WarehouseOperative implements Serializable{
 
     public void setWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }
