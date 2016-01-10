@@ -15,6 +15,12 @@ import java.math.BigDecimal;
 @DiscriminatorValue("OC")
 public class OrderCommodity extends OrderComponent  {
 
+    private Item commodity;
+
+    private Integer amount;
+
+    private BigDecimal price;
+
     public Item getCommodity() {
         return commodity;
     }
@@ -39,11 +45,6 @@ public class OrderCommodity extends OrderComponent  {
         this.price = price;
     }
 
-    private Item commodity;
-
-    private Integer amount;
-
-    private BigDecimal price;
 
     @Override
     public void add(OrderComponent orderComponent) {
