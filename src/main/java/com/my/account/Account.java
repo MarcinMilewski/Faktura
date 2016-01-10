@@ -67,4 +67,16 @@ public class Account implements java.io.Serializable {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

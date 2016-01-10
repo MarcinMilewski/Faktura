@@ -1,7 +1,6 @@
 package com.my.invoice;
 
 import com.my.order.OrderComponent;
-import lombok.Data;
 
 import javax.persistence.*;
 
@@ -9,7 +8,6 @@ import javax.persistence.*;
  * Created by marcin on 09.01.16.
  */
 @Entity
-@Data
 @Table(name = "INVOICE")
 public class Invoice {
     @Id
@@ -24,4 +22,27 @@ public class Invoice {
     @Lob
     private String content;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public OrderComponent getOrder() {
+        return order;
+    }
+
+    public void setOrder(OrderComponent order) {
+        this.order = order;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

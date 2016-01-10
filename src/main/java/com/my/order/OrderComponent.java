@@ -2,7 +2,6 @@ package com.my.order;
 
 import com.my.account.Account;
 import com.my.order.state.OrderState;
-import lombok.Data;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
@@ -12,7 +11,6 @@ import java.util.Set;
 /**
  * Created by marcin on 06.01.16.
  */
-@Data
 @Entity
 @Inheritance(
         strategy= InheritanceType.SINGLE_TABLE)
@@ -52,4 +50,36 @@ public abstract class OrderComponent implements Serializable{
     public abstract void pay();
     public abstract void send(Account account);
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Set<OrderComponent> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<OrderComponent> children) {
+        this.children = children;
+    }
+
+    public OrderComponent getParent() {
+        return parent;
+    }
+
+    public void setParent(OrderComponent parent) {
+        this.parent = parent;
+    }
+
+    public OrderState getState() {
+        return state;
+    }
+
+    public void setState(OrderState state) {
+        this.state = state;
+    }
 }

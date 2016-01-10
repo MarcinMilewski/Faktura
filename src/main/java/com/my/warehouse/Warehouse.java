@@ -2,7 +2,6 @@ package com.my.warehouse;
 
 import com.my.item.Item;
 import com.my.warehouse.operative.WarehouseOperative;
-import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +10,6 @@ import java.util.List;
 /**
  * Created by marcin on 07.01.16.
  */
-@Data
 @Entity
 @Table(name="ORDER_STATE")
 public class Warehouse implements Serializable {
@@ -29,4 +27,35 @@ public class Warehouse implements Serializable {
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
     private List<WarehouseOperative> warehouseOperatives;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Item> getCommodities() {
+        return commodities;
+    }
+
+    public void setCommodities(List<Item> commodities) {
+        this.commodities = commodities;
+    }
+
+    public List<WarehouseOperative> getWarehouseOperatives() {
+        return warehouseOperatives;
+    }
+
+    public void setWarehouseOperatives(List<WarehouseOperative> warehouseOperatives) {
+        this.warehouseOperatives = warehouseOperatives;
+    }
 }

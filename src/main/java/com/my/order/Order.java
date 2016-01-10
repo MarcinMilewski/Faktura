@@ -1,7 +1,6 @@
 package com.my.order;
 
 import com.my.account.Account;
-import lombok.Data;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -12,7 +11,6 @@ import java.util.Date;
 /**
  * Created by marcin on 07.01.16.
  */
-@Data
 @Entity
 @DiscriminatorValue("O")
 public class Order extends OrderComponent{
@@ -51,5 +49,25 @@ public class Order extends OrderComponent{
     @Override
     public void send(Account account) {
 
+    }
+
+    public Long getTotalPrice() {
+        return totalPrice;
+    }
+
+    public Account getCustomer() {
+        return customer;
+    }
+
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public Date getSendDate() {
+        return sendDate;
+    }
+
+    public Date getReceivedDate() {
+        return receivedDate;
     }
 }

@@ -1,7 +1,6 @@
 package com.my.item;
 
 import com.my.warehouse.Warehouse;
-import lombok.Data;
 
 import javax.persistence.*;
 
@@ -9,7 +8,6 @@ import javax.persistence.*;
  * Created by Marcin on 09.01.2016.
  */
 @Entity
-@Data
 @Table(name = "ITEM")
 public class Item {
     @Id
@@ -38,4 +36,43 @@ public class Item {
         this.amount = amount;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
 }

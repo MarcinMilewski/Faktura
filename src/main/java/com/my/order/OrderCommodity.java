@@ -1,21 +1,45 @@
 package com.my.order;
 
 import com.my.account.Account;
-import com.my.commodity.Commodity;
-import lombok.Data;
+import com.my.item.Item;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.math.BigDecimal;
 
 /**
  * Created by marcin on 07.01.16.
  */
-@Data
+
 @Entity
 @DiscriminatorValue("OC")
 public class OrderCommodity extends OrderComponent  {
 
-    private Commodity commodity;
+    public Item getCommodity() {
+        return commodity;
+    }
+
+    public void setCommodity(Item commodity) {
+        this.commodity = commodity;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    private Item commodity;
 
     private Integer amount;
 
@@ -45,4 +69,6 @@ public class OrderCommodity extends OrderComponent  {
     public void send(Account account) {
 
     }
+
+
 }
