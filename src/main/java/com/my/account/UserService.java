@@ -55,4 +55,9 @@ public class UserService implements UserDetailsService {
 		return new SimpleGrantedAuthority(account.getRole());
 	}
 
+	public Account getLoggedUser() {
+		User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Account logged = accountRepository.findByEmail(principal.getUsername());
+		return logged;
+	}
 }
