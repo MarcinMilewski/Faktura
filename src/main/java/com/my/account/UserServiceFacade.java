@@ -29,6 +29,7 @@ public class UserServiceFacade implements UserDetailsService {
 	protected void initialize() {
 		accountRepository.create(new Account("customer", "demo", "ROLE_USER"));
 		accountRepository.create(new Account("admin", "admin", "ROLE_ADMIN"));
+		accountRepository.create(new Account("operator", "operator", "ROLE_OPERATIVE"));
 	}
 	
 	@Override

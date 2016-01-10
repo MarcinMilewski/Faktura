@@ -30,11 +30,11 @@ public class UserServiceFacadeTest {
 	public ExpectedException thrown = ExpectedException.none();
 
 	@Test
-	public void shouldInitializeWithTwoDemoUsers() {
+	public void shouldInitializeWithThreeDemoUsers() {
 		// act
 		userServiceFacade.initialize();
 		// assert
-		verify(accountRepositoryMock, times(2)).create(any(Account.class));
+		verify(accountRepositoryMock, times(3)).create(any(Account.class));
 	}
 
 	@Test

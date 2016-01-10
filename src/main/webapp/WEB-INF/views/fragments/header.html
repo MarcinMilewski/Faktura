@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
 </head>
@@ -12,21 +12,75 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Demo project</a>
+            <a class="navbar-brand" href="#">Faktura</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#" th:href="@{/}">Home</a></li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}">
-                    <a href="/order" th:href="@{/order}">
-                        &nbsp;Zamowienia
-                    </a>
+                <li class="active">
+                    <a href="#" th:href="@{/}">Home</a>
                 </li>
-                <li th:if="${#authorization.expression('isAuthenticated()')}">
-                    <a href="/items" th:href="@{/items}">
-                        &nbsp;Items
-                    </a>
-                </li>
+
+                <!--USER-->
+                <div sec:authorize="hasRole('ROLE_USER')">
+                    <li>
+                        <a href="/user/order" th:href="@{/user/order}">
+                            &nbsp;Zamowienia
+                        </a>
+                    </li>
+                </div>
+                <div sec:authorize="hasRole('ROLE_USER')">
+                    <li>
+                        <a href="/user/items" th:href="@{/user/items}">
+                            &nbsp;Przedmioty
+                        </a>
+                    </li>
+                </div>
+
+                <!--ADMIN-->
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li>
+                        <a href="/admin/order" th:href="@{/admin/order}">
+                            &nbsp;Zamowienia
+                        </a>
+                    </li>
+                </div>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li>
+                        <a href="/user/items" th:href="@{/admin/items}">
+                            &nbsp;Przedmioty
+                        </a>
+                    </li>
+                </div>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <li>
+                        <a href="/admin/order" th:href="@{/admin/order}">
+                            &nbsp;Magazyn
+                        </a>
+                    </li>
+                </div>
+
+                <!--OPERATOR MAGAZYNU-->
+                <div sec:authorize="hasRole('ROLE_OPERATIVE')">
+                    <li>
+                        <a href="/admin/order" th:href="@{/operative/order}">
+                            &nbsp;Zamowienia
+                        </a>
+                    </li>
+                </div>
+
+                <div sec:authorize="hasRole('ROLE_OPERATIVE')">
+                    <li>
+                        <a href="/admin/order" th:href="@{/operative/order}">
+                            &nbsp;Magazyn
+                        </a>
+                    </li>
+                </div>
+
+                <!--<li th:if="${#authorization.expression('isAuthenticated()')}">-->
+                    <!--<a href="/items" th:href="@{/items}">-->
+                        <!--&nbsp;Items-->
+                    <!--</a>-->
+                <!--</li>-->
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li th:if="${#authorization.expression('!isAuthenticated()')}">
