@@ -1,7 +1,5 @@
 package com.my.item;
 
-import com.my.repository.AbstractRepository;
-import com.my.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +28,7 @@ public class ItemController {
     @RequestMapping(value = "items", method = RequestMethod.POST)
     public String addItem(@ModelAttribute ItemForm itemForm){
         Item item = itemForm.createItem();
-        itemRepository.create(itemForm.createItem());
+        itemRepository.save(itemForm.createItem());
         return "redirect:/items";
     }
 
