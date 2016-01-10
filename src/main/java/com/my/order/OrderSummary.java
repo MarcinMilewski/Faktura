@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Entity
 @DiscriminatorValue("O")
-public class Order extends OrderComponent{
+public class OrderSummary extends OrderComponent{
     private Long totalPrice;
 
     @ManyToOne

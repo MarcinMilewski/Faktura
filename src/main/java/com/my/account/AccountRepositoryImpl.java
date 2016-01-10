@@ -42,6 +42,8 @@ public class AccountRepositoryImpl extends AbstractRepositoryImpl<Account> imple
 		}
 	}
 
+
+
 	@Override
 	protected EntityManager getEntityManager() {
 		return entityManager;

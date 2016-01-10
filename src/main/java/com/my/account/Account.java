@@ -1,19 +1,24 @@
 package com.my.account;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.my.order.Order;
-import com.my.order.OrderComponent;
+import com.my.order.OrderSummary;
 import com.my.warehouse.operative.WarehouseOperative;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.util.List;
 
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "account")
-@NamedQuery(name = Account.FIND_BY_EMAIL, query = "select a from Account a where a.email = :email")
+@NamedQueries({
+		@NamedQuery(name = Account.FIND_BY_EMAIL, query = "select a from Account a where a.email = :email")
+})
 public class Account implements java.io.Serializable {
 
 	public static final String FIND_BY_EMAIL = "Account.findByEmail";
@@ -32,7 +37,7 @@ public class Account implements java.io.Serializable {
 
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "customer")
-	private List<Order> orders;
+	private List<OrderSummary> orderSummaries;
 
 	@OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
 	private WarehouseOperative warehouseOperative;
@@ -75,12 +80,12 @@ public class Account implements java.io.Serializable {
 		this.role = role;
 	}
 
-	public List<Order> getOrders() {
-		return orders;
+	public List<OrderSummary> getOrderSummaries() {
+		return orderSummaries;
 	}
 
-	public void setOrders(List<Order> orders) {
-		this.orders = orders;
+	public void setOrderSummaries(List<OrderSummary> orderSummaries) {
+		this.orderSummaries = orderSummaries;
 	}
 
 	public void setId(Long id) {
