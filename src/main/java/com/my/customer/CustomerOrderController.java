@@ -4,7 +4,7 @@ import com.my.account.Account;
 import com.my.account.UserServiceFacade;
 import com.my.item.cart.ItemCart;
 import com.my.item.repository.ItemRepository;
-import com.my.order.OrderSummary;
+import com.my.order.OrderComponent;
 import com.my.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +35,7 @@ public class CustomerOrderController {
         model.addAttribute("cart", itemCart.getCart());
         Account account = userServiceFacade.getLoggedUser();
         if (account != null) {
-            List<OrderSummary> orders = orderRepository.findByCustomerId(account.getId());
+            List<OrderComponent> orders = orderRepository.findByCustomerId(account.getId());
             model.addAttribute("orders");
         }
         return "user/order/showAll";

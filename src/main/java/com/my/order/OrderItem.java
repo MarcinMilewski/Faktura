@@ -6,7 +6,6 @@ import com.my.item.Item;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
-import java.math.BigDecimal;
 
 /**
  * Created by marcin on 07.01.16.
@@ -21,22 +20,12 @@ public class OrderItem extends OrderComponent  {
 
     private Integer amount;
 
-    private BigDecimal price;
-
     public Integer getAmount() {
         return amount;
     }
 
     public void setAmount(Integer amount) {
         this.amount = amount;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
 

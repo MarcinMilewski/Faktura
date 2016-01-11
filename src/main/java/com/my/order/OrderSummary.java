@@ -14,7 +14,6 @@ import java.util.Date;
 @Entity
 @DiscriminatorValue("O")
 public class OrderSummary extends OrderComponent{
-    private Long totalPrice;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -51,10 +50,6 @@ public class OrderSummary extends OrderComponent{
 
     }
 
-    public Long getTotalPrice() {
-        return totalPrice;
-    }
-
     public Account getCustomer() {
         return customer;
     }
@@ -73,10 +68,6 @@ public class OrderSummary extends OrderComponent{
 
     public void setReceivedDate(Date receivedDate) {
         this.receivedDate = receivedDate;
-    }
-
-    public void setTotalPrice(Long totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public void setCustomer(Account customer) {

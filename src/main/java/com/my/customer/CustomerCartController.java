@@ -46,7 +46,7 @@ public class CustomerCartController {
         model.addAttribute("cart", itemCart.getCart());
         Account account = userServiceFacade.getLoggedUser();
         if (account != null) {
-            List<OrderSummary> orders = orderRepository.findByCustomerId(account.getId());
+            List<OrderComponent> orders = orderRepository.findByCustomerId(account.getId());
             model.addAttribute("orders");
         }
         return "/user/cart/show";
@@ -70,10 +70,8 @@ public class CustomerCartController {
         itemAmountMap.entrySet().stream().forEach(entry -> orderComponents.add(createOrderItem(entry)));
 
         OrderComponent orderSummary = createOrderSummary(orderComponents);
-// items.stream().
-//        List<OrderComponent> orderComponents = new ArrayList<>();
-//        items.stream().forEach(item -> );
 
+        orderRepository.save(orderSummary);
 
         return "/user/cart/orderApproved";
     }
@@ -90,7 +88,17 @@ public class CustomerCartController {
         orderSummary.setReceivedDate(null);
         orderSummary.setCustomer(purchaser);
         orderSummary.setSendDate(null);
-        orderSummary.setTotalPrice(orderComponents.stream().forEach(orderItem -> ););
+        orderSummary.setPrice(calculateTotalOrderPrice(orderComponents));
+
+        return orderSummary;
+    }
+
+    private BigDecimal calculateTotalOrderPrice(Set<OrderComponent> orderComponents) {
+        BigDecimal totalPrice = new BigDecimal(0);
+        for (OrderComponent orderComponent : orderComponents) {
+            totalPrice = totalPrice.add(orderComponent.getPrice());
+        }
+        return totalPrice;
     }
 
     private OrderItem createOrderItem(Map.Entry<Item, Integer> entry) {

@@ -31,8 +31,7 @@ public abstract class OrderComponent implements Serializable{
     @JoinColumn
     private OrderComponent parent;
 
-    @OneToOne
-    @JoinColumn(name = "orderComponent_id")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "orderComponent")
     private OrderState state;
 
     private BigDecimal price;
