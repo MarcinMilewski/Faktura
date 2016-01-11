@@ -5,6 +5,7 @@ package com.my.item.dto;
  */
 public class ItemDto {
     private Long id;
+    private String name;
     private Integer amount;
 
     public Long getId() {
@@ -21,5 +22,13 @@ public class ItemDto {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

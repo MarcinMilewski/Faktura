@@ -18,27 +18,15 @@
             <th><b>Price</b></th>
             <th><b>Amount</b></th>
         </tr>
-        <tr>
+        <tr th:each="item : ${cart}">
             <td th:text="${item.id}"></td>
             <td th:text="${item.name}"></td>
-            <td th:text="${item.price}"></td>
             <td th:text="${item.amount}"></td>
         </tr>
-        <form class="form-narrow form-horizontal" method="post" th:action="@{/user/items/addToCart}" th:object="${itemDto}">
-            <fieldset>
-                <legend>Dodaj do koszyka</legend>
-                <div class="form-group">
-                    <input type="text" hidden="true" id="itemId" th:field="*{id}"/>
-                    <input type="text" hidden="true" id="itemName" th:field="*{name}"/>
-                    <label for="amount" class="col-lg-2 control-label">Ilosc</label>
-                    <div class="col-lg-10">
-                        <input type="text" class="form-control" id="amount" placeholder="Price" th:field="*{amount}"/>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-default">Add</button>
-            </fieldset>
-        </form>
     </table>
+    <form class="form-narrow form-horizontal" method="post" th:action="@{/user/cart/doOrder}">
+            <button type="submit" class="btn btn-default">Press to make order</button>
+    </form>
 </div>
 </body>
 </html>

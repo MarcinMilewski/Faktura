@@ -1,5 +1,7 @@
 package com.my.account;
 
+import com.my.item.Item;
+import com.my.item.repository.ItemRepository;
 import com.my.logger.Log;
 import com.my.warehouse.Warehouse;
 import com.my.warehouse.WarehouseRepository;
@@ -19,9 +21,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.Collections;
-import java.util.List;
 
 public class UserServiceFacade implements UserDetailsService {
 
@@ -34,7 +35,9 @@ public class UserServiceFacade implements UserDetailsService {
 	private WarehouseRepository warehouseRepository;
 	@Autowired
 	private WarehouseOperativeRepository warehouseOperativeRepository;
-	
+	@Autowired
+	private ItemRepository itemRepository;
+
 	@PostConstruct	
 	protected void initialize() {
 		Account account = new Account("operator", "operator", "ROLE_OPERATIVE");
@@ -57,6 +60,14 @@ public class UserServiceFacade implements UserDetailsService {
 		warehouseOperative.setAccount(account);
 		warehouseOperative.setWarehouse(warehouse);
 		warehouseOperativeRepository.save(warehouseOperative);
+
+		Item item = new Item();
+		item.setName("testowy");
+		item.setAmount(10);
+		item.setPrice(new BigDecimal(120));
+		item.setWarehouse(warehouse);
+		itemRepository.save(item);
+
 
 	}
 	

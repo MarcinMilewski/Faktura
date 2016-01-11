@@ -31,7 +31,11 @@
                             &nbsp;Przedmioty
                         </a>
                     </li>
-
+                    <li sec:authorize="hasRole('ROLE_USER')">
+                        <a href="/user/cart" th:href="@{/user/cart}">
+                            &nbsp;Koszyk
+                        </a>
+                    </li>
                 <!--ADMIN-->
                     <li sec:authorize="hasRole('ROLE_ADMIN')">
                         <a href="/admin/order" th:href="@{/admin/order}">
