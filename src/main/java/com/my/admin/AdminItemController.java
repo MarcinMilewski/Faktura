@@ -1,6 +1,8 @@
 package com.my.admin;
 
 import com.my.item.Item;
+import com.my.item.ItemInterface;
+import com.my.item.decorator.OccasionalDiscount;
 import com.my.item.form.ItemForm;
 import com.my.item.repository.ItemRepository;
 import com.my.warehouse.Warehouse;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -47,11 +50,23 @@ public class AdminItemController {
     @RequestMapping(method = RequestMethod.POST)
     public String addItem(@ModelAttribute ItemForm itemForm){
         Warehouse warehouse = warehouseRepository.findOne(itemForm.getWarehouseId());
+
+        ItemInterface ii;
         Item item = new Item();
         item.setName(itemForm.getName());
         item.setPrice(itemForm.getPrice());
         item.setAmount(itemForm.getAmount());
         item.setWarehouse(warehouse);
+
+        if(itemForm.getOccasional()){
+            ii = new OccasionalDiscount(item);
+            item.setPrice(ii.getPrice());
+        }
+
+
+
+
+
         itemRepository.save(item);
         return "redirect:/admin/items";
     }

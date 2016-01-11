@@ -35,6 +35,8 @@ public class Account implements java.io.Serializable {
 
 	private String role = "ROLE_USER";
 
+	private Boolean regular;
+
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@OneToMany(mappedBy = "customer")
 	private List<OrderSummary> orderSummaries;
@@ -50,6 +52,7 @@ public class Account implements java.io.Serializable {
 		this.email = email;
 		this.password = password;
 		this.role = role;
+		regular=false;
 	}
 
 	public Long getId() {
@@ -98,5 +101,13 @@ public class Account implements java.io.Serializable {
 
 	public void setWarehouseOperative(WarehouseOperative warehouseOperative) {
 		this.warehouseOperative = warehouseOperative;
+	}
+
+	public Boolean getRegular() {
+		return regular;
+	}
+
+	public void setRegular(Boolean regular) {
+		this.regular = regular;
 	}
 }

@@ -1,5 +1,11 @@
 package com.my.customer;
 
+import com.my.account.Account;
+import com.my.account.UserServiceFacade;
+import com.my.item.Item;
+import com.my.item.ItemInterface;
+import com.my.item.decorator.OccasionalDiscount;
+import com.my.item.decorator.RegularClientDiscount;
 import com.my.item.dto.ItemDto;
 import com.my.item.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +29,40 @@ public class CustomerItemController {
 
     @Autowired
     ItemRepository itemRepository;
+    @Autowired
+    UserServiceFacade userServiceFacade;
 
     @RequestMapping(method = RequestMethod.GET)
     public String viewItems(Model model) {
-        model.addAttribute("items", itemRepository.findAll());
+        Account account = userServiceFacade.getLoggedUser();
+        ItemInterface ii;
+        Iterable<Item> items = itemRepository.findAll();
+
+        if(account.getRegular()){
+            for(Item i : items){
+                ii = new RegularClientDiscount(i);
+                i.setPrice(ii.getPrice());
+            }
+        }
+
+        model.addAttribute("items", items);
         return SHOW_ITEM_VIEW_NAME;
     }
 
     @RequestMapping(value = "/details", method = RequestMethod.GET, params = {"id"})
     public String showDetails(Model model, @RequestParam("id") Long id) {
+        Account account = userServiceFacade.getLoggedUser();
+        ItemInterface ii;
+        Item item = itemRepository.findOne(id);
+        if(account.getRegular()){
+            ii = new RegularClientDiscount(item);
+            item.setPrice(ii.getPrice());
+        }
         if(!model.containsAttribute("cart")) {
             model.addAttribute("cart", new ArrayList<ItemDto>());
         }
         model.addAttribute("itemDto",new ItemDto());
-        model.addAttribute("item", itemRepository.findOne(id));
+        model.addAttribute("item", item);
         return ITEM_DETAILS;
     }
 

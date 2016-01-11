@@ -38,8 +38,11 @@ public class UserServiceFacade implements UserDetailsService {
 	@PostConstruct	
 	protected void initialize() {
 		Account account = new Account("operator", "operator", "ROLE_OPERATIVE");
+		Account regular = new Account("regular","regular", "ROLE_USER");
+		regular.setRegular(true);
 		accountRepository.create(new Account("customer", "demo", "ROLE_USER"));
 		accountRepository.create(new Account("admin", "admin", "ROLE_ADMIN"));
+		accountRepository.create(regular);
 		accountRepository.create(account);
 		account = accountRepository.findByEmail("operator");
 

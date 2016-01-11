@@ -11,7 +11,7 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "ITEM")
-public class Item implements Serializable{
+public class Item implements ItemInterface{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", updatable = false, nullable = false)
@@ -32,12 +32,6 @@ public class Item implements Serializable{
 
     public Item(){}
 
-    public Item(String name, BigDecimal price, Integer amount) {
-        this.name = name;
-        this.price = price;
-        this.amount = amount;
-    }
-
     public Long getId() {
         return id;
     }
@@ -54,6 +48,7 @@ public class Item implements Serializable{
         this.name = name;
     }
 
+    @Override
     public BigDecimal getPrice() {
         return price;
     }

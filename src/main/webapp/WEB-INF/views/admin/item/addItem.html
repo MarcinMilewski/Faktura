@@ -15,31 +15,43 @@
         <fieldset>
             <legend>Add item</legend>
             <div class="form-group">
-                <label for="name" class="col-lg-2 control-label">Name</label>
-                <div class="col-lg-10">
+                <label for="name" class="col-lg-4 control-label">Name</label>
+                <div class="col-lg-6">
                     <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="price" class="col-lg-2 control-label">Price</label>
-                <div class="col-lg-10">
+                <label for="price" class="col-lg-4 control-label">Price</label>
+                <div class="col-lg-6">
                     <input type="text" class="form-control" id="price" placeholder="Price" th:field="*{price}"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="amount" class="col-lg-2 control-label">Amount</label>
-                <div class="col-lg-10">
+                <label for="amount" class="col-lg-4 control-label">Amount</label>
+                <div class="col-lg-6">
                     <input type="text" class="form-control" id="amount" placeholder="Amount" th:field="*{amount}"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="wh" class="col-lg-2 control-label">Warehouse</label>
-                <div class="col-lg-10">
+                <label for="wh" class="col-lg-4 control-label">Warehouse</label>
+                <div class="col-lg-6">
 
                     <select class="form-control" id="wh" th:field="*{warehouseId}">
                         <option th:each="w : ${warehouse}" th:text="${w.name}" th:value="${w.id}"></option>
                     </select>
 
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="occasional" class="col-lg-6 control-label">Occasional discount</label>
+                <div class="col-lg-4">
+                    <input id="occasional" name="occasional" type="checkbox" th:field="*{occasional}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="twoinone" class="col-lg-6 control-label">Two in one</label>
+                <div class="col-lg-4">
+                    <input id="twoinone" name="occasional" type="checkbox" th:field="*{twoinone}"/>
                 </div>
             </div>
             <div class="form-group">

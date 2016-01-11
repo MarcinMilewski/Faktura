@@ -22,6 +22,9 @@ public class ItemForm {
     @NotBlank
     private Long warehouseId;
 
+    private Boolean occasional;
+    private Boolean twoinone;
+
     public String getName() {
         return name;
     }
@@ -46,15 +49,27 @@ public class ItemForm {
         this.amount = amount;
     }
 
-    public Item createItem(){
-        return new Item(name,price,amount);
-    }
-
     public Long getWarehouseId() {
         return warehouseId;
     }
 
     public void setWarehouseId(Long warehouseId) {
         this.warehouseId = warehouseId;
+    }
+
+    public Boolean getOccasional() {
+        return occasional;
+    }
+
+    public void setOccasional(Boolean occasional) {
+        this.occasional = occasional;
+    }
+
+    public Boolean getTwoinone() {
+        return twoinone;
+    }
+
+    public void setTwoinone(Boolean twoinone) {
+        this.twoinone = twoinone;
     }
 }
