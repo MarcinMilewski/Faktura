@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,5 +27,10 @@ public class ItemCart {
 
     public void addToCart(ItemDto itemDto) {
         cart.add(itemDto);
+    }
+
+    @PostConstruct
+    protected void initialize() {
+        cart = new ArrayList<>();
     }
 }

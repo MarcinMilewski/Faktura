@@ -28,11 +28,11 @@
             <fieldset>
                 <legend>Dodaj do koszyka</legend>
                 <div class="form-group">
-                    <input type="text" hidden="true" id="itemId" th:field="*{id}"/>
-                    <input type="text" hidden="true" id="itemName" th:field="*{name}"/>
+                    <input type="text" name="id" id="id" hidden="true" th:value="${item.id}"/>
+                    <input type="text" name="name" id="name" hidden="true" th:value="${item.name}"/>
                     <label for="amount" class="col-lg-2 control-label">Ilosc</label>
                     <div class="col-lg-10">
-                        <input type="text" class="form-control" id="amount" placeholder="Price" th:field="*{amount}"/>
+                        <input type="text" class="form-control" id="amount" placeholder="Amount" th:field="*{amount}"/>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-default">Add</button>
