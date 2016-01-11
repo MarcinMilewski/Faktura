@@ -36,7 +36,7 @@ public class CustomerOrderController {
         Account account = userServiceFacade.getLoggedUser();
         if (account != null) {
             List<OrderComponent> orders = orderRepository.findByCustomerId(account.getId());
-            model.addAttribute("orders");
+            model.addAttribute("orders", orders);
         }
         return "user/order/showAll";
     }

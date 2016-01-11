@@ -11,7 +11,19 @@
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
-   Test
+    <p>Zamowienia.</p>
+    <table class="table">
+    <tr>
+        <th><b>Id</b></th>
+        <th><b>Cena</b></th>
+        <th><b>Status</b></th>
+    </tr>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.id}"></td>
+        <td th:text="${order.price}"></td>
+        <td th:text="TEST"></td>
+    </tr>
+    </table>
 </div>
 </body>
 </html>
