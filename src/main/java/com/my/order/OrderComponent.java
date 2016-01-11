@@ -6,6 +6,7 @@ import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Set;
 
 /**
@@ -33,6 +34,8 @@ public abstract class OrderComponent implements Serializable{
     @OneToOne
     @JoinColumn(name = "orderComponent_id")
     private OrderState state;
+
+    private BigDecimal price;
 
     @Transient
     public boolean isLeaf() {
@@ -81,5 +84,13 @@ public abstract class OrderComponent implements Serializable{
 
     public void setState(OrderState state) {
         this.state = state;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }

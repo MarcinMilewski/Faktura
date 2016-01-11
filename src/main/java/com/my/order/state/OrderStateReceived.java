@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 @Data
 @Entity
 @DiscriminatorValue("RE")
-public class OrderStatusReceived extends OrderState {
+public class OrderStateReceived extends OrderState {
     @Override
     public void cancel() {
 

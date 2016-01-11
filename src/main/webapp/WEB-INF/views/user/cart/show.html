@@ -23,9 +23,11 @@
             <td th:text="${item.amount}"></td>
         </tr>
     </table>
-    <form class="form-narrow form-horizontal" method="post" th:action="@{/user/cart/doOrder}">
+    <div th:if="${not #lists.isEmpty(cart)}">
+        <form class="form-narrow form-horizontal" method="post" th:action="@{/user/cart/doOrder}">
             <button type="submit" class="btn btn-default">Press to make order</button>
-    </form>
+        </form>
+    </div>
 </div>
 </body>
 </html>

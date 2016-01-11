@@ -70,4 +70,24 @@ public class OrderSummary extends OrderComponent{
     public Date getReceivedDate() {
         return receivedDate;
     }
+
+    public void setReceivedDate(Date receivedDate) {
+        this.receivedDate = receivedDate;
+    }
+
+    public void setTotalPrice(Long totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void setCustomer(Account customer) {
+        this.customer = customer;
+    }
+
+    public void setPurchaseDate(Date purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    public void setSendDate(Date sendDate) {
+        this.sendDate = sendDate;
+    }
 }

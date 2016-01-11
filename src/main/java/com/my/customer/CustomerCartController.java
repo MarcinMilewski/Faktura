@@ -1,18 +1,27 @@
 package com.my.customer;
 
+import com.google.common.collect.Sets;
 import com.my.account.Account;
 import com.my.account.UserServiceFacade;
+import com.my.item.Item;
 import com.my.item.cart.ItemCart;
 import com.my.item.repository.ItemRepository;
+import com.my.logger.Log;
+import com.my.order.OrderComponent;
+import com.my.order.OrderItem;
 import com.my.order.OrderSummary;
 import com.my.order.repository.OrderRepository;
+import com.my.order.state.OrderStateIncompleted;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by marcin on 11.01.16.
@@ -20,6 +29,9 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "user/cart")
 public class CustomerCartController {
+    @Log
+    Logger logger;
+
     @Autowired
     private ItemRepository itemRepository;
     @Autowired
@@ -42,9 +54,54 @@ public class CustomerCartController {
 
     @RequestMapping(value = "/doOrder", method = RequestMethod.POST)
     public String doOrder(Model model) {
-        if (itemCart != null) {
-        }
+        Set<Item> items = new HashSet<>();
+        itemCart.getCart().stream().forEach(itemDto -> items.add(itemRepository.findOne(itemDto.getId())));
+
+        Map<Item, Integer> itemAmountMap = items.stream()
+                .map(item ->
+                new AbstractMap.SimpleImmutableEntry<>(
+                        item , itemCart.getCart()
+                        .stream()
+                        .filter(itemDto -> item.getId().equals(itemDto.getId()))
+                        .findFirst().get().getAmount()))
+                        .collect(Collectors.toMap(Map.Entry::getKey ,Map.Entry::getValue));
+
+        Set<OrderComponent> orderComponents = Sets.newHashSet();
+        itemAmountMap.entrySet().stream().forEach(entry -> orderComponents.add(createOrderItem(entry)));
+
+        OrderComponent orderSummary = createOrderSummary(orderComponents);
+// items.stream().
+//        List<OrderComponent> orderComponents = new ArrayList<>();
+//        items.stream().forEach(item -> );
+
+
         return "/user/cart/orderApproved";
+    }
+
+    private OrderSummary createOrderSummary(Set<OrderComponent> orderComponents) {
+        Date date = new Date();
+        Account purchaser = userServiceFacade.getLoggedUser();
+
+        OrderSummary orderSummary = new OrderSummary();
+        orderSummary.setParent(null);
+        orderSummary.setChildren(orderComponents);
+        orderSummary.setState(new OrderStateIncompleted());
+        orderSummary.setPurchaseDate(new Date());
+        orderSummary.setReceivedDate(null);
+        orderSummary.setCustomer(purchaser);
+        orderSummary.setSendDate(null);
+        orderSummary.setTotalPrice(orderComponents.stream().forEach(orderItem -> ););
+    }
+
+    private OrderItem createOrderItem(Map.Entry<Item, Integer> entry) {
+        OrderItem orderItem = new OrderItem();
+        Item item = entry.getKey();
+        Integer amount = entry.getValue();
+        orderItem.setItem(item);
+        orderItem.setAmount(amount);
+        orderItem.setPrice(item.getPrice().multiply(new BigDecimal(amount)));
+        orderItem.setState(new OrderStateIncompleted());
+        return orderItem;
     }
 
 }
