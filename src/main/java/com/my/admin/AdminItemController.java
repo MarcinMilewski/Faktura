@@ -1,7 +1,7 @@
 package com.my.admin;
 
 import com.my.item.Item;
-import com.my.item.controller.ItemForm;
+import com.my.item.form.ItemForm;
 import com.my.item.repository.ItemRepository;
 import com.my.warehouse.Warehouse;
 import com.my.warehouse.WarehouseRepository;
@@ -65,8 +65,7 @@ public class AdminItemController {
 
     @RequestMapping(value="remove", params={"id"})
     public String deleteItem(final HttpServletRequest req) {
-        Item item = new Item();
         itemRepository.delete(itemRepository.findOne(Long.valueOf(req.getParameter("id"))));
-        return "redirect:admin/items/all";
+        return "redirect:/admin/items/all";
     }
 }

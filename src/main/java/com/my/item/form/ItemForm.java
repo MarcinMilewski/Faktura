@@ -1,4 +1,4 @@
-package com.my.item.controller;
+package com.my.item.form;
 
 import com.my.item.Item;
 import org.hibernate.validator.constraints.NotBlank;

@@ -27,7 +27,7 @@
                         </a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_USER')">
-                        <a href="/user/items" th:href="@{/items}">
+                        <a href="/user/items" th:href="@{/user/items}">
                             &nbsp;Przedmioty
                         </a>
                     </li>
@@ -44,19 +44,19 @@
                         </a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a href="/admin/order" th:href="@{/admin/order}">
+                        <a href="/admin/warehouse" th:href="@{/admin/warehouse}">
                             &nbsp;Magazyn
                         </a>
                     </li>
 
                 <!--OPERATOR MAGAZYNU-->
                     <li sec:authorize="hasRole('ROLE_OPERATIVE')">
-                        <a href="/admin/order" th:href="@{/operative/order}">
+                        <a href="/operative/order" th:href="@{/operative/order}">
                             &nbsp;Zamowienia
                         </a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_OPERATIVE')">
-                        <a href="/admin/order" th:href="@{/operative/order}">
+                        <a href="/operative/warehouse" th:href="@{/operative/warehouse}">
                             &nbsp;Magazyn
                         </a>
                     </li>
