@@ -3,6 +3,7 @@ package com.my.customer;
 import com.google.common.collect.Sets;
 import com.my.account.Account;
 import com.my.account.UserServiceFacade;
+import com.my.executor.OrderExecutor;
 import com.my.item.Item;
 import com.my.item.cart.ItemCart;
 import com.my.item.repository.ItemRepository;
@@ -70,8 +71,7 @@ public class CustomerCartController {
         itemAmountMap.entrySet().stream().forEach(entry -> orderComponents.add(createOrderItem(entry)));
 
         OrderComponent orderSummary = createOrderSummary(orderComponents);
-
-        orderRepository.save(orderSummary);
+        OrderExecutor.getInstance().createNewOrder(orderSummary);
 
         itemCart.getCart().clear();
 
@@ -85,7 +85,6 @@ public class CustomerCartController {
         OrderSummary orderSummary = new OrderSummary();
         orderSummary.setParent(null);
         orderSummary.setChildren(orderComponents);
-        orderSummary.setState(new OrderStateIncompleted());
         orderSummary.setPurchaseDate(new Date());
         orderSummary.setReceivedDate(null);
         orderSummary.setCustomer(purchaser);
