@@ -1,6 +1,5 @@
 package com.my.order;
 
-import com.my.account.Account;
 import com.my.order.state.OrderState;
 import com.my.warehouse.operative.WarehouseOperative;
 import org.hibernate.annotations.DiscriminatorOptions;
@@ -52,11 +51,9 @@ public abstract class OrderComponent implements Serializable{
         return (parent == null);
     }
 
-    public abstract void add(OrderComponent orderComponent);
-    public abstract void remove(OrderComponent orderComponent);
     public abstract void cancel();
     public abstract void pay();
-    public abstract void send(Account account);
+    public abstract void send();
 
 
     public Long getId() {

@@ -1,6 +1,5 @@
 package com.my.order;
 
-import com.my.account.Account;
 import com.my.item.Item;
 
 import javax.persistence.DiscriminatorValue;
@@ -30,27 +29,17 @@ public class OrderItem extends OrderComponent  {
 
 
     @Override
-    public void add(OrderComponent orderComponent) {
-
-    }
-
-    @Override
-    public void remove(OrderComponent orderComponent) {
-
-    }
-
-    @Override
     public void cancel() {
 
     }
 
     @Override
     public void pay() {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
-    public void send(Account account) {
+    public void send() {
 
     }
 

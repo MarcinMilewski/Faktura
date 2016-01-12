@@ -25,15 +25,6 @@ public class OrderSummary extends OrderComponent{
 
     private Date receivedDate;
 
-    @Override
-    public void add(OrderComponent orderComponent) {
-
-    }
-
-    @Override
-    public void remove(OrderComponent orderComponent) {
-
-    }
 
     @Override
     public void cancel() {
@@ -46,7 +37,7 @@ public class OrderSummary extends OrderComponent{
     }
 
     @Override
-    public void send(Account account) {
+    public void send() {
 
     }
 

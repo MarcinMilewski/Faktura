@@ -55,6 +55,7 @@ public class OrderExecutor implements Serializable{
     }
 
     public void pay(OrderComponent order) {
+        order.pay();
         assignWarehouseOperatives(order);
     }
 
@@ -66,7 +67,6 @@ public class OrderExecutor implements Serializable{
         OrderState orderStateNew = new OrderStateNew();
         order.setState(orderStateNew);
         orderRepository.save(order);
-        assignWarehouseOperatives(order);
     }
 
     private void assignWarehouseOperatives(OrderComponent order) {
