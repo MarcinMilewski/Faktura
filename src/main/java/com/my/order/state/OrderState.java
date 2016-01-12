@@ -1,7 +1,6 @@
 package com.my.order.state;
 
 import com.my.order.OrderComponent;
-import lombok.Data;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
@@ -10,7 +9,6 @@ import java.io.Serializable;
 /**
  * Created by marcin on 07.01.16.
  */
-@Data
 @Entity
 @Inheritance(
         strategy= InheritanceType.SINGLE_TABLE)
@@ -27,10 +25,33 @@ public abstract class OrderState implements Serializable {
     @JoinColumn(name = "orderComponent_id")
     private OrderComponent orderComponent;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    protected OrderStateType orderStateType;
+
     public abstract void cancel();
 
     public abstract void send();
 
     public abstract void pay();
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public OrderComponent getOrderComponent() {
+        return orderComponent;
+    }
+
+    public void setOrderComponent(OrderComponent orderComponent) {
+        this.orderComponent = orderComponent;
+    }
+
+    public OrderStateType getOrderStateType() {
+        return orderStateType;
+    }
 }

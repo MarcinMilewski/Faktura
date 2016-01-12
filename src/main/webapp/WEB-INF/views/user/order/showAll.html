@@ -16,27 +16,16 @@
     <table class="table" th:each="order : ${orders}">
         <tr>
             <th><b>Id</b></th>
-            <th><b>Cena</b></th>
+            <th><b>Total price</b></th>
             <th><b>Status</b></th>
             <th><b>Details</b></th>
         </tr>
         <tr>
             <td th:text="${order.id}"></td>
             <td th:text="${order.price}"></td>
+            <td th:text="${order.state}"></td>
             <td th:text="TEST"></td>
             <td><a th:href="@{/user/order/details(id=${order.id})}">Details</a></td>
-            <!--<table class="table">
-                <tr>
-                    <th>Name</th>
-                    <th>Amount</th>
-                    <th>Price</th>
-                </tr>
-                <tr th:each="i : ${order.children}">
-                    <td th:text="${i.item.name}"></td>
-                    <td th:text="${i.amount}"></td>
-                    <td th:text="${i.price}"></td>
-                </tr>
-            </table> -->
         </tr>
     </table>
 </div>

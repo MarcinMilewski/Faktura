@@ -1,14 +1,11 @@
 package com.my.order.state;
 
-import lombok.Data;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
  * Created by marcin on 11.01.16.
  */
-@Data
 @Entity
 @DiscriminatorValue("IN")
 public class OrderStateIncompleted extends OrderState {
@@ -25,5 +22,9 @@ public class OrderStateIncompleted extends OrderState {
     @Override
     public void pay() {
 
+    }
+
+    public OrderStateIncompleted() {
+        orderStateType = OrderStateType.INCOMPLETED;
     }
 }

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -62,10 +61,6 @@ public class AdminItemController {
             ii = new OccasionalDiscount(item);
             item.setPrice(ii.getPrice());
         }
-
-
-
-
 
         itemRepository.save(item);
         return "redirect:/admin/items";
