@@ -14,9 +14,8 @@ import com.my.warehouse.operative.WarehouseOperative;
 import com.my.warehouse.operative.WarehouseOperativeRepository;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by marcin on 09.01.16.
@@ -67,6 +66,7 @@ public class OrderExecutor implements Serializable{
         OrderState orderStateNew = new OrderStateNew();
         order.setState(orderStateNew);
         orderRepository.save(order);
+        assignWarehouseOperatives(order);
     }
 
     private void assignWarehouseOperatives(OrderComponent order) {
@@ -86,7 +86,12 @@ public class OrderExecutor implements Serializable{
                 operativeOrderItemMap.get(operative).add(orderItem);
             }
         }
-        warehouseOperativeRepository.save(operativeOrderItemMap.keySet());
+        operativeOrderItemMap.entrySet().stream().forEach(entry ->
+                entry.getValue().stream().forEach(itemOrder -> itemOrder.setWarehouseOperative(entry.getKey())));
+
+        Set<OrderComponent> components = operativeOrderItemMap.values().stream().flatMap(orderComponents -> orderComponents.stream()).collect(Collectors.toSet());
+        orderRepository.save(components);
+        Iterable<WarehouseOperative> lista = warehouseOperativeRepository.findAll();
     }
 
     public void createInvoice(OrderSummary orderSummary) {

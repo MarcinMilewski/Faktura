@@ -33,7 +33,7 @@ public class WarehouseOperative implements Serializable{
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToMany(mappedBy = "warehouseOperative", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "warehouseOperative", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<OrderComponent> orderItems;
 
     public Long getId() {
@@ -74,5 +74,13 @@ public class WarehouseOperative implements Serializable{
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public Set<OrderComponent> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(Set<OrderComponent> orderItems) {
+        this.orderItems = orderItems;
     }
 }
