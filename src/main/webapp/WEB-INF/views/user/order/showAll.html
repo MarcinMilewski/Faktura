@@ -18,7 +18,6 @@
             <th><b>Id</b></th>
             <th><b>Total price</b></th>
             <th><b>Status</b></th>
-            <th><b>Details</b></th>
         </tr>
         <tr>
             <td th:text="${order.id}"></td>
@@ -27,7 +26,6 @@
                 <!--CHW-->
             <!--</div>-->
             <td th:text="${order.state.orderStateType}"></td>
-            <td th:text="TEST"></td>
             <td><a th:href="@{/user/order/details(id=${order.id})}">Details</a></td>
         </tr>
     </table>

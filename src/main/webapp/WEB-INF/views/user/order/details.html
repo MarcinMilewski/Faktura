@@ -11,7 +11,7 @@
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
-    <p>Zamowienia.</p>
+    <p>Zamowienie.</p>
 
     <table class="table">
         <tr>
@@ -22,17 +22,20 @@
         <tr>
             <td th:text="${order.id}"></td>
             <td th:text="${order.price}"></td>
-            <td th:text="TEST"></td>
+            <td th:text="${order.state.orderStateType}"></td>
             <table class="table">
+                <p>Szczegoly zamowienia.</p>
                 <tr>
-                    <th>Name</th>
+                    <th>Item name</th>
                     <th>Amount</th>
                     <th>Price</th>
+                    <th>Status</th>
                 </tr>
                 <tr th:each="i : ${order.children}">
                     <td th:text="${i.item.name}"></td>
                     <td th:text="${i.amount}"></td>
                     <td th:text="${i.price}"></td>
+                    <td th:text="${i.state.orderStateType}"></td>
                 </tr>
             </table>
         </tr>
