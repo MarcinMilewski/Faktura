@@ -65,9 +65,6 @@ public abstract class OrderComponent implements Serializable{
         return children;
     }
 
-//    public void setChildren(Set<OrderComponent> children) {
-//        this.children = children;
-//    }
 
     public void setChildren(Set<OrderComponent> children) {
         if (children != null) {

@@ -73,6 +73,8 @@ public class CustomerCartController {
 
         orderRepository.save(orderSummary);
 
+        itemCart.getCart().clear();
+
         return "/user/cart/orderApproved";
     }
 

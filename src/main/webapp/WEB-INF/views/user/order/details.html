@@ -13,19 +13,17 @@
 <div class="container">
     <p>Zamowienia.</p>
 
-    <table class="table" th:each="order : ${orders}">
+    <table class="table">
         <tr>
             <th><b>Id</b></th>
             <th><b>Cena</b></th>
             <th><b>Status</b></th>
-            <th><b>Details</b></th>
         </tr>
         <tr>
             <td th:text="${order.id}"></td>
             <td th:text="${order.price}"></td>
             <td th:text="TEST"></td>
-            <td><a th:href="@{/user/order/details(id=${order.id})}">Details</a></td>
-            <!--<table class="table">
+            <table class="table">
                 <tr>
                     <th>Name</th>
                     <th>Amount</th>
@@ -36,7 +34,7 @@
                     <td th:text="${i.amount}"></td>
                     <td th:text="${i.price}"></td>
                 </tr>
-            </table> -->
+            </table>
         </tr>
     </table>
 </div>
