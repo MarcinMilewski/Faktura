@@ -1,10 +1,12 @@
 package com.my.warehouse.operative;
 
 import com.my.account.Account;
+import com.my.order.OrderComponent;
 import com.my.warehouse.Warehouse;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by marcin on 07.01.16.
@@ -30,6 +32,9 @@ public class WarehouseOperative implements Serializable{
     @OneToOne
     @JoinColumn(name = "account_id")
     private Account account;
+
+    @OneToMany(mappedBy = "warehouseOperative")
+    private Set<OrderComponent> orderItems;
 
     public Long getId() {
         return id;

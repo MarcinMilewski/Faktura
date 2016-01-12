@@ -2,10 +2,12 @@ package com.my.executor;
 
 import com.my.account.UserServiceFacade;
 import com.my.config.SpringContext;
-import com.my.order.OrderSummary;
 import com.my.order.OrderComponent;
+import com.my.order.OrderSummary;
 import com.my.order.repository.OrderRepository;
 import com.my.order.state.OrderStateIncompleted;
+import com.my.warehouse.operative.WarehouseOperative;
+import com.my.warehouse.operative.WarehouseOperativeRepository;
 
 import java.io.Serializable;
 
@@ -18,6 +20,8 @@ public class OrderExecutor implements Serializable{
     private UserServiceFacade userServiceFacade;
 
     private OrderRepository orderRepository;
+
+    private WarehouseOperativeRepository warehouseOperativeRepository;
 
     private OrderExecutor() {
         userServiceFacade = (UserServiceFacade) SpringContext.getApplicationContext().getBean(UserServiceFacade.class);
@@ -47,7 +51,8 @@ public class OrderExecutor implements Serializable{
 
     }
 
-    public void createNewOrder(OrderComponent order) {
+    public void addNew(OrderComponent order) {
+        WarehouseOperative warehouseOperative = new WarehouseOperative();
         order.setState(new OrderStateIncompleted());
         orderRepository.save(order);
     }

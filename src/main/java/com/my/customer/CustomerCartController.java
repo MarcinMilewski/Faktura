@@ -71,7 +71,7 @@ public class CustomerCartController {
         itemAmountMap.entrySet().stream().forEach(entry -> orderComponents.add(createOrderItem(entry)));
 
         OrderComponent orderSummary = createOrderSummary(orderComponents);
-        OrderExecutor.getInstance().createNewOrder(orderSummary);
+        OrderExecutor.getInstance().addNew(orderSummary);
 
         itemCart.getCart().clear();
 

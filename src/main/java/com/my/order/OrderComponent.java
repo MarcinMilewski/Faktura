@@ -2,6 +2,7 @@ package com.my.order;
 
 import com.my.account.Account;
 import com.my.order.state.OrderState;
+import com.my.warehouse.operative.WarehouseOperative;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
@@ -35,6 +36,10 @@ public abstract class OrderComponent implements Serializable{
     private OrderState state;
 
     private BigDecimal price;
+
+    @ManyToOne
+    @JoinColumn(name = "warehouseOperative_id")
+    private WarehouseOperative warehouseOperative;
 
     @Transient
     public boolean isLeaf() {
@@ -95,5 +100,13 @@ public abstract class OrderComponent implements Serializable{
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public WarehouseOperative getWarehouseOperative() {
+        return warehouseOperative;
+    }
+
+    public void setWarehouseOperative(WarehouseOperative warehouseOperative) {
+        this.warehouseOperative = warehouseOperative;
     }
 }
