@@ -1,5 +1,6 @@
 package com.my.executor;
 
+import com.google.common.collect.Sets;
 import com.my.account.UserServiceFacade;
 import com.my.config.SpringContext;
 import com.my.order.OrderComponent;
@@ -65,7 +66,7 @@ public class OrderExecutor implements Serializable{
         OrderState orderStateNew = new OrderStateNew();
         order.setState(orderStateNew);
         orderRepository.save(order);
-
+        assignWarehouseOperatives(order);
     }
 
     private void assignWarehouseOperatives(OrderComponent order) {
@@ -78,6 +79,10 @@ public class OrderExecutor implements Serializable{
             WarehouseOperative operative = orderItem.getItem().getWarehouse().getWarehouseOperatives().get(0);
 
             if (operativeOrderItemMap.containsKey(operative)) {
+                operativeOrderItemMap.get(operative).add(orderItem);
+            }
+            else {
+                operativeOrderItemMap.put(operative, Sets.newHashSet());
                 operativeOrderItemMap.get(operative).add(orderItem);
             }
         }
