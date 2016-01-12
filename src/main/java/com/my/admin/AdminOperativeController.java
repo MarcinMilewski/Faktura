@@ -74,10 +74,13 @@ public class AdminOperativeController {
         if(account != null && account.getRole().equals("ROLE_ADMIN")){
             Warehouse warehouse = warehouseRepository.findOne(wId);
             WarehouseOperative operative = warehouseOperativeRepository.findOne(oId);
-            List<WarehouseOperative> list = warehouse.getWarehouseOperatives();
+            //List<WarehouseOperative> list = warehouse.getWarehouseOperatives();
             operative.setWarehouse(warehouse);
-            list.add(operative);
-            warehouseRepository.setOperatives(list,wId);
+            //operative.setId(null);
+            //list.add(operative);
+            warehouseOperativeRepository.delete(oId);
+            warehouseOperativeRepository.save(operative);
+            //warehouseRepository.setOperatives(list,wId);
             //warehouseOperativeRepository.setWarehouse(warehouse,oId);
             //warehouseOperativeRepository.setName("zmiana",oId);
             //Warehouse warehouse = warehouseRepository.findOne(wId);
