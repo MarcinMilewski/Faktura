@@ -6,6 +6,7 @@ import com.my.order.OrderComponent;
 import com.my.order.OrderItem;
 import com.my.order.OrderSummary;
 import com.my.order.repository.OrderRepository;
+import com.my.order.state.OrderState;
 import com.my.order.state.OrderStateNew;
 import com.my.warehouse.WarehouseRepository;
 import com.my.warehouse.operative.WarehouseOperative;
@@ -61,7 +62,8 @@ public class OrderExecutor implements Serializable{
     }
 
     public void addNew(OrderComponent order) {
-        order.setState(new OrderStateNew());
+        OrderState orderStateNew = new OrderStateNew();
+        order.setState(orderStateNew);
         orderRepository.save(order);
 
     }

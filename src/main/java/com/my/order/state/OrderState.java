@@ -21,8 +21,7 @@ public abstract class OrderState implements Serializable {
     @Column(name = "ID", updatable = false, nullable = false)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "orderComponent_id")
+    @OneToOne(mappedBy = "state")
     private OrderComponent orderComponent;
 
     @Column

@@ -23,7 +23,10 @@
         <tr>
             <td th:text="${order.id}"></td>
             <td th:text="${order.price}"></td>
-            <td th:text="${order.state}"></td>
+            <!--<div th:if="${order.state.orderStateType}">-->
+                <!--CHW-->
+            <!--</div>-->
+            <td th:text="${order.state.orderStateType}"></td>
             <td th:text="TEST"></td>
             <td><a th:href="@{/user/order/details(id=${order.id})}">Details</a></td>
         </tr>
