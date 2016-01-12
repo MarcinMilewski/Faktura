@@ -88,10 +88,8 @@ public class OrderExecutor implements Serializable{
         }
         operativeOrderItemMap.entrySet().stream().forEach(entry ->
                 entry.getValue().stream().forEach(itemOrder -> itemOrder.setWarehouseOperative(entry.getKey())));
-
         Set<OrderComponent> components = operativeOrderItemMap.values().stream().flatMap(orderComponents -> orderComponents.stream()).collect(Collectors.toSet());
         orderRepository.save(components);
-        Iterable<WarehouseOperative> lista = warehouseOperativeRepository.findAll();
     }
 
     public void createInvoice(OrderSummary orderSummary) {
