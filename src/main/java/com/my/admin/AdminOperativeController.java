@@ -74,30 +74,9 @@ public class AdminOperativeController {
         if(account != null && account.getRole().equals("ROLE_ADMIN")){
             Warehouse warehouse = warehouseRepository.findOne(wId);
             WarehouseOperative operative = warehouseOperativeRepository.findOne(oId);
-            //List<WarehouseOperative> list = warehouse.getWarehouseOperatives();
             operative.setWarehouse(warehouse);
-            //operative.setId(null);
-            //list.add(operative);
-            warehouseOperativeRepository.delete(oId);
-            warehouseOperativeRepository.save(operative);
-            //warehouseRepository.setOperatives(list,wId);
-            //warehouseOperativeRepository.setWarehouse(warehouse,oId);
-            //warehouseOperativeRepository.setName("zmiana",oId);
-            //Warehouse warehouse = warehouseRepository.findOne(wId);
-            //WarehouseOperative operative = warehouseOperativeRepository.findOne(oId);
             //warehouseOperativeRepository.delete(oId);
-            //operative.setId(null);
-            //operative.setWarehouse(warehouse);
-            //warehouseOperativeRepository.save(operative);
-            //warehouseOperativeRepository.setWarehouse(wId,oId);
-            //List<WarehouseOperative> operativeList = warehouse.getWarehouseOperatives();
-            //operativeList.add(operative);
-            //warehouse.setWarehouseOperatives(operativeList);
-            //operative.setWarehouse(warehouse);
-            //operative.setId(null);
-            //warehouseOperativeRepository.delete(wId);
-            //warehouseOperativeRepository.findOne(oId).setWarehouse(warehouse);
-            //warehouseOperativeRepository.setWarehouse(wId,oId);
+            warehouseOperativeRepository.save(operative);
             return SHOW_OPERATIVE_VIEW_NAME;
         }
         return "/";

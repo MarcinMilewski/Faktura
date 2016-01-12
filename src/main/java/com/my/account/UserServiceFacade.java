@@ -67,6 +67,7 @@ public class UserServiceFacade implements UserDetailsService {
 		bezM.setFirstName("Nie");
 		bezM.setLastName("Mam");
 		bezM.setAccount(bez);
+		//bezM.setWarehouse(warehouse);
 		warehouseOperativeRepository.save(bezM);
 
 		Item item = new Item();
