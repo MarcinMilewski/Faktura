@@ -33,7 +33,7 @@ public class WarehouseOperative implements Serializable{
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToMany(mappedBy = "warehouseOperative")
+    @OneToMany(mappedBy = "warehouseOperative", fetch = FetchType.EAGER)
     private Set<OrderComponent> orderItems;
 
     public Long getId() {

@@ -42,11 +42,13 @@ public class UserServiceFacade implements UserDetailsService {
 	protected void initialize() {
 		Account account = new Account("operator", "operator", "ROLE_OPERATIVE");
 		Account regular = new Account("regular","regular", "ROLE_USER");
+		Account bez = new Account("bez","bez", "ROLE_OPERATIVE");
 		regular.setRegular(true);
 		accountRepository.create(new Account("customer", "demo", "ROLE_USER"));
 		accountRepository.create(new Account("admin", "admin", "ROLE_ADMIN"));
 		accountRepository.create(regular);
 		accountRepository.create(account);
+		accountRepository.create(bez);
 		account = accountRepository.findByEmail("operator");
 
 		Warehouse warehouse = new Warehouse();
@@ -60,6 +62,12 @@ public class UserServiceFacade implements UserDetailsService {
 		warehouseOperative.setAccount(account);
 		warehouseOperative.setWarehouse(warehouse);
 		warehouseOperativeRepository.save(warehouseOperative);
+
+		WarehouseOperative bezM = new WarehouseOperative();
+		bezM.setFirstName("Nie");
+		bezM.setLastName("Mam");
+		bezM.setAccount(account);
+		warehouseOperativeRepository.save(bezM);
 
 		Item item = new Item();
 		item.setName("testowy");

@@ -52,6 +52,11 @@
                             &nbsp;Magazyn
                         </a>
                     </li>
+                    <li sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a href="/admin/operative" th:href="@{/admin/operative}">
+                            &nbsp;Magazynierzy
+                        </a>
+                    </li>
 
                 <!--OPERATOR MAGAZYNU-->
                     <li sec:authorize="hasRole('ROLE_OPERATIVE')">

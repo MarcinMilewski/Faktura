@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Warehouses</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th><b>Id</b></th>
+            <th><b>First name</b></th>
+            <th><b>Last name</b></th>
+            <th><b>Details</b></th>
+        </tr>
+        <tr th:each="o : ${operatives}">
+            <td th:text="${o.id}"></td>
+            <td th:text="${o.firstName}"></td>
+            <td th:text="${o.lastName}"></td>
+            <td><a th:href="@{/admin/operative/details(id=${o.id})}">Details</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
