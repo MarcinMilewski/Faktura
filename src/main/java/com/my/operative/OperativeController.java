@@ -4,17 +4,13 @@ package com.my.operative;
  * Created by marcin on 10.01.16.
  */
 
-import com.my.account.Account;
 import com.my.account.UserServiceFacade;
-import com.my.item.repository.ItemRepository;
 import com.my.warehouse.Warehouse;
-import com.my.warehouse.WarehouseRepository;
 import com.my.warehouse.operative.WarehouseOperative;
 import com.my.warehouse.operative.WarehouseOperativeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -34,7 +30,7 @@ public class OperativeController {
         WarehouseOperative warehouseOperative = userServiceFacade.getLoggedUser().getWarehouseOperative();
         Warehouse warehouse = warehouseOperative.getWarehouse();
         mv.addObject("warehouse",warehouse.getName());
-        mv.addObject("items",warehouse.getCommodities());
+        mv.addObject("items",warehouse.getItems());
         return mv;
     }
 }

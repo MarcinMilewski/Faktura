@@ -3,13 +3,18 @@ package com.my.executor;
 import com.my.account.UserServiceFacade;
 import com.my.config.SpringContext;
 import com.my.order.OrderComponent;
+import com.my.order.OrderItem;
 import com.my.order.OrderSummary;
 import com.my.order.repository.OrderRepository;
-import com.my.order.state.OrderStateIncompleted;
+import com.my.order.state.OrderStateNew;
+import com.my.warehouse.WarehouseRepository;
 import com.my.warehouse.operative.WarehouseOperative;
 import com.my.warehouse.operative.WarehouseOperativeRepository;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by marcin on 09.01.16.
@@ -23,9 +28,13 @@ public class OrderExecutor implements Serializable{
 
     private WarehouseOperativeRepository warehouseOperativeRepository;
 
+    private WarehouseRepository warehouseRepository;
+
     private OrderExecutor() {
         userServiceFacade = (UserServiceFacade) SpringContext.getApplicationContext().getBean(UserServiceFacade.class);
         orderRepository = SpringContext.getApplicationContext().getBean(OrderRepository.class);
+        warehouseOperativeRepository = SpringContext.getApplicationContext().getBean(WarehouseOperativeRepository.class);
+        warehouseRepository = SpringContext.getApplicationContext().getBean(WarehouseRepository.class);
     }
 
     public static OrderExecutor getInstance() {
@@ -44,7 +53,7 @@ public class OrderExecutor implements Serializable{
     }
 
     public void pay(OrderComponent order) {
-
+        assignWarehouseOperatives(order);
     }
 
     public void cancel(OrderComponent order) {
@@ -52,9 +61,25 @@ public class OrderExecutor implements Serializable{
     }
 
     public void addNew(OrderComponent order) {
-        WarehouseOperative warehouseOperative = new WarehouseOperative();
-        order.setState(new OrderStateIncompleted());
+        order.setState(new OrderStateNew());
         orderRepository.save(order);
+
+    }
+
+    private void assignWarehouseOperatives(OrderComponent order) {
+        Map<WarehouseOperative, Set<OrderComponent>> operativeOrderItemMap = new HashMap<>();
+
+        Iterable<WarehouseOperative> warehouseOperatives = warehouseOperativeRepository.findAll();
+
+        for (OrderComponent orderComponent : order.getChildren()) {
+            OrderItem orderItem = (OrderItem) orderComponent;
+            WarehouseOperative operative = orderItem.getItem().getWarehouse().getWarehouseOperatives().get(0);
+
+            if (operativeOrderItemMap.containsKey(operative)) {
+                operativeOrderItemMap.get(operative).add(orderItem);
+            }
+        }
+        warehouseOperativeRepository.save(operativeOrderItemMap.keySet());
     }
 
     public void createInvoice(OrderSummary orderSummary) {

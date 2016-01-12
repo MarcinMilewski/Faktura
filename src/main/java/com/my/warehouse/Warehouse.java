@@ -22,7 +22,7 @@ public class Warehouse implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
-    private List<Item> commodities;
+    private List<Item> items;
 
     @OneToMany(mappedBy = "warehouse", fetch = FetchType.EAGER)
     private List<WarehouseOperative> warehouseOperatives;
@@ -43,12 +43,12 @@ public class Warehouse implements Serializable {
         this.name = name;
     }
 
-    public List<Item> getCommodities() {
-        return commodities;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setCommodities(List<Item> commodities) {
-        this.commodities = commodities;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     public List<WarehouseOperative> getWarehouseOperatives() {

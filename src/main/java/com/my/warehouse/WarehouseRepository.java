@@ -9,4 +9,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface WarehouseRepository extends CrudRepository<Warehouse, Long>{
     Warehouse findByName(String name);
+
+
+//    @Query("select w from Warehouse w where :id in (w.items.id)")
+//    Set<Ware> findByItemsId(@Param("ids")Set<Long> ids);
 }
