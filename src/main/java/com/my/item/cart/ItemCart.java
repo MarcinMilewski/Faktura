@@ -26,6 +26,12 @@ public class ItemCart {
     }
 
     public void addToCart(ItemDto itemDto) {
+        for (ItemDto cartItem : cart) {
+            if (cartItem.getId().equals(itemDto.getId())) {
+                cartItem.setAmount(cartItem.getAmount() + itemDto.getAmount());
+                return;
+            }
+        }
         cart.add(itemDto);
     }
 
