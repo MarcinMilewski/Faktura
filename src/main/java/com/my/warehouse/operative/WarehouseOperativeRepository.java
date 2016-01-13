@@ -16,10 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface WarehouseOperativeRepository extends CrudRepository<WarehouseOperative, Long> {
     WarehouseOperative findByFirstName(String firstName);
 
-    //@Modifying
-    //@Query("update WarehouseOperative w set w.warehouse = :warehouse where w.id = :id")
-    //void setWarehouse(@Param("warehouse") Warehouse warehouse, @Param("id") Long id);
-
     @Modifying
     @Query("update WarehouseOperative w set w.firstName = :firstName where w.id = :id")
     void setName(@Param("firstName") String firstName, @Param("id") Long id);

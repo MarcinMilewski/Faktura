@@ -41,6 +41,10 @@ public class OrderSummary extends OrderComponent{
 
     }
 
+    public OrderSummary() {
+        super();
+    }
+
     public Account getCustomer() {
         return customer;
     }

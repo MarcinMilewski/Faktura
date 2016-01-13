@@ -64,7 +64,6 @@ public class OrderExecutor implements Serializable{
 
     public void addNew(OrderComponent order) {
         OrderState orderStateNew = new OrderStateNew();
-        order.setState(orderStateNew);
         orderRepository.save(order);
         assignWarehouseOperatives(order);
     }

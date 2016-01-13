@@ -4,11 +4,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
- * Created by marcin on 11.01.16.
+ * Created by marcin on 07.01.16.
  */
 @Entity
-@DiscriminatorValue("IN")
-public class OrderStateIncompleted extends OrderState {
+@DiscriminatorValue("COMPLETTING")
+public class OrderStateCompletting extends OrderState {
+
     @Override
     public void cancel() {
 
@@ -24,7 +25,7 @@ public class OrderStateIncompleted extends OrderState {
 
     }
 
-    public OrderStateIncompleted() {
-        orderStateType = OrderStateType.INCOMPLETED;
+    public OrderStateCompletting() {
+        orderStateType = OrderStateType.COMPLETED;
     }
 }

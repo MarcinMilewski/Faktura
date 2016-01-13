@@ -12,7 +12,6 @@ import com.my.order.OrderComponent;
 import com.my.order.OrderItem;
 import com.my.order.OrderSummary;
 import com.my.order.repository.OrderRepository;
-import com.my.order.state.OrderStateIncompleted;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -108,7 +107,6 @@ public class CustomerCartController {
         orderItem.setItem(item);
         orderItem.setAmount(amount);
         orderItem.setPrice(item.getPrice().multiply(new BigDecimal(amount)));
-        orderItem.setState(new OrderStateIncompleted());
         return orderItem;
     }
 

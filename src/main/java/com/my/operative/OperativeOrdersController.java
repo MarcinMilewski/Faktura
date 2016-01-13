@@ -2,12 +2,9 @@ package com.my.operative;
 
 import com.my.account.Account;
 import com.my.account.UserServiceFacade;
+import com.my.executor.OrderExecutor;
 import com.my.order.OrderComponent;
-import com.my.order.OrderSummary;
 import com.my.order.repository.OrderRepository;
-import com.my.order.state.OrderState;
-import com.my.order.state.OrderStateCompleted;
-import com.my.order.state.OrderStateSend;
 import com.my.order.state.OrderStateType;
 import com.my.warehouse.operative.WarehouseOperative;
 import com.my.warehouse.operative.WarehouseOperativeRepository;
@@ -18,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,15 +33,20 @@ public class OperativeOrdersController {
     @Autowired
     WarehouseOperativeRepository warehouseOperativeRepository;
 
+    private OrderExecutor orderExecutor;
+
+    @PostConstruct
+    public void initialize() {
+        orderExecutor = OrderExecutor.getInstance();
+    }
+
     @RequestMapping
     public String showOrders(Model model) {
         Account account = userServiceFacade.getLoggedUser();
-
-        if (account != null && account.getRole().equals("ROLE_OPERATIVE")) {
             Long id = account.getWarehouseOperative().getId();
             Set<OrderComponent> orders = account.getWarehouseOperative().getOrderItems();
             model.addAttribute("orders", orders);
-        }
+
 
         return "operative/order/orderList";
     }
@@ -53,7 +54,6 @@ public class OperativeOrdersController {
     @RequestMapping(value = "/details", method = RequestMethod.GET, params = {"id"})
     public String showDetails(Model model, @RequestParam("id") Long id) {
         Account account = userServiceFacade.getLoggedUser();
-        if(account != null && account.getRole().equals("ROLE_OPERATIVE")){
             Boolean paid = false, completed = false, send = false;
             WarehouseOperative operative = account.getWarehouseOperative();
             OrderComponent order = orderRepository.findOne(id);
@@ -70,8 +70,6 @@ public class OperativeOrdersController {
             model.addAttribute("completed",completed);
             model.addAttribute("send",send);
             model.addAttribute("order",order);
-            //order.getParent().getState()
-        }
         return "/operative/order/details";
 
     }
@@ -80,12 +78,10 @@ public class OperativeOrdersController {
     public String completed(Model model, @RequestParam("id") Long id) {
         Boolean completed = true;
         Account account = userServiceFacade.getLoggedUser();
-        if(account != null && account.getRole().equals("ROLE_OPERATIVE")){
             OrderComponent order = orderRepository.findOne(id);
             Set<OrderComponent> orders = order.getParent().getChildren();
             Iterator<OrderComponent> i = orders.iterator();
 
-            order.setState(new OrderStateCompleted());
             orderRepository.save(order);
 
             while(i.hasNext()){
@@ -95,12 +91,8 @@ public class OperativeOrdersController {
             }
             if(completed){
                 OrderComponent summary = order.getParent();
-                summary.setState(new OrderStateCompleted());
                 orderRepository.save(summary);
             }
-
-        }
-
 
         return "/user/order/showAll";
 
@@ -109,11 +101,9 @@ public class OperativeOrdersController {
     @RequestMapping(value = "/send", method = RequestMethod.GET, params = {"id"})
     public String send(Model model, @RequestParam("id") Long id) {
         Account account = userServiceFacade.getLoggedUser();
-        if(account != null && account.getRole().equals("ROLE_OPERATIVE")){
             OrderComponent order = orderRepository.findOne(id).getParent();
-            order.setState(new OrderStateSend());
+            orderExecutor.send(order);
             orderRepository.save(order);
-        }
 
         return "/user/order/showAll";
 

@@ -53,11 +53,11 @@ public class CustomerItemController {
     @RequestMapping(value = "/details", method = RequestMethod.GET, params = {"id"})
     public String showDetails(Model model, @RequestParam("id") Long id) {
         Account account = userServiceFacade.getLoggedUser();
-        ItemInterface ii;
+        ItemInterface itemInterface;
         Item item = itemRepository.findOne(id);
         if(account.getRegular()){
-            ii = new RegularClientDiscount(item);
-            item.setPrice(ii.getPrice());
+            itemInterface = new RegularClientDiscount(item);
+            item.setPrice(itemInterface.getPrice());
         }
         model.addAttribute("itemDto",new ItemDto());
         model.addAttribute("item", item);

@@ -50,4 +50,8 @@ public class OrderItem extends OrderComponent  {
     public void setItem(Item item) {
         this.item = item;
     }
+
+    public OrderItem() {
+        super();
+    }
 }
