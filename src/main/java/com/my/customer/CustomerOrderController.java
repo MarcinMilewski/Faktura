@@ -7,6 +7,8 @@ import com.my.item.repository.ItemRepository;
 import com.my.order.OrderComponent;
 import com.my.order.OrderItem;
 import com.my.order.repository.OrderRepository;
+import com.my.order.state.OrderStatePaid;
+import com.my.order.state.OrderStateType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,12 +51,31 @@ public class CustomerOrderController {
     @RequestMapping(value = "/details", method = RequestMethod.GET, params = {"id"})
     public String showDetails(Model model, @RequestParam("id") Long id) {
         Account account = userServiceFacade.getLoggedUser();
-        if(account != null){
+        if(account != null && account.getRole().equals("ROLE_USER")){
             OrderComponent order = orderRepository.findOne(id);
             model.addAttribute("order",order);
         }
 
         return "/user/order/details";
+
+    }
+
+    @RequestMapping(value = "/pay", method = RequestMethod.GET, params = {"id"})
+    public String pay(Model model, @RequestParam("id") Long id) {
+        Account account = userServiceFacade.getLoggedUser();
+        if(account != null && account.getRole().equals("ROLE_USER")){
+            OrderComponent order = orderRepository.findOne(id);
+            /*tu nie jestem pewien czy kazdy item oznaczac jako paid, jak cos to dziala to sie odkomentuje
+            Set<OrderComponent> orders = order.getChildren();
+            for(OrderComponent o : orders){
+                o.setState(new OrderStatePaid());
+            }
+            */
+            order.setState(new OrderStatePaid());
+            orderRepository.save(order);
+        }
+
+        return "/user/order/showAll";
 
     }
 }

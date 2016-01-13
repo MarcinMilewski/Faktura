@@ -18,6 +18,8 @@
             <th><b>Id</b></th>
             <th><b>Total price</b></th>
             <th><b>Status</b></th>
+            <th><b>Details</b></th>
+            <th></th>
         </tr>
         <tr>
             <td th:text="${order.id}"></td>
@@ -27,6 +29,7 @@
             <!--</div>-->
             <td th:text="${order.state.orderStateType}"></td>
             <td><a th:href="@{/user/order/details(id=${order.id})}">Details</a></td>
+            <td><a th:href="@{/user/order/pay(id=${order.id})}">Pay</a></td>
         </tr>
     </table>
 </div>

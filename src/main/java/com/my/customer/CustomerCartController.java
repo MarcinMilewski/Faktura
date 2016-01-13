@@ -90,7 +90,6 @@ public class CustomerCartController {
         orderSummary.setCustomer(purchaser);
         orderSummary.setSendDate(null);
         orderSummary.setPrice(calculateTotalOrderPrice(orderComponents));
-
         return orderSummary;
     }
 

@@ -11,32 +11,37 @@
 <body>
 <div th:replace="fragments/header :: header">&nbsp;</div>
 <div class="container">
-    <p>Zamowienia.</p>
+    <p>Zamowienie.</p>
 
-    <table class="table" th:each="order : ${orders}">
+    <table class="table">
         <tr>
             <th><b>Id</b></th>
             <th><b>Cena</b></th>
             <th><b>Status</b></th>
-            <th><b>Details</b></th>
+            <th th:if="${completed}"></th>
         </tr>
         <tr>
             <td th:text="${order.id}"></td>
             <td th:text="${order.price}"></td>
             <td th:text="${order.parent.state.orderStateType}"></td>
-            <td><a th:href="@{/operative/orders/details(id=${order.id})}">Details</a></td>
-            <!--<table class="table">
+            <td th:if="${completed}"><a th:href="@{/operative/orders/send(id=${order.id})}">Send</a></td>
+            <table class="table">
+                <p>Szczegoly zamowienia.</p>
                 <tr>
-                    <th>Name</th>
+                    <th>Item name</th>
                     <th>Amount</th>
                     <th>Price</th>
+                    <th>Status</th>
+                    <th></th>
                 </tr>
-                <tr th:each="i : ${order.children}">
+                <tr th:each="i : ${order}">
                     <td th:text="${i.item.name}"></td>
                     <td th:text="${i.amount}"></td>
                     <td th:text="${i.price}"></td>
+                    <td th:text="${i.state.orderStateType}"></td>
+                    <td th:if="${paid}"><a th:href="@{/operative/orders/completed(id=${i.id})}">Completed</a></td>
                 </tr>
-            </table> -->
+            </table>
         </tr>
     </table>
 </div>
