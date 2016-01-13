@@ -1,6 +1,8 @@
 package com.my.order;
 
 import com.my.order.state.OrderState;
+import com.my.sends.CenaWysylki;
+import com.my.sends.SendMethods;
 import com.my.warehouse.operative.WarehouseOperative;
 import org.hibernate.annotations.DiscriminatorOptions;
 
@@ -8,6 +10,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
+
+import static com.my.sends.SendMethods.*;
 
 /**
  * Created by marcin on 06.01.16.
@@ -68,7 +72,6 @@ public abstract class OrderComponent implements Serializable{
         return children;
     }
 
-
     public void setChildren(Set<OrderComponent> children) {
         if (children != null) {
             children.stream().forEach(child -> child.setParent(this));
@@ -106,5 +109,11 @@ public abstract class OrderComponent implements Serializable{
 
     public void setWarehouseOperative(WarehouseOperative warehouseOperative) {
         this.warehouseOperative = warehouseOperative;
+    }
+    // Strategia np. "Polska" "ekonomiczna",2.5,3.5
+    public CenaWysylki getSendPrice(String krajDoKtoregoWysylamy, String metodaWysylki, double CenaEkonomiczna, double CenaEkspresowa ) {
+        SendMethods stry = new SendMethods();
+        CenaWysylki cena = stry.countSendPrice(krajDoKtoregoWysylamy,metodaWysylki,CenaEkonomiczna,CenaEkspresowa);
+        return cena;
     }
 }

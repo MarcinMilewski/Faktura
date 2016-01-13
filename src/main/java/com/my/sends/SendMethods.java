@@ -18,14 +18,17 @@ public class SendMethods  {
         public String ustawStatusWmagazynie();
     }
     public class Osobista implements SendStrategy {
+        @Override
         public double obliczCeneWysylki(String kraj,double cenaEkonomiczna){
             return 0;
         }
+        @Override
         public String ustawStatusWmagazynie(){
             return "osobista";
         }
     }
     public class Ekonomincza implements SendStrategy{
+        @Override
         public double obliczCeneWysylki(String kraj,double cenaEkonomiczna){
             double ret = -1;
             for(int i=0;i<records.size() ;i++){
@@ -36,11 +39,13 @@ public class SendMethods  {
             ret += cenaEkonomiczna;
             return ret;
         }
+        @Override
         public String ustawStatusWmagazynie(){
             return "ekonomiczna";
         }
     }
     public class Ekspresowa implements SendStrategy{
+        @Override
         public double obliczCeneWysylki(String kraj,double cenaEkspresowa){
             double ret = -1;
             for(int i=0;i<records.size() ;i++){
@@ -51,6 +56,7 @@ public class SendMethods  {
             ret += cenaEkspresowa;
             return ret;
         }
+        @Override
         public String ustawStatusWmagazynie(){
             return "ekspresowa";
         }
@@ -58,9 +64,10 @@ public class SendMethods  {
     public class Context{
         private SendStrategy strategy;
         /*
-        WYwolanie w innej klasie
-              Context context = new Context(new obliczCeneWysylki());
+        //WYwolanie w innej klasie
+              Context context = new Context(new Osobista());
                 System.out.println(context.executeStrategy_obliczCeneWysylki("Polska", 2.5));
+              Context context = new Context(new Osobista());
                 System.out.println(context.executeStrategy_ustawStatusWmagazynie());
          */
         public Context(SendStrategy strategy){
@@ -93,5 +100,38 @@ public class SendMethods  {
         public String executeStrategy_ustawStatusWmagazynie(){
             return strategy.ustawStatusWmagazynie();
         }
+    }
+    public CenaWysylki countSendPrice(String krajDoKtoregoWysylamy, String metodaWysylki, double CenaEkonomiczna, double CenaEkspresowa ) {
+        CenaWysylki ret = new CenaWysylki();
+        ret.cena=-1;
+        ret.status="Brak tego rodzaju strategii";
+        if(metodaWysylki=="osobista") {
+            SendMethods.Context context = new SendMethods.Context(new SendMethods.Osobista());
+            ret.cena = context.executeStrategy_obliczCeneWysylki(krajDoKtoregoWysylamy, 0);
+            System.out.println(ret.cena);
+            context = new SendMethods.Context(new SendMethods.Osobista());
+            ret.status = context.executeStrategy_ustawStatusWmagazynie();
+            System.out.println(ret.status);
+            return ret;
+        }
+        if(metodaWysylki=="ekonomiczna") {
+            SendMethods.Context context = new SendMethods.Context(new SendMethods.Ekonomincza());
+            ret.cena = context.executeStrategy_obliczCeneWysylki(krajDoKtoregoWysylamy, CenaEkonomiczna);
+            System.out.println(ret.cena);
+            context = new SendMethods.Context(new SendMethods.Ekonomincza());
+            ret.status = context.executeStrategy_ustawStatusWmagazynie();
+            System.out.println(ret.status);
+            return ret;
+        }
+        if(metodaWysylki=="ekspresowa") {
+            SendMethods.Context context = new SendMethods.Context(new SendMethods.Ekspresowa());
+            ret.cena = context.executeStrategy_obliczCeneWysylki(krajDoKtoregoWysylamy, CenaEkspresowa);
+            System.out.println(ret.cena);
+            context = new SendMethods.Context(new SendMethods.Ekspresowa());
+            ret.status = context.executeStrategy_ustawStatusWmagazynie();
+            System.out.println(ret.status);
+            return ret;
+        }
+        return ret;
     }
 }
