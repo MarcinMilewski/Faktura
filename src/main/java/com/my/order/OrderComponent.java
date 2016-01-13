@@ -1,5 +1,6 @@
 package com.my.order;
 
+import com.my.executor.InvalidStateException;
 import com.my.order.state.OrderState;
 import com.my.order.state.OrderStateNew;
 import com.my.warehouse.operative.WarehouseOperative;
@@ -34,7 +35,7 @@ public abstract class OrderComponent implements Serializable{
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "orderComponent_id")
-    private OrderState state;
+    protected OrderState state;
 
     private BigDecimal price;
 
@@ -52,9 +53,9 @@ public abstract class OrderComponent implements Serializable{
         return (parent == null);
     }
 
-    public abstract void cancel();
-    public abstract void pay();
-    public abstract void send();
+    public abstract void cancel() throws InvalidStateException;
+    public abstract void pay() throws InvalidStateException;
+    public abstract void send() throws InvalidStateException;
 
 
     public Long getId() {
@@ -110,10 +111,4 @@ public abstract class OrderComponent implements Serializable{
         state = new OrderStateNew();
     }
 
-    // Strategia np. "Polska" "ekonomiczna",2.5,3.5
-    public CenaWysylki getSendPrice(String krajDoKtoregoWysylamy, String metodaWysylki, double CenaEkonomiczna, double CenaEkspresowa ) {
-        SendMethods stry = new SendMethods();
-        CenaWysylki cena = stry.countSendPrice(krajDoKtoregoWysylamy,metodaWysylki,CenaEkonomiczna,CenaEkspresowa);
-        return cena;
-    }
 }
