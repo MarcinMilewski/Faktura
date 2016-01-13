@@ -2,6 +2,7 @@ package com.my.customer;
 
 import com.my.account.Account;
 import com.my.account.UserServiceFacade;
+import com.my.executor.IncorrectOperationException;
 import com.my.executor.InvalidStateException;
 import com.my.executor.OrderExecutor;
 import com.my.item.cart.ItemCart;
@@ -69,8 +70,24 @@ public class CustomerOrderController {
             orderExecutor.pay(order);
         } catch (InvalidStateException e) {
             e.printStackTrace();
+        } catch (IncorrectOperationException e) {
+            e.printStackTrace();
         }
         return "/user/order/showAll";
+    }
 
+    @RequestMapping(value = "/cancel", method = RequestMethod.GET, params = {"id"})
+    public String cancel(Model model, @RequestParam("id") Long id) {
+        Account account = userServiceFacade.getLoggedUser();
+        OrderComponent order = orderRepository.findOne(id);
+        try {
+            orderExecutor.cancel(order);
+        } catch (InvalidStateException e) {
+            e.printStackTrace();
+        } catch (IncorrectOperationException e) {
+            e.printStackTrace();
+        }
+
+        return "/user/order/showAll";
     }
 }

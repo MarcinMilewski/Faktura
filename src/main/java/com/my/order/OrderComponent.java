@@ -1,5 +1,6 @@
 package com.my.order;
 
+import com.my.executor.IncorrectOperationException;
 import com.my.executor.InvalidStateException;
 import com.my.order.state.OrderState;
 import com.my.order.state.OrderStateNew;
@@ -53,9 +54,9 @@ public abstract class OrderComponent implements Serializable{
         return (parent == null);
     }
 
-    public abstract void cancel() throws InvalidStateException;
-    public abstract void pay() throws InvalidStateException;
-    public abstract void send() throws InvalidStateException;
+    public abstract void cancel() throws InvalidStateException, IncorrectOperationException;
+    public abstract void pay() throws InvalidStateException, IncorrectOperationException;
+    public abstract void send() throws InvalidStateException,IncorrectOperationException;
 
 
     public Long getId() {

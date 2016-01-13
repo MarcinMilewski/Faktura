@@ -1,8 +1,11 @@
 package com.my.order;
 
 import com.my.account.Account;
+import com.my.executor.IncorrectOperationException;
 import com.my.executor.InvalidStateException;
+import com.my.order.state.OrderStateCancelled;
 import com.my.order.state.OrderStatePaid;
+import com.my.order.state.OrderStateSend;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -29,19 +32,21 @@ public class OrderSummary extends OrderComponent{
 
 
     @Override
-    public void cancel() throws InvalidStateException {
-
+    public void cancel() throws InvalidStateException, IncorrectOperationException {
+            getState().cancel();
+            state = new OrderStateCancelled();
     }
 
     @Override
-    public void pay() throws InvalidStateException  {
-        getState().pay();
-        state = new OrderStatePaid();
+    public void pay() throws InvalidStateException, IncorrectOperationException  {
+            getState().pay();
+            state = new OrderStatePaid();
     }
 
     @Override
-    public void send() throws InvalidStateException {
-
+    public void send() throws InvalidStateException, IncorrectOperationException {
+            getState().send();
+            state = new OrderStateSend();
     }
 
     public OrderSummary() {

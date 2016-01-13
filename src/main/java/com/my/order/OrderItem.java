@@ -1,5 +1,6 @@
 package com.my.order;
 
+import com.my.executor.IncorrectOperationException;
 import com.my.executor.InvalidStateException;
 import com.my.item.Item;
 
@@ -30,18 +31,18 @@ public class OrderItem extends OrderComponent  {
 
 
     @Override
-    public void cancel() throws InvalidStateException {
-
+    public void cancel() throws InvalidStateException, IncorrectOperationException {
+        state.cancel();
     }
 
     @Override
-    public void pay() throws InvalidStateException {
-        throw new InvalidStateException();
+    public void pay() throws InvalidStateException, IncorrectOperationException {
+        throw new IncorrectOperationException();
     }
 
     @Override
-    public void send() throws InvalidStateException {
-
+    public void send() throws InvalidStateException, IncorrectOperationException {
+        throw new IncorrectOperationException();
     }
 
     public Item getItem() {

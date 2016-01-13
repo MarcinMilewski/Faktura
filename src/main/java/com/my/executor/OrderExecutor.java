@@ -51,19 +51,21 @@ public class OrderExecutor implements Serializable{
 
     }
 
-    public void send(OrderComponent order) throws InvalidStateException {
+    public void send(OrderComponent order) throws InvalidStateException, IncorrectOperationException {
         order.send();
         orderRepository.save(order);
     }
 
-    public void pay(OrderComponent order) throws InvalidStateException {
+    public void pay(OrderComponent order) throws InvalidStateException, IncorrectOperationException {
         order.pay();
         assignWarehouseOperatives(order);
+        //TODO generacja faktury
         orderRepository.save(order);
     }
 
-    public void cancel(OrderComponent order) throws InvalidStateException {
+    public void cancel(OrderComponent order) throws InvalidStateException, IncorrectOperationException {
         order.cancel();
+        //TODO unassign warehousesOperatives
         orderRepository.save(order);
     }
 

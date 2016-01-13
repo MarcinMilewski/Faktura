@@ -2,6 +2,7 @@ package com.my.operative;
 
 import com.my.account.Account;
 import com.my.account.UserServiceFacade;
+import com.my.executor.IncorrectOperationException;
 import com.my.executor.InvalidStateException;
 import com.my.executor.OrderExecutor;
 import com.my.order.OrderComponent;
@@ -106,6 +107,8 @@ public class OperativeOrdersController {
         try {
             orderExecutor.send(order);
         } catch (InvalidStateException e) {
+            e.printStackTrace();
+        } catch (IncorrectOperationException e) {
             e.printStackTrace();
         }
         return "/user/order/showAll";

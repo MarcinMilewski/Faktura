@@ -1,5 +1,6 @@
 package com.my.order.state;
 
+import com.my.executor.InvalidStateException;
 import com.my.order.OrderComponent;
 import org.hibernate.annotations.DiscriminatorOptions;
 
@@ -28,11 +29,11 @@ public abstract class OrderState implements Serializable {
     @Enumerated(EnumType.STRING)
     protected OrderStateType orderStateType;
 
-    public abstract void cancel() throws UnsupportedOperationException;
+    public abstract void cancel() throws InvalidStateException;
 
-    public abstract void send() throws UnsupportedOperationException;
+    public abstract void send() throws InvalidStateException;
 
-    public abstract void pay() throws UnsupportedOperationException;
+    public abstract void pay() throws InvalidStateException;
 
     public Long getId() {
         return id;

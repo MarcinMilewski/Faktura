@@ -1,5 +1,7 @@
 package com.my.order.state;
 
+import com.my.executor.InvalidStateException;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -14,18 +16,19 @@ public class OrderStateNew extends OrderState {
         orderStateType = OrderStateType.NEW;
     }
 
+
     @Override
-    public void cancel() throws UnsupportedOperationException {
+    public void cancel() throws InvalidStateException {
 
     }
 
     @Override
-    public void send() throws UnsupportedOperationException {
+    public void send() throws InvalidStateException {
 
     }
 
     @Override
-    public void pay() throws UnsupportedOperationException {
+    public void pay() throws InvalidStateException {
 
     }
 }
