@@ -19,16 +19,17 @@ public class OrderStatePaid extends OrderState {
 
     @Override
     public void cancel() throws InvalidStateException {
-
+        throw new InvalidStateException("Cannot cancel paid order");
     }
 
     @Override
     public void send() throws InvalidStateException {
-
+        throw new InvalidStateException("Paid order cannot be send, before completed");
     }
 
     @Override
     public void pay() throws InvalidStateException {
+        throw new InvalidStateException("Paid cannot be paid second time");
 
     }
 }

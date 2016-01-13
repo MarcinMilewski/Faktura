@@ -24,7 +24,7 @@ public class OrderStateNew extends OrderState {
 
     @Override
     public void send() throws InvalidStateException {
-
+        throw new InvalidStateException("New order canont be sent");
     }
 
     @Override

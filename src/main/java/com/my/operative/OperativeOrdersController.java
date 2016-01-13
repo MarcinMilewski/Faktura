@@ -5,11 +5,13 @@ import com.my.account.UserServiceFacade;
 import com.my.executor.IncorrectOperationException;
 import com.my.executor.InvalidStateException;
 import com.my.executor.OrderExecutor;
+import com.my.logger.Log;
 import com.my.order.OrderComponent;
 import com.my.order.repository.OrderRepository;
 import com.my.order.state.OrderStateType;
 import com.my.warehouse.operative.WarehouseOperative;
 import com.my.warehouse.operative.WarehouseOperativeRepository;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -28,6 +29,8 @@ import java.util.Set;
 @RequestMapping("/operative/orders")
 public class OperativeOrdersController {
 
+    @Log
+    Logger logger;
     @Autowired
     UserServiceFacade userServiceFacade;
     @Autowired
@@ -78,34 +81,12 @@ public class OperativeOrdersController {
 
     @RequestMapping(value = "/completed", method = RequestMethod.GET, params = {"id"})
     public String completed(Model model, @RequestParam("id") Long id) {
-        Boolean completed = true;
-        Account account = userServiceFacade.getLoggedUser();
-            OrderComponent order = orderRepository.findOne(id);
-            Set<OrderComponent> orders = order.getParent().getChildren();
-            Iterator<OrderComponent> i = orders.iterator();
-
-            orderRepository.save(order);
-
-            while(i.hasNext()){
-                if(!i.next().getState().getOrderStateType().equals(OrderStateType.COMPLETED)){
-                    completed = false;
-                }
-            }
-            if(completed){
-                OrderComponent summary = order.getParent();
-                orderRepository.save(summary);
-            }
-
-        return "/user/order/showAll";
-
-    }
-
-    @RequestMapping(value = "/send", method = RequestMethod.GET, params = {"id"})
-    public String send(Model model, @RequestParam("id") Long id) {
         Account account = userServiceFacade.getLoggedUser();
             OrderComponent order = orderRepository.findOne(id).getParent();
         try {
+            //TODO notify observer
             orderExecutor.send(order);
+            //logger.debug("orderComponent completed " + id);
         } catch (InvalidStateException e) {
             e.printStackTrace();
         } catch (IncorrectOperationException e) {

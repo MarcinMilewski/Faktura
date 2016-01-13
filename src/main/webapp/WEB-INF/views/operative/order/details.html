@@ -24,7 +24,7 @@
             <td th:text="${order.id}"></td>
             <td th:text="${order.price}"></td>
             <td th:text="${order.parent.state.orderStateType}"></td>
-            <td th:if="${completed}"><a th:href="@{/operative/orders/send(id=${order.id})}">Send</a></td>
+            <td th:if="${completed}"><a th:href="@{/operative/orders/complete(id=${order.id})}">Send</a></td>
             <table class="table">
                 <p>Szczegoly zamowienia.</p>
                 <tr>

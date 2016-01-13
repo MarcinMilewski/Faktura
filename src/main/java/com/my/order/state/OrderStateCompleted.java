@@ -18,6 +18,7 @@ public class OrderStateCompleted extends OrderState {
 
     @Override
     public void cancel() throws InvalidStateException {
+        throw new InvalidStateException();
 
     }
 
@@ -28,6 +29,7 @@ public class OrderStateCompleted extends OrderState {
 
     @Override
     public void pay() throws InvalidStateException {
+        throw new InvalidStateException();
 
     }
 }

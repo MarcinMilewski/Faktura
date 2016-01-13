@@ -18,16 +18,19 @@ public class OrderStateSend extends OrderState {
 
     @Override
     public void cancel() throws InvalidStateException {
+        throw new InvalidStateException();
 
     }
 
     @Override
     public void send() throws InvalidStateException {
+        throw new InvalidStateException();
 
     }
 
     @Override
     public void pay() throws InvalidStateException {
+        throw new InvalidStateException();
 
     }
 }
