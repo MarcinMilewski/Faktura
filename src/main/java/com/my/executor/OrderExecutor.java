@@ -14,7 +14,9 @@ import com.my.warehouse.operative.WarehouseOperative;
 import com.my.warehouse.operative.WarehouseOperativeRepository;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -49,23 +51,25 @@ public class OrderExecutor implements Serializable{
 
     }
 
-    public void send(OrderComponent order) {
-
+    public void send(OrderComponent order) throws InvalidStateException {
+        order.send();
+        orderRepository.save(order);
     }
 
-    public void pay(OrderComponent order) {
+    public void pay(OrderComponent order) throws InvalidStateException {
         order.pay();
         assignWarehouseOperatives(order);
+        orderRepository.save(order);
     }
 
-    public void cancel(OrderComponent order) {
-
+    public void cancel(OrderComponent order) throws InvalidStateException {
+        order.cancel();
+        orderRepository.save(order);
     }
 
     public void addNew(OrderComponent order) {
         OrderState orderStateNew = new OrderStateNew();
         orderRepository.save(order);
-        assignWarehouseOperatives(order);
     }
 
     private void assignWarehouseOperatives(OrderComponent order) {

@@ -9,22 +9,23 @@ import javax.persistence.Entity;
 @Entity
 @DiscriminatorValue("SE")
 public class OrderStateSend extends OrderState {
-    @Override
-    public void cancel() {
-
-    }
-
-    @Override
-    public void send() {
-
-    }
-
-    @Override
-    public void pay() {
-
-    }
 
     public OrderStateSend() {
         orderStateType = OrderStateType.SEND;
+    }
+
+    @Override
+    public void cancel() throws UnsupportedOperationException {
+
+    }
+
+    @Override
+    public void send() throws UnsupportedOperationException {
+
+    }
+
+    @Override
+    public void pay() throws UnsupportedOperationException {
+
     }
 }

@@ -1,6 +1,7 @@
 package com.my.order;
 
 import com.my.order.state.OrderState;
+import com.my.order.state.OrderStateNew;
 import com.my.warehouse.operative.WarehouseOperative;
 import org.hibernate.annotations.DiscriminatorOptions;
 
@@ -86,10 +87,6 @@ public abstract class OrderComponent implements Serializable{
 
     public OrderState getState() {
         return state;
-    }
-
-    public void setState(OrderState state) {
-        this.state = state;
     }
 
     public BigDecimal getPrice() {

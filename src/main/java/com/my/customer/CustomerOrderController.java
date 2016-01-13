@@ -2,6 +2,7 @@ package com.my.customer;
 
 import com.my.account.Account;
 import com.my.account.UserServiceFacade;
+import com.my.executor.InvalidStateException;
 import com.my.executor.OrderExecutor;
 import com.my.item.cart.ItemCart;
 import com.my.item.repository.ItemRepository;
@@ -44,8 +45,8 @@ public class CustomerOrderController {
         model.addAttribute("cart", itemCart.getCart());
         Account account = userServiceFacade.getLoggedUser();
 
-            List<OrderComponent> orders = orderRepository.findByCustomerId(account.getId());
-            model.addAttribute("orders", orders);
+        List<OrderComponent> orders = orderRepository.findByCustomerId(account.getId());
+        model.addAttribute("orders", orders);
 
         return "user/order/showAll";
     }
@@ -64,9 +65,11 @@ public class CustomerOrderController {
     public String pay(Model model, @RequestParam("id") Long id) {
         Account account = userServiceFacade.getLoggedUser();
             OrderComponent order = orderRepository.findOne(id);
+        try {
             orderExecutor.pay(order);
-            orderRepository.save(order);
-
+        } catch (InvalidStateException e) {
+            e.printStackTrace();
+        }
         return "/user/order/showAll";
 
     }

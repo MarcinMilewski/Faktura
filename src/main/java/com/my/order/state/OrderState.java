@@ -28,11 +28,11 @@ public abstract class OrderState implements Serializable {
     @Enumerated(EnumType.STRING)
     protected OrderStateType orderStateType;
 
-    public abstract void cancel();
+    public abstract void cancel() throws UnsupportedOperationException;
 
-    public abstract void send();
+    public abstract void send() throws UnsupportedOperationException;
 
-    public abstract void pay();
+    public abstract void pay() throws UnsupportedOperationException;
 
     public Long getId() {
         return id;

@@ -1,5 +1,6 @@
 package com.my.order;
 
+import com.my.executor.InvalidStateException;
 import com.my.item.Item;
 
 import javax.persistence.DiscriminatorValue;
@@ -29,17 +30,17 @@ public class OrderItem extends OrderComponent  {
 
 
     @Override
-    public void cancel() {
+    public void cancel() throws InvalidStateException {
 
     }
 
     @Override
-    public void pay() {
-        throw new UnsupportedOperationException();
+    public void pay() throws InvalidStateException {
+        throw new InvalidStateException();
     }
 
     @Override
-    public void send() {
+    public void send() throws InvalidStateException {
 
     }
 

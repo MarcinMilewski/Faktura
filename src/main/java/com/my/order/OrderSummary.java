@@ -1,6 +1,8 @@
 package com.my.order;
 
 import com.my.account.Account;
+import com.my.executor.InvalidStateException;
+import com.my.order.state.OrderStatePaid;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -27,17 +29,18 @@ public class OrderSummary extends OrderComponent{
 
 
     @Override
-    public void cancel() {
+    public void cancel() throws InvalidStateException {
 
     }
 
     @Override
-    public void pay() {
-
+    public void pay() throws InvalidStateException  {
+        getState().pay();
+        state = new OrderStatePaid();
     }
 
     @Override
-    public void send() {
+    public void send() throws InvalidStateException {
 
     }
 

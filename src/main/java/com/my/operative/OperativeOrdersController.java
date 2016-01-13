@@ -2,6 +2,7 @@ package com.my.operative;
 
 import com.my.account.Account;
 import com.my.account.UserServiceFacade;
+import com.my.executor.InvalidStateException;
 import com.my.executor.OrderExecutor;
 import com.my.order.OrderComponent;
 import com.my.order.repository.OrderRepository;
@@ -102,9 +103,11 @@ public class OperativeOrdersController {
     public String send(Model model, @RequestParam("id") Long id) {
         Account account = userServiceFacade.getLoggedUser();
             OrderComponent order = orderRepository.findOne(id).getParent();
+        try {
             orderExecutor.send(order);
-            orderRepository.save(order);
-
+        } catch (InvalidStateException e) {
+            e.printStackTrace();
+        }
         return "/user/order/showAll";
 
     }
