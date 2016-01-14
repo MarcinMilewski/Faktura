@@ -13,18 +13,24 @@
 <div class="container">
     <p>Zamowienia.</p>
 
-    <table class="table" th:each="order : ${orders}">
+    <table class="table" >
         <tr>
-            <th><b>Id</b></th>
-            <th><b>Cena</b></th>
+            <th><b>Order ID</b></th>
+            <th><b>Name</b></th>
+            <th><b>Amount</b></th>
+            <th><b>Price</b></th>
             <th><b>Status</b></th>
-            <th><b>Details</b></th>
+            <td></td>
+            <td></td>
         </tr>
-        <tr>
-            <td th:text="${order.id}"></td>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.parent.id}"></td>
+            <td th:text="${order.item.name}"></td>
+            <td th:text="${order.amount}"></td>
             <td th:text="${order.price}"></td>
-            <td th:text="${order.parent.state.orderStateType}"></td>
-            <td><a th:href="@{/operative/orders/details(id=${order.id})}">Details</a></td>
+            <td th:text="${order.state.orderStateType}"></td>
+            <td th:if="${order.parent.state.orderStateType == T(com.my.order.state.OrderStateType).PAID}"><a th:href="@{/operative/orders/completed(id=${order.id})}">Complete</a></td>
+            <td><a th:href="@{/operative/orders/details(id=${order.id})}">Cancel</a></td>
             <!--<table class="table">
                 <tr>
                     <th>Name</th>
