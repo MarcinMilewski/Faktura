@@ -2,8 +2,6 @@ package com.my.order;
 
 import com.my.executor.IncorrectOperationException;
 import com.my.executor.InvalidStateException;
-import com.my.order.state.OrderState;
-import com.my.order.state.OrderStateNew;
 import com.my.warehouse.operative.WarehouseOperative;
 import org.hibernate.annotations.DiscriminatorOptions;
 
@@ -57,6 +55,7 @@ public abstract class OrderComponent implements Serializable{
     public abstract void cancel() throws InvalidStateException, IncorrectOperationException;
     public abstract void pay() throws InvalidStateException, IncorrectOperationException;
     public abstract void send() throws InvalidStateException,IncorrectOperationException;
+    public abstract void complete() throws InvalidStateException,IncorrectOperationException;
 
 
     public Long getId() {
@@ -70,7 +69,6 @@ public abstract class OrderComponent implements Serializable{
     public Set<OrderComponent> getChildren() {
         return children;
     }
-
 
     public void setChildren(Set<OrderComponent> children) {
         if (children != null) {
@@ -107,9 +105,11 @@ public abstract class OrderComponent implements Serializable{
         this.warehouseOperative = warehouseOperative;
     }
 
-
     public OrderComponent() {
         state = new OrderStateNew();
     }
 
+    void setState(OrderState state) {
+        this.state = state;
+    }
 }

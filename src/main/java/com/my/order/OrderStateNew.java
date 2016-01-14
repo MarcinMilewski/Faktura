@@ -1,4 +1,4 @@
-package com.my.order.state;
+package com.my.order;
 
 import com.my.executor.InvalidStateException;
 
@@ -19,7 +19,7 @@ public class OrderStateNew extends OrderState {
 
     @Override
     public void cancel() throws InvalidStateException {
-
+        getOrderComponent().setState(new OrderStateCancelled());
     }
 
     @Override
@@ -29,6 +29,12 @@ public class OrderStateNew extends OrderState {
 
     @Override
     public void pay() throws InvalidStateException {
+        getOrderComponent().setState(new OrderStateCompletting());
 
+    }
+
+    @Override
+    public void complete() throws InvalidStateException {
+        throw new InvalidStateException();
     }
 }

@@ -1,8 +1,12 @@
 package com.my.warehouse.operative;
 
 import com.my.account.Account;
+import com.my.executor.OrderExecutor;
+import com.my.executor.OrderUpdateException;
 import com.my.order.OrderComponent;
 import com.my.warehouse.Warehouse;
+import com.my.warehouse.observer.WarehouseOperativeObserved;
+import com.my.warehouse.observer.WarehouseOperativeObserver;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +17,11 @@ import java.util.Set;
  */
 @Entity
 @Table(name="WAREHOUSE_OPERATOR")
-public class WarehouseOperative implements Serializable{
+public class WarehouseOperative implements Serializable, WarehouseOperativeObserved{
+
+    @Transient
+    private WarehouseOperativeObserver observer = null;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", updatable = false, nullable = false)
@@ -82,5 +90,23 @@ public class WarehouseOperative implements Serializable{
 
     public void setOrderItems(Set<OrderComponent> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    @Override
+    public void registerObserver(WarehouseOperativeObserver warehouseOperativeObserver) {
+        observer = warehouseOperativeObserver;
+    }
+
+    @Override
+    public void unregisterObserver(WarehouseOperativeObserver warehouseOperativeObserver) {
+        if (observer.equals(warehouseOperativeObserver)) {
+            observer = null;
+        }
+    }
+
+    @Override
+    public void updateOrder(OrderComponent orderComponent) throws OrderUpdateException {
+        observer = OrderExecutor.getInstance();
+        observer.updateOrder(orderComponent);
     }
 }

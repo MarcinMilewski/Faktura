@@ -1,7 +1,6 @@
-package com.my.order.state;
+package com.my.order;
 
 import com.my.executor.InvalidStateException;
-import com.my.order.OrderComponent;
 import org.hibernate.annotations.DiscriminatorOptions;
 
 import javax.persistence.*;
@@ -34,6 +33,8 @@ public abstract class OrderState implements Serializable {
     public abstract void send() throws InvalidStateException;
 
     public abstract void pay() throws InvalidStateException;
+
+    public abstract void complete() throws InvalidStateException;
 
     public Long getId() {
         return id;

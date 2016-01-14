@@ -2,13 +2,11 @@ package com.my.operative;
 
 import com.my.account.Account;
 import com.my.account.UserServiceFacade;
-import com.my.executor.IncorrectOperationException;
-import com.my.executor.InvalidStateException;
 import com.my.executor.OrderExecutor;
 import com.my.logger.Log;
 import com.my.order.OrderComponent;
 import com.my.order.repository.OrderRepository;
-import com.my.order.state.OrderStateType;
+import com.my.order.OrderStateType;
 import com.my.warehouse.operative.WarehouseOperative;
 import com.my.warehouse.operative.WarehouseOperativeRepository;
 import org.slf4j.Logger;
@@ -62,7 +60,7 @@ public class OperativeOrdersController {
             Boolean paid = false, completed = false, send = false;
             WarehouseOperative operative = account.getWarehouseOperative();
             OrderComponent order = orderRepository.findOne(id);
-            if(order.getParent().getState().getOrderStateType().equals(OrderStateType.PAID) && !order.getState().getOrderStateType().equals(OrderStateType.COMPLETED)){
+            if(order.getParent().getState().getOrderStateType().equals(OrderStateType.COMPLETTING) && !order.getState().getOrderStateType().equals(OrderStateType.COMPLETED)){
                 paid = true;
             }
             if(order.getParent().getState().getOrderStateType().equals(OrderStateType.COMPLETED)){
@@ -82,14 +80,10 @@ public class OperativeOrdersController {
     @RequestMapping(value = "/completed", method = RequestMethod.GET, params = {"id"})
     public String completed(Model model, @RequestParam("id") Long id) {
         Account account = userServiceFacade.getLoggedUser();
-            OrderComponent order = orderRepository.findOne(id).getParent();
+        OrderComponent order = orderRepository.findOne(id).getParent();
         try {
-            //TODO notify observer
-            orderExecutor.send(order);
-            //logger.debug("orderComponent completed " + id);
-        } catch (InvalidStateException e) {
-            e.printStackTrace();
-        } catch (IncorrectOperationException e) {
+            account.getWarehouseOperative().updateOrder(order);
+        } catch (com.my.executor.OrderUpdateException e) {
             e.printStackTrace();
         }
         return "/user/order/showAll";

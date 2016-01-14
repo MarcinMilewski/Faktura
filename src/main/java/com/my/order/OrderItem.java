@@ -33,16 +33,23 @@ public class OrderItem extends OrderComponent  {
     @Override
     public void cancel() throws InvalidStateException, IncorrectOperationException {
         state.cancel();
+        state = new OrderStateCancelled();
     }
 
     @Override
     public void pay() throws InvalidStateException, IncorrectOperationException {
-        throw new IncorrectOperationException();
+        state.pay();
     }
+
 
     @Override
     public void send() throws InvalidStateException, IncorrectOperationException {
-        throw new IncorrectOperationException();
+        state.send();
+    }
+
+    @Override
+    public void complete() throws InvalidStateException, IncorrectOperationException {
+        state.complete();
     }
 
     public Item getItem() {

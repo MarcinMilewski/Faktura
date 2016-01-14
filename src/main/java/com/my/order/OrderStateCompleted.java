@@ -1,4 +1,4 @@
-package com.my.order.state;
+package com.my.order;
 
 import com.my.executor.InvalidStateException;
 
@@ -9,13 +9,12 @@ import javax.persistence.Entity;
  * Created by marcin on 07.01.16.
  */
 @Entity
-@DiscriminatorValue("COMPLETTING")
-public class OrderStateCompletting extends OrderState {
-
-    public OrderStateCompletting() {
+@DiscriminatorValue("CO")
+public class OrderStateCompleted extends OrderState {
+    
+    public OrderStateCompleted() {
         orderStateType = OrderStateType.COMPLETED;
     }
-
 
     @Override
     public void cancel() throws InvalidStateException {
@@ -25,13 +24,17 @@ public class OrderStateCompletting extends OrderState {
 
     @Override
     public void send() throws InvalidStateException {
-        throw new InvalidStateException();
-
+        getOrderComponent().setState(new OrderStateSend());
     }
 
     @Override
     public void pay() throws InvalidStateException {
         throw new InvalidStateException();
 
+    }
+
+    @Override
+    public void complete() throws InvalidStateException {
+        throw new InvalidStateException();
     }
 }

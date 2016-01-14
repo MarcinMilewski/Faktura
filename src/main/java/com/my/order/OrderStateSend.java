@@ -1,4 +1,4 @@
-package com.my.order.state;
+package com.my.order;
 
 import com.my.executor.InvalidStateException;
 
@@ -32,5 +32,10 @@ public class OrderStateSend extends OrderState {
     public void pay() throws InvalidStateException {
         throw new InvalidStateException();
 
+    }
+
+    @Override
+    public void complete() throws InvalidStateException {
+        throw new InvalidStateException();
     }
 }
