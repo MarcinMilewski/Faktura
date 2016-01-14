@@ -107,9 +107,11 @@ public abstract class OrderComponent implements Serializable{
 
     public OrderComponent() {
         state = new OrderStateNew();
+        state.setOrderComponent(this);
     }
 
     void setState(OrderState state) {
         this.state = state;
+        state.setOrderComponent(this);
     }
 }

@@ -83,9 +83,11 @@ public class OperativeOrdersController {
     public String completed(Model model, @RequestParam("id") Long id) {
         Account account = userServiceFacade.getLoggedUser();
         OrderComponent order = orderRepository.findOne(id);
+        WarehouseOperative operative = account.getWarehouseOperative();
         try {
             order.complete();
-            account.getWarehouseOperative().updateOrder(order);
+            orderRepository.save(order);
+            operative.updateOrder(order);
         } catch (com.my.executor.OrderUpdateException e) {
             e.printStackTrace();
         } catch (IncorrectOperationException e) {
