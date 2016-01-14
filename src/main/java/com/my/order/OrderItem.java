@@ -33,7 +33,6 @@ public class OrderItem extends OrderComponent  {
     @Override
     public void cancel() throws InvalidStateException, IncorrectOperationException {
         state.cancel();
-        state = new OrderStateCancelled();
     }
 
     @Override

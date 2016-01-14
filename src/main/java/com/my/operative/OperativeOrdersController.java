@@ -2,6 +2,8 @@ package com.my.operative;
 
 import com.my.account.Account;
 import com.my.account.UserServiceFacade;
+import com.my.executor.IncorrectOperationException;
+import com.my.executor.InvalidStateException;
 import com.my.executor.OrderExecutor;
 import com.my.logger.Log;
 import com.my.order.OrderComponent;
@@ -80,10 +82,15 @@ public class OperativeOrdersController {
     @RequestMapping(value = "/completed", method = RequestMethod.GET, params = {"id"})
     public String completed(Model model, @RequestParam("id") Long id) {
         Account account = userServiceFacade.getLoggedUser();
-        OrderComponent order = orderRepository.findOne(id).getParent();
+        OrderComponent order = orderRepository.findOne(id);
         try {
+            order.complete();
             account.getWarehouseOperative().updateOrder(order);
         } catch (com.my.executor.OrderUpdateException e) {
+            e.printStackTrace();
+        } catch (IncorrectOperationException e) {
+            e.printStackTrace();
+        } catch (InvalidStateException e) {
             e.printStackTrace();
         }
         return "/user/order/showAll";

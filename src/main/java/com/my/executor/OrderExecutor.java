@@ -88,6 +88,7 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
                     .allMatch(orderComponent
                             -> orderComponent.getState() instanceof OrderStateCompleted)) {
                 try {
+                    complete(order.getParent());
                     send(order.getParent());
                     for (OrderComponent child : order.getChildren()) {
                         send(child);
@@ -101,6 +102,11 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
                 }
             }
 
+    }
+
+    private void complete(OrderComponent order) throws InvalidStateException, IncorrectOperationException {
+        order.complete();
+        orderRepository.save(order);
     }
 
     public void send(OrderComponent order) throws InvalidStateException, IncorrectOperationException {
