@@ -3,6 +3,7 @@ package com.my.executor;
 import com.google.common.collect.Sets;
 import com.my.account.UserServiceFacade;
 import com.my.config.SpringContext;
+import com.my.item.Item;
 import com.my.order.*;
 import com.my.order.repository.OrderRepository;
 import com.my.warehouse.WarehouseRepository;
@@ -128,9 +129,20 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
     public void cancel(OrderComponent order) throws InvalidStateException, IncorrectOperationException {
         order.cancel();
         unassignWarehouseOperatives(order);
+        updateWarehouseAmountOfItems(order);
         orderRepository.save(order);
     }
 
+    private void updateWarehouseAmountOfItems(OrderComponent order) {
+       if(order.isRoot()) {
+           for (OrderComponent orderComponent : order.getChildren()) {
+               OrderItem orderItem = (OrderItem) orderComponent;
+               Item item = orderItem.getItem();
+               item.setWarehouseAmount(item.getWarehouseAmount() + orderItem.getAmount());
+               item.setAmount(item.getAmount() + orderItem.getAmount());
+           }
+       }
+    }
 
     public void addNew(OrderComponent order) {
         OrderState orderStateNew = new OrderStateNew();

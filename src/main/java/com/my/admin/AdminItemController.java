@@ -55,6 +55,7 @@ public class AdminItemController {
         item.setName(itemForm.getName());
         item.setPrice(itemForm.getPrice());
         item.setAmount(itemForm.getAmount());
+        item.setWarehouseAmount(itemForm.getAmount());
         item.setWarehouse(warehouse);
 
         if(itemForm.getOccasional()){

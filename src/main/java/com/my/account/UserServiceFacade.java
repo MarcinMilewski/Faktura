@@ -72,6 +72,7 @@ public class UserServiceFacade implements UserDetailsService {
 		Item item = new Item();
 		item.setName("testowy");
 		item.setAmount(10);
+		item.setWarehouseAmount(10);
 		item.setPrice(new BigDecimal(120));
 		item.setWarehouse(warehouse);
 		itemRepository.save(item);
