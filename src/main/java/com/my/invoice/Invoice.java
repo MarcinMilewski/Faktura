@@ -7,42 +7,85 @@ import javax.persistence.*;
 /**
  * Created by marcin on 09.01.16.
  */
-@Entity
-@Table(name = "INVOICE")
 public class Invoice {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID", updatable = false, nullable = false)
-    private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "order_id")
-    private OrderComponent order;
+    private String items;
 
-    @Lob
-    private String content;
+    private String dates;
 
-    public Long getId() {
-        return id;
+    private String header;
+
+    private String footer;
+
+    private String seller;
+
+    private String buyer;
+
+    private String number;
+
+    private String total;
+
+    public String getTotal() {
+        return total;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTotal(String total) {
+        this.total = total;
     }
 
-    public OrderComponent getOrder() {
-        return order;
+    public String getNumber() {
+        return number;
     }
 
-    public void setOrder(OrderComponent order) {
-        this.order = order;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
-    public String getContent() {
-        return content;
+    public String getBuyer() {
+        return buyer;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setBuyer(String buyer) {
+        this.buyer = buyer;
+    }
+
+    public String getSeller() {
+        return seller;
+    }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public String getFooter() {
+        return footer;
+    }
+
+    public void setFooter(String footer) {
+        this.footer = footer;
+    }
+
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+    public String getDates() {
+        return dates;
+    }
+
+    public void setDates(String dates) {
+        this.dates = dates;
+    }
+
+    public void setItems(String items) {
+        this.items = items;
+    }
+
+    public String getItems() {
+        return items;
     }
 }
