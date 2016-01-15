@@ -47,6 +47,7 @@ public class InvoiceTxtBuilder implements InvoiceBuilder{
         for(OrderComponent o : orders.getChildren()){
             Item i = ((OrderItem)o).getItem();
             invoice.setItems(invoice.getItems()+
+                    "                ---+--------------------+--------------------+--------------------+---------------------\r\n"+
             String.format("%20s %20s %20s %20s %20s\r\n",
                     j++ +" |",
                     " "+i.getName()+" |",

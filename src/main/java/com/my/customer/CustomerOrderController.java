@@ -119,10 +119,6 @@ public class CustomerOrderController {
         OrderComponent order = orderRepository.findOne(id);
         orderExecutor.createInvoiceTxt(order);
         String str = orderExecutor.getInvoice();
-        String invoice = "Nr |  Item name              |  Amount  |     Price     |  Overall price";
-        invoice = String.format("%20s %20s %20s %20s %20s\r\n","Nr |"," Item name |"," Amount |"," Price |"," Overall price" );
-        String invoice2 = String.format("%20s %20s %20s %20s %20s\r\n","1 |"," testowy |"," 23 |"," 199.99 |"," 9765.23" );
-        String invoice3 = invoice + invoice2;
         ServletOutputStream out = response.getOutputStream();
         out.print(str);
         out.flush();
