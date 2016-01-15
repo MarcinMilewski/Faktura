@@ -6,11 +6,9 @@ import com.my.executor.IncorrectOperationException;
 import com.my.executor.InvalidStateException;
 import com.my.executor.OrderExecutor;
 import com.my.executor.OrderUpdateException;
-import com.my.item.Item;
 import com.my.item.repository.ItemRepository;
 import com.my.logger.Log;
 import com.my.order.OrderComponent;
-import com.my.order.OrderItem;
 import com.my.order.OrderStateType;
 import com.my.order.repository.OrderRepository;
 import com.my.warehouse.operative.WarehouseOperative;
@@ -100,6 +98,7 @@ public class OperativeOrdersController {
             e.printStackTrace();
         }
         return "redirect:/operative/orders";
+    }
 
     @RequestMapping(value = "/cancel", method = RequestMethod.GET, params = {"id"})
     public String unableToComplete(Model model, @RequestParam("id") Long id) {
@@ -127,18 +126,6 @@ public class OperativeOrdersController {
     private void completeOrderItemAndNotify(OrderComponent order, WarehouseOperative operative) throws InvalidStateException, IncorrectOperationException, OrderUpdateException {
         order.complete();
         orderRepository.save(order);
-        operative.updateOrder(order);
-    }
-
-
-        if (order.isLeaf()) {
-
-            OrderItem orderItem = (OrderItem) order;
-            Item item= itemRepository.findOne(orderItem.getItem().getId());
-            item.setAmount(item.getWarehouseAmount() - orderItem.getAmount());
-            itemRepository.save(item);
-        }
-
         operative.updateOrder(order);
     }
 }
