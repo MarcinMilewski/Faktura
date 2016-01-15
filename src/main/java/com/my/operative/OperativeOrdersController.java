@@ -99,7 +99,7 @@ public class OperativeOrdersController {
         } catch (InvalidStateException e) {
             e.printStackTrace();
         }
-        return "/user/order/showAll";
+        return "redirect:/operative/orders";
 
     }
 

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -52,6 +53,17 @@ public class CustomerCartController {
         return "/user/cart/show";
     }
 
+    @RequestMapping(value = "/clear", method = RequestMethod.POST)
+    public String clear(){
+
+        if(!itemCart.getCart().isEmpty()){
+            itemCart.clearAndReturnItems();
+            itemCart.clear();
+        }
+
+        return "redirect:/user/cart";
+    }
+
     @RequestMapping(value = "/doOrder", method = RequestMethod.POST)
     public String doOrder(Model model) {
         Set<Item> items = new HashSet<>();
@@ -72,7 +84,7 @@ public class CustomerCartController {
         OrderComponent orderSummary = createOrderSummary(orderComponents);
         OrderExecutor.getInstance().addNew(orderSummary);
 
-        itemCart.getCart().clear();
+        itemCart.clear();
 
         return "/user/cart/orderApproved";
     }

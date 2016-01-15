@@ -70,7 +70,7 @@ public class CustomerItemController {
         item.setAmount(item.getAmount() - itemDto.getAmount());
         itemRepository.save(item);
         cart.addToCart(itemDto);
-        return SHOW_ITEM_VIEW_NAME;
+        return "redirect:/user/items";
     }
 
 

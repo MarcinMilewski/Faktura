@@ -82,7 +82,7 @@ public class CustomerOrderController {
         } catch (IncorrectOperationException e) {
             e.printStackTrace();
         }
-        return "/user/order/showAll";
+        return "redirect:/user/order";
     }
 
     @RequestMapping(value = "/cancel", method = RequestMethod.GET, params = {"id"})
@@ -97,7 +97,7 @@ public class CustomerOrderController {
             e.printStackTrace();
         }
 
-        return "/user/order/showAll";
+        return "redirect:/user/order";
     }
 
 
