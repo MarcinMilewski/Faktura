@@ -106,7 +106,7 @@ public class OperativeOrdersController {
         OrderComponent order = orderRepository.findOne(id);
         WarehouseOperative operative = account.getWarehouseOperative();
         try {
-            cancelOrderItemAndNotify(order, operative);
+            unableToCompleteAndNotify(order, operative);
         } catch (IncorrectOperationException e) {
             e.printStackTrace();
         } catch (InvalidStateException e) {
@@ -117,7 +117,7 @@ public class OperativeOrdersController {
         return "/user/order/showAll";
     }
 
-    private void cancelOrderItemAndNotify(OrderComponent order, WarehouseOperative operative) throws OrderUpdateException, InvalidStateException, IncorrectOperationException {
+    private void unableToCompleteAndNotify(OrderComponent order, WarehouseOperative operative) throws OrderUpdateException, InvalidStateException, IncorrectOperationException {
             order.unableToComplete();
             orderRepository.save(order);
             operative.updateOrder(order);

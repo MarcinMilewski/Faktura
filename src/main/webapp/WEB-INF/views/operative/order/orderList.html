@@ -30,9 +30,9 @@
             <td th:text="${order.item.name}"></td>
             <td th:text="${order.amount}"></td>
             <td th:text="${order.price}"></td>
-            <td th:text="${order.parent.state.orderStateType}"></td>
-            <td th:if="${order.parent.state.orderStateType == T(com.my.order.OrderStateType).COMPLETTING}"><a th:href="@{/operative/orders/completed(id=${order.id})}">Complete</a></td>
-            <td><a th:href="@{/operative/orders/cancel(id=${order.id})}">Cancel</a></td>
+            <td th:text="${order.state.orderStateType}"></td>
+            <td th:if="${order.state.orderStateType == T(com.my.order.OrderStateType).COMPLETTING}"><a th:href="@{/operative/orders/completed(id=${order.id})}">Complete</a></td>
+            <td th:if="${order.state.orderStateType == T(com.my.order.OrderStateType).COMPLETTING}"><a th:href="@{/operative/orders/cancel(id=${order.id})}">Cancel</a></td>
         </tr>
     </table>
 </div>

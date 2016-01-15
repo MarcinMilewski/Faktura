@@ -130,7 +130,6 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
 
     public void cancel(OrderComponent order) throws InvalidStateException, IncorrectOperationException {
         order.cancel();
-        unassignWarehouseOperatives(order);
         orderRepository.save(order);
     }
 
@@ -160,17 +159,6 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
                 entry.getValue().stream().forEach(itemOrder -> itemOrder.setWarehouseOperative(entry.getKey())));
         Set<OrderComponent> components = operativeOrderItemMap.values().stream().flatMap(orderComponents -> orderComponents.stream()).collect(Collectors.toSet());
         orderRepository.save(components);
-    }
-
-    private void unassignWarehouseOperatives(OrderComponent order) {
-        Set<Long> orderChildrenIds = order.getChildren().stream()
-                .map(orderComponent -> orderComponent.getId()).collect(Collectors.toSet());
-
-//        Set<WarehouseOperative> operatives =
-//                warehouseOperativeRepository.findByOrderComponentsIds(orderChildrenIds);
-        if (order.isRoot()) {
-
-        }
     }
 
     public void createInvoiceHTML(OrderComponent orders){

@@ -41,6 +41,7 @@ public class UserServiceFacade implements UserDetailsService {
 	@PostConstruct	
 	protected void initialize() {
 		Account account = new Account("operator", "operator", "ROLE_OPERATIVE");
+		Account account2 = new Account("operator2", "operator2", "ROLE_OPERATIVE");
 		Account regular = new Account("regular","regular", "ROLE_USER", "imie2", "nazwisko2");
 		Account bez = new Account("bez","bez", "ROLE_OPERATIVE");
 		regular.setRegular(true);
@@ -48,12 +49,18 @@ public class UserServiceFacade implements UserDetailsService {
 		accountRepository.create(new Account("admin", "admin", "ROLE_ADMIN"));
 		accountRepository.create(regular);
 		accountRepository.create(account);
+		accountRepository.create(account2);
 		accountRepository.create(bez);
 		account = accountRepository.findByEmail("operator");
 
 		Warehouse warehouse = new Warehouse();
 		warehouse.setName("magazyn1");
 		warehouseRepository.save(warehouse);
+
+		Warehouse warehouse2 = new Warehouse();
+		warehouse2.setName("magazyn2");
+		warehouseRepository.save(warehouse2);
+
 		warehouse = warehouseRepository.findByName("magazyn1");
 
 		WarehouseOperative warehouseOperative = new WarehouseOperative();
@@ -62,6 +69,14 @@ public class UserServiceFacade implements UserDetailsService {
 		warehouseOperative.setAccount(account);
 		warehouseOperative.setWarehouse(warehouse);
 		warehouseOperativeRepository.save(warehouseOperative);
+
+		WarehouseOperative warehouseOperative2 = new WarehouseOperative();
+		warehouseOperative2.setFirstName("Pan2");
+		warehouseOperative2.setLastName("Magazynier2");
+		warehouseOperative2.setAccount(account2);
+		warehouseOperative2.setWarehouse(warehouse2);
+		warehouseOperativeRepository.save(warehouseOperative2);
+
 
 		WarehouseOperative bezM = new WarehouseOperative();
 		bezM.setFirstName("Nie");
@@ -77,6 +92,13 @@ public class UserServiceFacade implements UserDetailsService {
 		item.setWarehouse(warehouse);
 		itemRepository.save(item);
 
+		Item item2 = new Item();
+		item2.setName("testowy2");
+		item2.setAmount(30);
+		item2.setWarehouseAmount(30);
+		item2.setPrice(new BigDecimal(50));
+		item2.setWarehouse(warehouse2);
+		itemRepository.save(item2);
 
 	}
 	
