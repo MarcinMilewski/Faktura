@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -67,5 +68,10 @@ public class ItemCart {
         }
 
         itemRepository.save(items);
+    }
+
+    @PreDestroy
+    public void preDestroy() {
+        clear();
     }
 }

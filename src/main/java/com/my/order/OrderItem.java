@@ -33,11 +33,14 @@ public class OrderItem extends OrderComponent  {
 
     @Override
     public void cancel() throws InvalidStateException, IncorrectOperationException {
-        state.cancel();
         if (state instanceof OrderStateCompleted) {
             item.setWarehouseAmount(item.getWarehouseAmount() + amount);
             item.setAmount(item.getAmount() + amount);
         }
+        else {
+            item.setAmount(item.getAmount() + amount);
+        }
+        state.cancel();
         OrderExecutor.getInstance().updateItem(item);
         setWarehouseOperative(null);
     }
@@ -57,7 +60,6 @@ public class OrderItem extends OrderComponent  {
     public void complete() throws InvalidStateException, IncorrectOperationException {
         state.complete();
         item.setWarehouseAmount(item.getWarehouseAmount() - amount);
-        item.setWarehouseAmount(item.getAmount() - amount);
         OrderExecutor.getInstance().updateItem(item);
     }
 
