@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 public class OrderStateUnableToComplete extends OrderState {
 
     public OrderStateUnableToComplete() {
-        orderStateType = OrderStateType.SEND;
+        orderStateType = OrderStateType.UNABLE_TO_COMPLETE;
     }
 
     @Override
