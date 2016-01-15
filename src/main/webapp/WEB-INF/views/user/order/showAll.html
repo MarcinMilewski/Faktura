@@ -33,6 +33,8 @@
             <td th:if="${order.state.orderStateType == T(com.my.order.OrderStateType).NEW}"><a th:href="@{/user/order/pay(id=${order.id})}">Pay</a></td>
             <td th:if="${order.state.orderStateType != T(com.my.order.OrderStateType).NEW and
             order.state.orderStateType != T(com.my.order.OrderStateType).CANCELLED}"><a th:href="@{/user/order/invoice(id=${order.id})}">Invoice</a></td>
+            <td th:if="${order.state.orderStateType != T(com.my.order.OrderStateType).NEW and
+            order.state.orderStateType != T(com.my.order.OrderStateType).CANCELLED}"><a th:href="@{/user/order/file(id=${order.id})}">Download</a></td>
         </tr>
     </table>
 </div>

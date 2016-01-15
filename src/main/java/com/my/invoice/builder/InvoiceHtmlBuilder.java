@@ -91,8 +91,9 @@ public class InvoiceHtmlBuilder implements InvoiceBuilder{
                     "<td>" +odstep+ ((OrderItem) o).getItem().getPrice() +odstep+ "</td>\n"+
                     "<td>" +odstep+ o.getPrice() +odstep+ "</td>\n</tr>\n"
             );
-            invoice.setItems(invoice.getItems()+"</table>\n");
+
         }
+        invoice.setItems(invoice.getItems()+"</table>\n");
     }
 
     @Override

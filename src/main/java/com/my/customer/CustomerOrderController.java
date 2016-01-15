@@ -13,13 +13,16 @@ import com.my.order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import java.util.Set;
 
@@ -108,7 +111,21 @@ public class CustomerOrderController {
         response.getWriter().print(orderExecutor.getInvoice());
     }
 
-    public void drawInvoice(HttpServletResponse response, Invoice invoice) throws IOException {
-        response.getWriter().println(invoice.getItems());
+    @RequestMapping(value = "/file", method = RequestMethod.GET, params = {"id"})
+    public void saveInvoice(HttpServletResponse response, @RequestParam("id") Long id)
+            throws IOException {
+        response.setContentType("text/plain");
+        response.setHeader("Content-Disposition","attachment;filename=invoice.txt");
+        OrderComponent order = orderRepository.findOne(id);
+        orderExecutor.createInvoiceTxt(order);
+        String str = orderExecutor.getInvoice();
+        String invoice = "Nr |  Item name              |  Amount  |     Price     |  Overall price";
+        invoice = String.format("%20s %20s %20s %20s %20s\r\n","Nr |"," Item name |"," Amount |"," Price |"," Overall price" );
+        String invoice2 = String.format("%20s %20s %20s %20s %20s\r\n","1 |"," testowy |"," 23 |"," 199.99 |"," 9765.23" );
+        String invoice3 = invoice + invoice2;
+        ServletOutputStream out = response.getOutputStream();
+        out.print(str);
+        out.flush();
+        out.close();
     }
 }

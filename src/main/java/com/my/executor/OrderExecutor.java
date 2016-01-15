@@ -3,6 +3,7 @@ package com.my.executor;
 import com.google.common.collect.Sets;
 import com.my.account.UserServiceFacade;
 import com.my.config.SpringContext;
+import com.my.invoice.builder.InvoiceTxtBuilder;
 import com.my.item.Item;
 import com.my.invoice.builder.InvoiceBuilder;
 import com.my.invoice.builder.InvoiceHtmlBuilder;
@@ -189,6 +190,16 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
 
     public void createInvoiceHTML(OrderComponent orders){
         builder = new InvoiceHtmlBuilder();
+        builder.buildDates(((OrderSummary)orders).getPurchaseDate());
+        builder.buildItems(orders);
+        builder.buildSeller();
+        builder.buildCustomer(userServiceFacade.getLoggedUser().getFirstName(), userServiceFacade.getLoggedUser().getLastName());
+        builder.buildNumber(String.valueOf(orders.getId()));
+        builder.buildTotal(orders.getPrice());
+    }
+
+    public void createInvoiceTxt(OrderComponent orders){
+        builder = new InvoiceTxtBuilder();
         builder.buildDates(((OrderSummary)orders).getPurchaseDate());
         builder.buildItems(orders);
         builder.buildSeller();
