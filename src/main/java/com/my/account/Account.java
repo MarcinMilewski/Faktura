@@ -35,6 +35,15 @@ public class Account implements java.io.Serializable {
 
 	@Column(name = "LASTNAME")
 	private String lastName;
+
+	@Column(name = "STREET")
+	private String street;
+
+	@Column(name = "CITY")
+	private String city;
+
+	@Column(name = "ZIP")
+	private Integer zip;
 	
 	@JsonIgnore
 	private String password;
@@ -69,6 +78,19 @@ public class Account implements java.io.Serializable {
 		this.role = role;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		regular=false;
+	}
+
+	public Account(String email, String password, String role, String firstName, String lastName, String street,
+				   String city, Integer zip) {
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.street = street;
+		this.city = city;
+		this.zip = zip;
 		regular=false;
 	}
 
@@ -142,5 +164,29 @@ public class Account implements java.io.Serializable {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public Integer getZip() {
+		return zip;
+	}
+
+	public void setZip(Integer zip) {
+		this.zip = zip;
 	}
 }
