@@ -100,6 +100,17 @@ public class CustomerOrderController {
         return "/user/order/showAll";
     }
 
+
+    @RequestMapping(value = "/invoice", method = RequestMethod.GET, params = {"id"})
+    public void invoice(HttpServletResponse response, @RequestParam("id") Long id) throws IOException {
+
+        Account account = userServiceFacade.getLoggedUser();
+        OrderComponent order = orderRepository.findOne(id);
+        orderExecutor.createInvoiceHTML(order);
+        response.setContentType("text/html");
+        response.getWriter().print(orderExecutor.getInvoice());
+    }
+
     @RequestMapping(value = "/file", method = RequestMethod.GET, params = {"id"})
     public void saveInvoice(HttpServletResponse response, @RequestParam("id") Long id)
             throws IOException {
