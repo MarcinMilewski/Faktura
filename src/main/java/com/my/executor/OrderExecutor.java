@@ -66,7 +66,7 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
         if (order.getState() instanceof OrderStateCompleted) {
             sendIfWholeCompleted(order);
         }
-        else if (order.getState() instanceof OrderStateCancelled) {
+        else if (order.getState() instanceof OrderStateUnableToComplete) {
             cancelWholeOrder(order);
         }
         else {
@@ -77,10 +77,11 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
     public void updateItem(Item item)  {
         itemRepository.save(item);
     }
+
     private void cancelWholeOrder(OrderComponent order) throws OrderUpdateException {
             try {
                 logger.debug("cancelling summary order");
-                cancel(order);
+                cancel(order.getParent());
             } catch (InvalidStateException e) {
                 logger.debug("updateOrder -> invalid state");
                 throw new OrderUpdateException();
