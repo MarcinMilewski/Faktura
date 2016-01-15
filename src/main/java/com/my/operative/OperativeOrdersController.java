@@ -101,11 +101,34 @@ public class OperativeOrdersController {
         }
         return "redirect:/operative/orders";
 
+    @RequestMapping(value = "/cancel", method = RequestMethod.GET, params = {"id"})
+    public String unableToComplete(Model model, @RequestParam("id") Long id) {
+        Account account = userServiceFacade.getLoggedUser();
+        OrderComponent order = orderRepository.findOne(id);
+        WarehouseOperative operative = account.getWarehouseOperative();
+        try {
+            cancelOrderItemAndNotify(order, operative);
+        } catch (IncorrectOperationException e) {
+            e.printStackTrace();
+        } catch (InvalidStateException e) {
+            e.printStackTrace();
+        } catch (OrderUpdateException e) {
+            e.printStackTrace();
+        }
+        return "/user/order/showAll";
+    }
+
+    private void cancelOrderItemAndNotify(OrderComponent order, WarehouseOperative operative) throws OrderUpdateException, InvalidStateException, IncorrectOperationException {
+            order.unableToComplete();
+            orderRepository.save(order);
+            operative.updateOrder(order);
     }
 
     private void completeOrderItemAndNotify(OrderComponent order, WarehouseOperative operative) throws InvalidStateException, IncorrectOperationException, OrderUpdateException {
         order.complete();
         orderRepository.save(order);
+        operative.updateOrder(order);
+    }
 
 
         if (order.isLeaf()) {

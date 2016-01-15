@@ -56,7 +56,7 @@ public abstract class OrderComponent implements Serializable{
     public abstract void pay() throws InvalidStateException, IncorrectOperationException;
     public abstract void send() throws InvalidStateException,IncorrectOperationException;
     public abstract void complete() throws InvalidStateException,IncorrectOperationException;
-
+    public abstract void unableToComplete() throws InvalidStateException,IncorrectOperationException;
 
     public Long getId() {
         return id;

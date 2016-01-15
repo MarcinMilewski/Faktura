@@ -3,10 +3,11 @@ package com.my.executor;
 import com.google.common.collect.Sets;
 import com.my.account.UserServiceFacade;
 import com.my.config.SpringContext;
-import com.my.invoice.builder.InvoiceTxtBuilder;
-import com.my.item.Item;
 import com.my.invoice.builder.InvoiceBuilder;
 import com.my.invoice.builder.InvoiceHtmlBuilder;
+import com.my.invoice.builder.InvoiceTxtBuilder;
+import com.my.item.Item;
+import com.my.item.repository.ItemRepository;
 import com.my.order.*;
 import com.my.order.repository.OrderRepository;
 import com.my.warehouse.WarehouseRepository;
@@ -37,6 +38,8 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
 
     private WarehouseRepository warehouseRepository;
 
+    private ItemRepository itemRepository;
+
     private InvoiceBuilder builder;
 
     private OrderExecutor() {
@@ -44,8 +47,7 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
         orderRepository = SpringContext.getApplicationContext().getBean(OrderRepository.class);
         warehouseOperativeRepository = SpringContext.getApplicationContext().getBean(WarehouseOperativeRepository.class);
         warehouseRepository = SpringContext.getApplicationContext().getBean(WarehouseRepository.class);
-        warehouseOperativeRepository.findAll().forEach(warehouseOperative -> registerAsObserver(warehouseOperative));
-
+        itemRepository = SpringContext.getApplicationContext().getBean(ItemRepository.class);
     }
 
     public void registerAsObserver(WarehouseOperative warehouseOperative) {
@@ -72,13 +74,13 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
         }
     }
 
+    public void updateItem(Item item)  {
+        itemRepository.save(item);
+    }
     private void cancelWholeOrder(OrderComponent order) throws OrderUpdateException {
             try {
                 logger.debug("cancelling summary order");
                 cancel(order);
-                for (OrderComponent child : order.getChildren()) {
-                    cancel(child);
-                }
             } catch (InvalidStateException e) {
                 logger.debug("updateOrder -> invalid state");
                 throw new OrderUpdateException();
@@ -115,18 +117,12 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
 
     public void send(OrderComponent order) throws InvalidStateException, IncorrectOperationException {
         order.send();
-        for (OrderComponent child : order.getChildren()) {
-            child.send();
-        }
         orderRepository.save(order);
     }
 
     public void pay(OrderComponent order) throws InvalidStateException, IncorrectOperationException {
         order.pay();
         assignWarehouseOperatives(order);
-        for (OrderComponent child : order.getChildren()) {
-            child.pay();
-        }
         //TODO generacja faktury
         orderRepository.save(order);
     }
@@ -134,19 +130,7 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
     public void cancel(OrderComponent order) throws InvalidStateException, IncorrectOperationException {
         order.cancel();
         unassignWarehouseOperatives(order);
-        updateWarehouseAmountOfItems(order);
         orderRepository.save(order);
-    }
-
-    private void updateWarehouseAmountOfItems(OrderComponent order) {
-       if(order.isRoot()) {
-           for (OrderComponent orderComponent : order.getChildren()) {
-               OrderItem orderItem = (OrderItem) orderComponent;
-               Item item = orderItem.getItem();
-               item.setWarehouseAmount(item.getWarehouseAmount() + orderItem.getAmount());
-               item.setAmount(item.getAmount() + orderItem.getAmount());
-           }
-       }
     }
 
     public void addNew(OrderComponent order) {

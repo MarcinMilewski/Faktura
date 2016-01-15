@@ -6,14 +6,14 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
- * Created by marcin on 07.01.16.
+ * Created by marcin on 15.01.16.
  */
 @Entity
-@DiscriminatorValue("CO")
-public class OrderStateCompleted extends OrderState {
-    
-    public OrderStateCompleted() {
-        orderStateType = OrderStateType.COMPLETED;
+@DiscriminatorValue("UN")
+public class OrderStateUnableToComplete extends OrderState {
+
+    public OrderStateUnableToComplete() {
+        orderStateType = OrderStateType.SEND;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class OrderStateCompleted extends OrderState {
 
     @Override
     public void send() throws InvalidStateException {
-        getOrderComponent().setState(new OrderStateSend());
+        throw new InvalidStateException();
     }
 
     @Override

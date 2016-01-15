@@ -2,6 +2,7 @@ package com.my.order;
 
 import com.my.executor.IncorrectOperationException;
 import com.my.executor.InvalidStateException;
+import com.my.executor.OrderExecutor;
 import com.my.item.Item;
 
 import javax.persistence.DiscriminatorValue;
@@ -33,6 +34,8 @@ public class OrderItem extends OrderComponent  {
     @Override
     public void cancel() throws InvalidStateException, IncorrectOperationException {
         state.cancel();
+        item.setWarehouseAmount(item.getWarehouseAmount() + amount);
+        OrderExecutor.getInstance().updateItem(item);
     }
 
     @Override
@@ -49,6 +52,13 @@ public class OrderItem extends OrderComponent  {
     @Override
     public void complete() throws InvalidStateException, IncorrectOperationException {
         state.complete();
+        item.setWarehouseAmount(item.getWarehouseAmount() - amount);
+        OrderExecutor.getInstance().updateItem(item);
+    }
+
+    @Override
+    public void unableToComplete() throws InvalidStateException, IncorrectOperationException {
+        state.unableToComplete();
     }
 
     public Item getItem() {

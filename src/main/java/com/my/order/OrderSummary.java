@@ -31,21 +31,35 @@ public class OrderSummary extends OrderComponent{
     @Override
     public void cancel() throws InvalidStateException, IncorrectOperationException {
             state.cancel();
+            for (OrderComponent component : getChildren()) {
+                component.cancel();
+            }
     }
 
     @Override
     public void pay() throws InvalidStateException, IncorrectOperationException  {
             state.pay();
+            for (OrderComponent component : getChildren()) {
+                component.pay();
+            }
     }
 
     @Override
     public void send() throws InvalidStateException, IncorrectOperationException {
             state.send();
+            for (OrderComponent component : getChildren()) {
+                component.send();
+            }
     }
 
     @Override
     public void complete() throws InvalidStateException, IncorrectOperationException {
-        state.complete();
+             state.complete();
+    }
+
+    @Override
+    public void unableToComplete() throws InvalidStateException, IncorrectOperationException {
+        throw new IncorrectOperationException();
     }
 
     public OrderSummary() {

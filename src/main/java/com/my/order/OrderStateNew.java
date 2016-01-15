@@ -37,4 +37,9 @@ public class OrderStateNew extends OrderState {
     public void complete() throws InvalidStateException {
         throw new InvalidStateException();
     }
+
+    @Override
+    public void unableToComplete() throws InvalidStateException {
+        throw new InvalidStateException();
+    }
 }

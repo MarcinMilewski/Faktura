@@ -36,6 +36,8 @@ public abstract class OrderState implements Serializable {
 
     public abstract void complete() throws InvalidStateException;
 
+    public abstract void unableToComplete() throws InvalidStateException;
+
     public Long getId() {
         return id;
     }

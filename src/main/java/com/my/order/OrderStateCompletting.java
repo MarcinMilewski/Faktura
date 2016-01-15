@@ -16,11 +16,9 @@ public class OrderStateCompletting extends OrderState {
         orderStateType = OrderStateType.COMPLETTING;
     }
 
-
     @Override
     public void cancel() throws InvalidStateException {
-        throw new InvalidStateException();
-
+        getOrderComponent().setState(new OrderStateCancelled());
     }
 
     @Override
@@ -38,5 +36,10 @@ public class OrderStateCompletting extends OrderState {
     @Override
     public void complete() throws InvalidStateException {
         getOrderComponent().setState(new OrderStateCompleted());
+    }
+
+    @Override
+    public void unableToComplete() throws InvalidStateException {
+        getOrderComponent().setState(new OrderStateUnableToComplete());
     }
 }
