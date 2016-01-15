@@ -24,8 +24,11 @@ public class OrderStateCompleted extends OrderState {
 
     @Override
     public void send() throws InvalidStateException {
-        if (getOrderComponent().getSendStrategy() instanceof SendStrategyPersonal) {
+        if (getOrderComponent().getSendStrategy() != null &&
+                getOrderComponent().getSendStrategy() instanceof SendStrategyPersonal) {
             getOrderComponent().setState(new OrderStateWaitingForReceive());
+            getOrderComponent().getChildren().stream()
+                    .forEach(orderComponent -> orderComponent.setState(new OrderStateWaitingForReceive()));
         }
         else {
             getOrderComponent().setState(new OrderStateSend());
