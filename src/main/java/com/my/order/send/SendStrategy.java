@@ -24,7 +24,7 @@ public abstract class SendStrategy {
 
     protected Date sendDate;
 
-    abstract void send(OrderSummary orderSummary);
+    public abstract void send(OrderSummary orderSummary);
 
     @OneToOne(mappedBy="sendStrategy")
     private OrderComponent orderComponent;

@@ -14,7 +14,7 @@ import java.util.Date;
 public class SendStrategyEconomic extends SendStrategy {
 
     @Override
-    void send(OrderSummary orderSummary) {
+    public void send(OrderSummary orderSummary) {
         sendDate = new Date();
         // wyslij ekonomiczna przesylka
     }

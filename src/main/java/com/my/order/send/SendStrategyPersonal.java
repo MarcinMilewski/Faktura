@@ -13,7 +13,7 @@ import java.util.Date;
 @DiscriminatorValue("PE")
 public class SendStrategyPersonal extends SendStrategy {
     @Override
-    void send(OrderSummary orderSummary) {
+    public void send(OrderSummary orderSummary) {
         sendDate = new Date();
         // zachowaj w magazynie do odebrania
     }
