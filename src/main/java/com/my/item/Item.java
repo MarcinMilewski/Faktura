@@ -3,7 +3,7 @@ package com.my.item;
 import com.my.warehouse.Warehouse;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 
 /**
@@ -24,11 +24,17 @@ public class Item implements ItemInterface{
     private BigDecimal price;
 
     @Column(name="AMOUNT",updatable = true, nullable = false)
+    @Min(0)
     private Integer amount;
+
+    @Column(name="WAREHOUSE_AMOUNT", updatable = true, nullable = false)
+    @Min(0)
+    private Integer warehouseAmount;
 
     @ManyToOne
     @JoinColumn(name="warehouse_id", nullable = false)
     private Warehouse warehouse;
+
 
     public Item(){}
 
@@ -71,5 +77,13 @@ public class Item implements ItemInterface{
 
     public void setWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
+    }
+
+    public Integer getWarehouseAmount() {
+        return warehouseAmount;
+    }
+
+    public void setWarehouseAmount(Integer warehouseAmount) {
+        this.warehouseAmount = warehouseAmount;
     }
 }

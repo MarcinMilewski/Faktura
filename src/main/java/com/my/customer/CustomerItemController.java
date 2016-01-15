@@ -65,8 +65,11 @@ public class CustomerItemController {
     }
 
     @RequestMapping(value ="addToCart", method = RequestMethod.POST)
-    public String addToShoppingCart(@ModelAttribute ItemDto product) {
-        cart.addToCart(product);
+    public String addToShoppingCart(@ModelAttribute ItemDto itemDto) {
+        Item item = itemRepository.findOne(itemDto.getId());
+        item.setAmount(item.getAmount() - itemDto.getAmount());
+        itemRepository.save(item);
+        cart.addToCart(itemDto);
         return SHOW_ITEM_VIEW_NAME;
     }
 
