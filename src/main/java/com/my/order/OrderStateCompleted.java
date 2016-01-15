@@ -1,6 +1,7 @@
 package com.my.order;
 
 import com.my.executor.InvalidStateException;
+import com.my.order.send.SendStrategyPersonal;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -23,7 +24,12 @@ public class OrderStateCompleted extends OrderState {
 
     @Override
     public void send() throws InvalidStateException {
-        getOrderComponent().setState(new OrderStateSend());
+        if (getOrderComponent().getSendStrategy() instanceof SendStrategyPersonal) {
+            getOrderComponent().setState(new OrderStateWaitingForReceive());
+        }
+        else {
+            getOrderComponent().setState(new OrderStateSend());
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.my.order;
 
 import com.my.executor.IncorrectOperationException;
 import com.my.executor.InvalidStateException;
+import com.my.order.send.SendStrategy;
 import com.my.warehouse.operative.WarehouseOperative;
 import org.hibernate.annotations.DiscriminatorOptions;
 
@@ -41,6 +42,10 @@ public abstract class OrderComponent implements Serializable{
     @ManyToOne
     @JoinColumn(name = "warehouseOperative_id")
     private WarehouseOperative warehouseOperative;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "sendStrategy_id")
+    private SendStrategy sendStrategy;
 
     @Transient
     public boolean isLeaf() {
@@ -113,5 +118,14 @@ public abstract class OrderComponent implements Serializable{
     void setState(OrderState state) {
         this.state = state;
         state.setOrderComponent(this);
+    }
+
+    public SendStrategy getSendStrategy() {
+        return sendStrategy;
+    }
+
+    public void setSendStrategy(SendStrategy sendStrategy) {
+        this.sendStrategy = sendStrategy;
+        sendStrategy.setOrderComponent(this);
     }
 }

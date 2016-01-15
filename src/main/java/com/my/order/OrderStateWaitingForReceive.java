@@ -6,25 +6,25 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 /**
- * Created by marcin on 07.01.16.
+ * Created by marcin on 15.01.16.
  */
 @Entity
-@DiscriminatorValue("SE")
-public class OrderStateSend extends OrderState {
+@DiscriminatorValue("WR")
+public class OrderStateWaitingForReceive extends OrderState {
 
-    public OrderStateSend() {
-        orderStateType = OrderStateType.SEND;
+    public OrderStateWaitingForReceive() {
+        orderStateType = OrderStateType.WAITING_FOR_RECEIVE;
     }
 
     @Override
     public void cancel() throws InvalidStateException {
         throw new InvalidStateException();
-
     }
 
     @Override
     public void send() throws InvalidStateException {
         throw new InvalidStateException();
+
     }
 
     @Override
@@ -36,6 +36,7 @@ public class OrderStateSend extends OrderState {
     @Override
     public void complete() throws InvalidStateException {
         throw new InvalidStateException();
+
     }
 
     @Override

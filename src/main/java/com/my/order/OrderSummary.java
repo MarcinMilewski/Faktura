@@ -47,6 +47,7 @@ public class OrderSummary extends OrderComponent{
     @Override
     public void send() throws InvalidStateException, IncorrectOperationException {
             state.send();
+            getSendStrategy().send(this);
             for (OrderComponent component : getChildren()) {
                 component.send();
             }
