@@ -29,6 +29,12 @@ public class Account implements java.io.Serializable {
 
 	@Column(unique = true)
 	private String email;
+
+	@Column(name = "FIRSTNAME")
+	private String firstName;
+
+	@Column(name = "LASTNAME")
+	private String lastName;
 	
 	@JsonIgnore
 	private String password;
@@ -47,11 +53,22 @@ public class Account implements java.io.Serializable {
     protected Account() {
 
 	}
-	
+
 	public Account(String email, String password, String role) {
 		this.email = email;
 		this.password = password;
 		this.role = role;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		regular=false;
+	}
+	
+	public Account(String email, String password, String role, String firstName, String lastName) {
+		this.email = email;
+		this.password = password;
+		this.role = role;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		regular=false;
 	}
 
@@ -109,5 +126,21 @@ public class Account implements java.io.Serializable {
 
 	public void setRegular(Boolean regular) {
 		this.regular = regular;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 }

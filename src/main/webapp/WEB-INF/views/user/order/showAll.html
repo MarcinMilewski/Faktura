@@ -13,15 +13,16 @@
 <div class="container">
     <p>Zamowienia.</p>
 
-    <table class="table" th:each="order : ${orders}">
+    <table class="table" >
         <tr>
             <th><b>Id</b></th>
             <th><b>Total price</b></th>
             <th><b>Status</b></th>
             <th><b>Details</b></th>
             <th></th>
+            <th></th>
         </tr>
-        <tr>
+        <tr th:each="order : ${orders}">
             <td th:text="${order.id}"></td>
             <td th:text="${order.price}"></td>
             <!--<div th:if="${order.state.orderStateType}">-->
@@ -29,7 +30,9 @@
             <!--</div>-->
             <td th:text="${order.state.orderStateType}"></td>
             <td><a th:href="@{/user/order/details(id=${order.id})}">Details</a></td>
-            <td><a th:href="@{/user/order/pay(id=${order.id})}">Pay</a></td>
+            <td th:if="${order.state.orderStateType == T(com.my.order.OrderStateType).NEW}"><a th:href="@{/user/order/pay(id=${order.id})}">Pay</a></td>
+            <td th:if="${order.state.orderStateType != T(com.my.order.OrderStateType).NEW and
+            order.state.orderStateType != T(com.my.order.OrderStateType).CANCELLED}"><a th:href="@{/user/order/invoice(id=${order.id})}">Invoice</a></td>
         </tr>
     </table>
 </div>

@@ -3,6 +3,8 @@ package com.my.executor;
 import com.google.common.collect.Sets;
 import com.my.account.UserServiceFacade;
 import com.my.config.SpringContext;
+import com.my.invoice.builder.InvoiceBuilder;
+import com.my.invoice.builder.InvoiceHtmlBuilder;
 import com.my.order.*;
 import com.my.order.repository.OrderRepository;
 import com.my.warehouse.WarehouseRepository;
@@ -32,6 +34,8 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
     private WarehouseOperativeRepository warehouseOperativeRepository;
 
     private WarehouseRepository warehouseRepository;
+
+    private InvoiceBuilder builder;
 
     private OrderExecutor() {
         userServiceFacade = (UserServiceFacade) SpringContext.getApplicationContext().getBean(UserServiceFacade.class);
@@ -170,7 +174,18 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
 
         }
     }
-    public void createInvoice(OrderSummary orderSummary) {
 
+    public void createInvoiceHTML(OrderComponent orders){
+        builder = new InvoiceHtmlBuilder();
+        builder.buildDates(((OrderSummary)orders).getPurchaseDate());
+        builder.buildItems(orders);
+        builder.buildSeller();
+        builder.buildCustomer(userServiceFacade.getLoggedUser().getFirstName(), userServiceFacade.getLoggedUser().getLastName());
+        builder.buildNumber(String.valueOf(orders.getId()));
+        builder.buildTotal(orders.getPrice());
+    }
+
+    public String getInvoice(){
+        return builder.getInvoice();
     }
 }

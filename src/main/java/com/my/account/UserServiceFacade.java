@@ -41,10 +41,10 @@ public class UserServiceFacade implements UserDetailsService {
 	@PostConstruct	
 	protected void initialize() {
 		Account account = new Account("operator", "operator", "ROLE_OPERATIVE");
-		Account regular = new Account("regular","regular", "ROLE_USER");
+		Account regular = new Account("regular","regular", "ROLE_USER", "imie2", "nazwisko2");
 		Account bez = new Account("bez","bez", "ROLE_OPERATIVE");
 		regular.setRegular(true);
-		accountRepository.create(new Account("customer", "demo", "ROLE_USER"));
+		accountRepository.create(new Account("customer", "demo", "ROLE_USER", "imie4", "nazwisko4"));
 		accountRepository.create(new Account("admin", "admin", "ROLE_ADMIN"));
 		accountRepository.create(regular);
 		accountRepository.create(account);

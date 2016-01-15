@@ -5,6 +5,7 @@ import com.my.account.UserServiceFacade;
 import com.my.executor.IncorrectOperationException;
 import com.my.executor.InvalidStateException;
 import com.my.executor.OrderExecutor;
+import com.my.invoice.Invoice;
 import com.my.item.cart.ItemCart;
 import com.my.item.repository.ItemRepository;
 import com.my.order.OrderComponent;
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by marcin on 11.01.16.
@@ -35,6 +39,8 @@ public class CustomerOrderController {
     private ItemCart itemCart;
 
     private OrderExecutor orderExecutor;
+
+
 
     @PostConstruct
     public void init() {
@@ -57,7 +63,7 @@ public class CustomerOrderController {
         Account account = userServiceFacade.getLoggedUser();
             OrderComponent order = orderRepository.findOne(id);
             model.addAttribute("order",order);
-
+            orderExecutor.createInvoiceHTML(order);
         return "/user/order/details";
 
     }
@@ -89,5 +95,20 @@ public class CustomerOrderController {
         }
 
         return "/user/order/showAll";
+    }
+
+
+    @RequestMapping(value = "/invoice", method = RequestMethod.GET, params = {"id"})
+    public void helloWorld(HttpServletResponse response, @RequestParam("id") Long id) throws IOException {
+
+        Account account = userServiceFacade.getLoggedUser();
+        OrderComponent order = orderRepository.findOne(id);
+        orderExecutor.createInvoiceHTML(order);
+        response.setContentType("text/html");
+        response.getWriter().print(orderExecutor.getInvoice());
+    }
+
+    public void drawInvoice(HttpServletResponse response, Invoice invoice) throws IOException {
+        response.getWriter().println(invoice.getItems());
     }
 }
