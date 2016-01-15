@@ -166,7 +166,11 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
         builder.buildDates(((OrderSummary)orders).getPurchaseDate());
         builder.buildItems(orders);
         builder.buildSeller();
-        builder.buildCustomer(userServiceFacade.getLoggedUser().getFirstName(), userServiceFacade.getLoggedUser().getLastName());
+        builder.buildCustomer(((OrderSummary) orders).getCustomer().getFirstName(),
+                ((OrderSummary) orders).getCustomer().getLastName(),
+                ((OrderSummary) orders).getCustomer().getStreet(),
+                ((OrderSummary) orders).getCustomer().getCity(),
+                ((OrderSummary) orders).getCustomer().getZip());
         builder.buildNumber(String.valueOf(orders.getId()));
         builder.buildTotal(orders.getPrice());
     }
@@ -176,7 +180,12 @@ public class OrderExecutor implements Serializable, WarehouseOperativeObserver {
         builder.buildDates(((OrderSummary)orders).getPurchaseDate());
         builder.buildItems(orders);
         builder.buildSeller();
-        builder.buildCustomer(userServiceFacade.getLoggedUser().getFirstName(), userServiceFacade.getLoggedUser().getLastName());
+        builder.buildCustomer(((OrderSummary) orders).getCustomer().getFirstName(),
+                ((OrderSummary) orders).getCustomer().getLastName(),
+                ((OrderSummary) orders).getCustomer().getStreet(),
+                ((OrderSummary) orders).getCustomer().getCity(),
+                ((OrderSummary) orders).getCustomer().getZip());
+        builder.buildNumber(String.valueOf(orders.getId()));
         builder.buildNumber(String.valueOf(orders.getId()));
         builder.buildTotal(orders.getPrice());
     }

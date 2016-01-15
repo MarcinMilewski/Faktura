@@ -14,7 +14,7 @@ public interface InvoiceBuilder {
 
 
     public void buildSeller();
-    public void buildCustomer(String first, String last);
+    public void buildCustomer(String first, String last, String street, String city, int zip);
     public void buildNumber(String number);
     public void buildItems(OrderComponent orders);
     public void buildDates(Date date);

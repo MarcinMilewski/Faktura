@@ -51,13 +51,13 @@ public class InvoiceHtmlBuilder implements InvoiceBuilder{
     }
 
     @Override
-    public void buildCustomer(String first, String last) {
+    public void buildCustomer(String first, String last, String street, String city, int zip) {
         invoice.setBuyer("<div class=\"container\">\n" +
                 "<table>\n" +
                 "<tr><td><b>Buyer:</b></td></tr>\n" +
                 "<tr><td>"+first+" "+last+"</td></tr>\n" +
-                "<tr><td>adres</td></tr>\n" +
-                "<tr><td>kod</td></tr>\n" +
+                "<tr><td>"+street+"</td></tr>\n" +
+                "<tr><td>"+zip+" "+city+"</td></tr>\n" +
                 "</table>\n</div><br><hr />");
     }
 

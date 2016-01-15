@@ -27,11 +27,11 @@ public class InvoiceTxtBuilder implements InvoiceBuilder{
     }
 
     @Override
-    public void buildCustomer(String first, String last) {
+    public void buildCustomer(String first, String last, String street, String city, int zip) {
         invoice.setBuyer("Buyer: \r\n" +
                 first+" "+last+"\r\n" +
-                "adres \r\n" +
-                "kod \r\n \r\n");
+                street +"\r\n" +
+                zip +" "+city +"\r\n \r\n");
     }
 
     @Override
