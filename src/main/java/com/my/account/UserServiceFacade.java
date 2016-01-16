@@ -42,10 +42,10 @@ public class UserServiceFacade implements UserDetailsService {
 	protected void initialize() {
 		Account account = new Account("operator", "operator", "ROLE_OPERATIVE");
 		Account account2 = new Account("operator2", "operator2", "ROLE_OPERATIVE");
-		Account regular = new Account("regular","regular", "ROLE_USER", "imie2", "nazwisko2");
+		Account regular = new Account("regular","regular", "ROLE_USER", "imie2", "nazwisko2","ul 1","miasto",11222);
 		Account bez = new Account("bez","bez", "ROLE_OPERATIVE");
 		regular.setRegular(true);
-		accountRepository.create(new Account("customer", "demo", "ROLE_USER", "imie4", "nazwisko4"));
+		accountRepository.create(new Account("customer", "demo", "ROLE_USER", "imie4", "nazwisko4","ul 1","miasto",11222));
 		accountRepository.create(new Account("admin", "admin", "ROLE_ADMIN"));
 		accountRepository.create(regular);
 		accountRepository.create(account);
@@ -90,6 +90,7 @@ public class UserServiceFacade implements UserDetailsService {
 		item.setWarehouseAmount(10);
 		item.setPrice(new BigDecimal(120));
 		item.setWarehouse(warehouse);
+		item.setVat(5);
 		itemRepository.save(item);
 
 		Item item2 = new Item();
@@ -98,6 +99,7 @@ public class UserServiceFacade implements UserDetailsService {
 		item2.setWarehouseAmount(30);
 		item2.setPrice(new BigDecimal(50));
 		item2.setWarehouse(warehouse2);
+		item2.setVat(23);
 		itemRepository.save(item2);
 
 	}

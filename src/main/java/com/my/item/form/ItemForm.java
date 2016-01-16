@@ -19,6 +19,8 @@ public class ItemForm {
     @NotBlank
     private int amount;
 
+    private int vat;
+
     @NotBlank
     private Long warehouseId;
 
@@ -71,5 +73,13 @@ public class ItemForm {
 
     public void setTwoinone(Boolean twoinone) {
         this.twoinone = twoinone;
+    }
+
+    public int getVat() {
+        return vat;
+    }
+
+    public void setVat(int vat) {
+        this.vat = vat;
     }
 }

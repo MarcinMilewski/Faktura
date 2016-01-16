@@ -31,6 +31,9 @@ public class Item implements ItemInterface{
     @Min(0)
     private Integer warehouseAmount;
 
+    @Column(name="VAT")
+    private Integer vat;
+
     @ManyToOne
     @JoinColumn(name="warehouse_id", nullable = false)
     private Warehouse warehouse;
@@ -85,5 +88,13 @@ public class Item implements ItemInterface{
 
     public void setWarehouseAmount(Integer warehouseAmount) {
         this.warehouseAmount = warehouseAmount;
+    }
+
+    public Integer getVat() {
+        return vat;
+    }
+
+    public void setVat(Integer vat) {
+        this.vat = vat;
     }
 }

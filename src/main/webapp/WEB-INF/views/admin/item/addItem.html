@@ -33,9 +33,13 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="warehouseAmount" class="col-lg-4 control-label">Warehouse amount</label>
+                <label for="vat" class="col-lg-4 control-label">VAT</label>
                 <div class="col-lg-6">
-                    <input type="text" class="form-control" id="warehouseAmount" placeholder="Amount" th:field="*{warehouseAmount}"/>
+                    <select class="form-control" id="vat" placeholder="VAT" th:field="*{vat}">
+                        <option>5</option>
+                        <option>8</option>
+                        <option>23</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">

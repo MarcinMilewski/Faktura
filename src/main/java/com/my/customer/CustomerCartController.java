@@ -12,8 +12,12 @@ import com.my.order.OrderComponent;
 import com.my.order.OrderItem;
 import com.my.order.OrderSummary;
 import com.my.order.repository.OrderRepository;
+import com.my.order.send.SendStrategyType;
+import com.my.order.send.factory.SendStrategyFactory;
+import com.my.order.send.repository.SendRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +45,8 @@ public class CustomerCartController {
     private OrderRepository orderRepository;
     @Autowired
     private ItemCart itemCart;
+    @Autowired
+    private SendRepository sendRepository;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String showOrders(Model model) {
@@ -65,7 +71,7 @@ public class CustomerCartController {
     }
 
     @RequestMapping(value = "/doOrder", method = RequestMethod.POST)
-    public String doOrder(Model model) {
+    public String doOrder(Model model, @RequestParam("type") String type) {
         Set<Item> items = new HashSet<>();
         itemCart.getCart().stream().forEach(itemDto -> items.add(itemRepository.findOne(itemDto.getId())));
 
@@ -82,6 +88,15 @@ public class CustomerCartController {
         itemAmountMap.entrySet().stream().forEach(entry -> orderComponents.add(createOrderItem(entry)));
 
         OrderComponent orderSummary = createOrderSummary(orderComponents);
+        if(type.equals("Economic")){
+            orderSummary.setSendStrategy(SendStrategyFactory.getSendStrategy(SendStrategyType.ECONOMIC));
+        }
+        else if(type.equals("Express")){
+            orderSummary.setSendStrategy(SendStrategyFactory.getSendStrategy(SendStrategyType.EXPRESS));
+        }
+        else if(type.equals("Personal")){
+            orderSummary.setSendStrategy(SendStrategyFactory.getSendStrategy(SendStrategyType.PERSONAL));
+        }
         OrderExecutor.getInstance().addNew(orderSummary);
 
         itemCart.clear();

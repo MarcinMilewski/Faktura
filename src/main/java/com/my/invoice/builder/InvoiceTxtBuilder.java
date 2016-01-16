@@ -14,9 +14,9 @@ import java.util.Set;
  */
 public class InvoiceTxtBuilder implements InvoiceBuilder{
 
-    private String odstep = "&nbsp&nbsp&nbsp&nbsp";
-
     private Invoice invoice = new Invoice();
+
+    private Float totalTax = 0f;
 
     @Override
     public void buildSeller() {
@@ -43,17 +43,25 @@ public class InvoiceTxtBuilder implements InvoiceBuilder{
     public void buildItems(OrderComponent orders) {
         int j = 1;
 
-        invoice.setItems(String.format("%20s %20s %20s %20s %20s\r\n","Nr |"," Item name |"," Amount |"," Price |"," Overall price"));
+        invoice.setItems(String.format("%5s %30s %10s %15s %15s %15s %15s\r\n",
+                "Nr |"," Item name |"," Amount |"," Price |"," VAT[%] |"," w/o tax |"," Overall"));
         for(OrderComponent o : orders.getChildren()){
+            Float tmp = ((OrderItem) o).getItem().getPrice().floatValue() *
+                    (((OrderItem) o).getItem().getVat().floatValue()/100);
+            BigDecimal tax = new BigDecimal(Float.toString(tmp));
+            tax = tax.setScale(2,BigDecimal.ROUND_DOWN);
             Item i = ((OrderItem)o).getItem();
             invoice.setItems(invoice.getItems()+
-                    "                ---+--------------------+--------------------+--------------------+---------------------\r\n"+
-            String.format("%20s %20s %20s %20s %20s\r\n",
+                    "----+------------------------------+----------+---------------+---------------+---------------+----------------\r\n"+
+            String.format("%5s %30s %10s %15s %15s %15s %15s\r\n",
                     j++ +" |",
                     " "+i.getName()+" |",
                     " "+((OrderItem) o).getAmount()+" |",
                     " "+((OrderItem) o).getItem().getPrice()+" |",
-                    " "+o.getPrice()) );
+                    " "+((OrderItem) o).getItem().getVat()+" |",
+                    " "+(((OrderItem) o).getItem().getPrice().floatValue()-tax.floatValue())+" |",
+                    " "+(o.getPrice().floatValue() - (tax.floatValue() * ((OrderItem) o).getAmount().floatValue()))) );
+            totalTax = totalTax + tmp;
         }
         invoice.setItems(invoice.getItems() + "\r\n \r\n");
     }
@@ -67,8 +75,15 @@ public class InvoiceTxtBuilder implements InvoiceBuilder{
 
     @Override
     public void buildTotal(BigDecimal price) {
-        String prc = String.valueOf(price);
-        invoice.setTotal("Total price " +prc);
+        Float totalPrice = price.floatValue() - totalTax;
+        BigDecimal rounded = new BigDecimal(Float.toString(totalPrice));
+        rounded = rounded.setScale(2,BigDecimal.ROUND_DOWN);
+        invoice.setTotal(String.format(
+                "%15s %10s %10s\r\n",
+                "Price w/o tax |"," VAT |"," with tax"));
+        invoice.setTotal(invoice.getTotal() + "--------------+----------+-----------\r\n");
+        invoice.setTotal(invoice.getTotal()+String.format("%15s %10s %10s\r\n",
+                rounded+" |",totalTax+" |",price));
     }
 
     @Override

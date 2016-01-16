@@ -12,6 +12,9 @@ import java.util.Date;
 @Entity
 @DiscriminatorValue("PE")
 public class SendStrategyPersonal extends SendStrategy {
+
+    public SendStrategyPersonal(){sendStrategyType = SendStrategyType.PERSONAL;}
+
     @Override
     public void send(OrderSummary orderSummary) {
         sendDate = new Date();

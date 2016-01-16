@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,7 +48,7 @@ public class AdminItemController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addItem(@ModelAttribute ItemForm itemForm){
+    public String addItem(@ModelAttribute ItemForm itemForm, @RequestParam("vat") Integer vat){
         Warehouse warehouse = warehouseRepository.findOne(itemForm.getWarehouseId());
 
         ItemInterface ii;
@@ -57,6 +58,7 @@ public class AdminItemController {
         item.setAmount(itemForm.getAmount());
         item.setWarehouseAmount(itemForm.getAmount());
         item.setWarehouse(warehouse);
+        item.setVat(vat);
 
         if(itemForm.getOccasional()){
             ii = new OccasionalDiscount(item);

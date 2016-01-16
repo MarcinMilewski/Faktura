@@ -1,6 +1,7 @@
 package com.my.order.send;
 
 import com.my.order.OrderComponent;
+import com.my.order.OrderStateType;
 import com.my.order.OrderSummary;
 import org.hibernate.annotations.DiscriminatorOptions;
 
@@ -29,6 +30,10 @@ public abstract class SendStrategy {
     @OneToOne(mappedBy="sendStrategy")
     private OrderComponent orderComponent;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    protected SendStrategyType sendStrategyType;
+
     public Long getId() {
         return id;
     }
@@ -51,5 +56,9 @@ public abstract class SendStrategy {
 
     public void setOrderComponent(OrderComponent orderComponent) {
         this.orderComponent = orderComponent;
+    }
+
+    public SendStrategyType getSendStrategyType() {
+        return sendStrategyType;
     }
 }

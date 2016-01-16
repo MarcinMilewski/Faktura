@@ -20,6 +20,7 @@
             <th><b>Name</b></th>
             <th><b>Amount</b></th>
             <th><b>Price</b></th>
+            <th><b>Shipping type</b></th>
             <th><b>Status</b></th>
             <td></td>
             <td></td>
@@ -30,6 +31,9 @@
             <td th:text="${order.item.name}"></td>
             <td th:text="${order.amount}"></td>
             <td th:text="${order.price}"></td>
+            <td th:if="${order.parent.sendStrategy.sendStrategyType == T(com.my.order.send.SendStrategyType).EXPRESS}">Express</td>
+            <td th:if="${order.parent.sendStrategy.sendStrategyType == T(com.my.order.send.SendStrategyType).PERSONAL}">Personal</td>
+            <td th:if="${order.parent.sendStrategy.sendStrategyType == T(com.my.order.send.SendStrategyType).ECONOMIC}">Economic</td>
             <td th:text="${order.state.orderStateType}"></td>
             <td th:if="${order.state.orderStateType == T(com.my.order.OrderStateType).COMPLETTING}"><a th:href="@{/operative/orders/completed(id=${order.id})}">Complete</a></td>
             <td th:if="${order.state.orderStateType == T(com.my.order.OrderStateType).COMPLETTING}"><a th:href="@{/operative/orders/cancel(id=${order.id})}">Cancel</a></td>

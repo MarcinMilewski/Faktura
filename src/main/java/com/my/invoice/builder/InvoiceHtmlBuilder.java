@@ -15,6 +15,7 @@ public class InvoiceHtmlBuilder implements InvoiceBuilder{
 
     private Invoice invoice = new Invoice();
     private String odstep = "&nbsp&nbsp&nbsp&nbsp";
+    private Float totalTax = 0f;
 
     public InvoiceHtmlBuilder(){
         invoice.setHeader("<!DOCTYPE html>\n" +
@@ -73,26 +74,38 @@ public class InvoiceHtmlBuilder implements InvoiceBuilder{
     @Override
     public void buildItems(OrderComponent orders) {
         int j = 1;
+
+
         invoice.setItems("<div class=\"container\">\n" +
                 "<table class=\"table-bordered\" width=\"90%\">\n" +
                 "<tr>\n" +
-                "<th width=\"5%\"><b>"+odstep+"Nr"+odstep+"</b></th>\n" +
-                "<th width=\"40%\"><b>"+odstep+"Item name"+odstep+"</b></th>\n" +
-                "<th width=\"15%\"><b>"+odstep+"Amount"+odstep+"</b></th>\n" +
-                "<th width=\"20%\"><b>"+odstep+"Price"+odstep+"</b></th>\n" +
-                "<th width=\"20%\"><b>"+odstep+"Overall price"+odstep+"</b></th>\n" +
+                "<th ><b>"+odstep+"Nr"+odstep+"</b></th>\n" +
+                "<th ><b>"+odstep+"Item name"+odstep+"</b></th>\n" +
+                "<th ><b>"+odstep+"Amount"+odstep+"</b></th>\n" +
+                "<th ><b>"+odstep+"Price"+odstep+"</b></th>\n" +
+                "<th ><b>"+odstep+"VAT[%]"+odstep+"</b></th>\n" +
+                "<th ><b>"+odstep+"w/o tax"+odstep+"</b></th>\n" +
+                "<th ><b>"+odstep+"Overall"+odstep+"</b></th>\n" +
                 "</tr>\n");
         for(OrderComponent o : orders.getChildren()){
+            Float tmp = ((OrderItem) o).getItem().getPrice().floatValue() *
+                    (((OrderItem) o).getItem().getVat().floatValue()/100);
+            BigDecimal tax = new BigDecimal(Float.toString(tmp));
+            tax = tax.setScale(2,BigDecimal.ROUND_DOWN);
             Item i = ((OrderItem)o).getItem();
             invoice.setItems(invoice.getItems()+
-            "<tr>\n<td>" + j++ + "</td>\n"+
+            "<tr>\n<td> " + j++ + "</td>\n"+
             "<td>" +odstep+ i.getName() +odstep+ "</td>\n"+
                     "<td>" +odstep+ ((OrderItem) o).getAmount() +odstep+ "</td>\n"+
                     "<td>" +odstep+ ((OrderItem) o).getItem().getPrice() +odstep+ "</td>\n"+
-                    "<td>" +odstep+ o.getPrice() +odstep+ "</td>\n</tr>\n"
+                    "<td>" +odstep+ ((OrderItem) o).getItem().getVat() +odstep+ "</td>\n"+
+                    "<td>" +odstep+ (((OrderItem) o).getItem().getPrice().floatValue()-tax.floatValue()) +odstep+ "</td>\n"+
+                    "<td>" +odstep+ (o.getPrice().floatValue() - (tax.floatValue() * ((OrderItem) o).getAmount().floatValue())) +odstep+ "</td>\n</tr>\n"
             );
-
+            tmp = tax.floatValue() * ((OrderItem) o).getAmount().floatValue();
+            totalTax = totalTax + tmp;
         }
+
         invoice.setItems(invoice.getItems()+"</table>\n");
     }
 
@@ -111,14 +124,20 @@ public class InvoiceHtmlBuilder implements InvoiceBuilder{
 
     @Override
     public void buildTotal(BigDecimal price) {
-        String prc = String.valueOf(price);
+        Float totalPrice = price.floatValue() - totalTax;
+        BigDecimal rounded = new BigDecimal(Float.toString(totalPrice));
+        rounded = rounded.setScale(2,BigDecimal.ROUND_DOWN);
         invoice.setTotal("<br><div class=\"container\">\n" +
                 "<table class=\"table-bordered\" width=\"20%\">\n" +
                 "<tr>" +
-                "<td><b>Total price</b></td>" +
+                "<td><b>Price w/o tax</b></td>" +
+                "<td><b>VAT</b></td>" +
+                "<td><b>with tax</b></td>" +
                 "</tr>\n" +
                 "<tr>" +
-                "<td>"+prc+"</td>" +
+                "<td>"+rounded+"</td>" +
+                "<td>"+totalTax+"</td>" +
+                "<td>"+price+"</td>" +
                 "</tr>\n</table>\n");
     }
 }

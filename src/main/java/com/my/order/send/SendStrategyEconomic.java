@@ -13,6 +13,8 @@ import java.util.Date;
 @DiscriminatorValue("EC")
 public class SendStrategyEconomic extends SendStrategy {
 
+    public SendStrategyEconomic(){sendStrategyType = SendStrategyType.ECONOMIC;}
+
     @Override
     public void send(OrderSummary orderSummary) {
         sendDate = new Date();

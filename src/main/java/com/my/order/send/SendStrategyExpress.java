@@ -13,6 +13,8 @@ import java.util.Date;
 @DiscriminatorValue("EX")
 public class SendStrategyExpress extends SendStrategy {
 
+    public SendStrategyExpress(){sendStrategyType = SendStrategyType.EXPRESS;}
+
     @Override
     public void send(OrderSummary orderSummary) {
         sendDate = new Date();
