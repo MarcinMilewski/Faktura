@@ -33,6 +33,7 @@
             <td th:if="${!u.regular}">No</td>
             <td th:if="${!u.regular}"><a th:href="@{/admin/users/make(email=${u.email})}">Make regular</a></td>
             <td th:if="${u.regular}"><a th:href="@{/admin/users/unmake(email=${u.email})}">Make standard</a></td>
+            <td><a th:href="@{/admin/users/operator(email=${u.email})}">Make operator</a></td>
         </tr>
     </table>
 </div>

@@ -2,6 +2,8 @@ package com.my.admin;
 
 import com.my.account.Account;
 import com.my.account.AccountRepository;
+import com.my.warehouse.operative.WarehouseOperative;
+import com.my.warehouse.operative.WarehouseOperativeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +23,9 @@ import java.util.List;
 public class AdminUserController {
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
+    @Autowired
+    private WarehouseOperativeRepository warehouseOperativeRepository;
 
     @RequestMapping
     public ModelAndView viewWarehouses() {
@@ -49,6 +53,20 @@ public class AdminUserController {
         Account user = accountRepository.findByEmail(email);
         user.setRegular(false);
         accountRepository.edit(user);
+        return "redirect:/admin/users";
+    }
+
+    @RequestMapping(value = "/operator", method = RequestMethod.GET, params = {"email"})
+    public String makeOperative(Model model, @RequestParam("email") String email){
+        Account user = accountRepository.findByEmail(email);
+        user.setRole("ROLE_OPERATIVE");
+        accountRepository.edit(user);
+        user = accountRepository.findByEmail(email);
+        WarehouseOperative operator = new WarehouseOperative();
+        operator.setFirstName(user.getFirstName());
+        operator.setLastName(user.getLastName());
+        operator.setAccount(user);
+        warehouseOperativeRepository.save(operator);
         return "redirect:/admin/users";
     }
 }
