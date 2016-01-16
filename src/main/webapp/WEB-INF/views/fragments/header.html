@@ -23,50 +23,45 @@
                 <!--USER-->
                     <li sec:authorize="hasRole('ROLE_USER')">
                         <a href="/user/order" th:href="@{/user/order}">
-                            &nbsp;Orders
+                            &nbsp;Zamowienia
                         </a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_USER')">
                         <a href="/user/items" th:href="@{/user/items}">
-                            &nbsp;Items
+                            &nbsp;Przedmioty
                         </a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_USER')">
                         <a href="/user/cart" th:href="@{/user/cart}">
-                            &nbsp;Cart
+                            &nbsp;Koszyk
                         </a>
                     </li>
                 <!--ADMIN-->
                     <li sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a href="/admin/order" th:href="@{/admin/order}">
-                            &nbsp;Orders
-                        </a>
-                    </li>
-                    <li sec:authorize="hasRole('ROLE_ADMIN')">
                         <a href="/admin/items" th:href="@{/admin/items}">
-                            &nbsp;Items
+                            &nbsp;Przedmioty
                         </a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_ADMIN')">
                         <a href="/admin/warehouse" th:href="@{/admin/warehouse}">
-                            &nbsp;Warehouse
+                            &nbsp;Magazyn
                         </a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_ADMIN')">
                         <a href="/admin/operative" th:href="@{/admin/operative}">
-                            &nbsp;Operators
+                            &nbsp;Magazynierzy
                         </a>
                     </li>
 
                 <!--OPERATOR MAGAZYNU-->
                     <li sec:authorize="hasRole('ROLE_OPERATIVE')">
                         <a href="/operative/orders" th:href="@{/operative/orders}">
-                            &nbsp;Orders
+                            &nbsp;Zamowienia
                         </a>
                     </li>
                     <li sec:authorize="hasRole('ROLE_OPERATIVE')">
                         <a href="/operative/warehouse" th:href="@{/operative/warehouse}">
-                            &nbsp;Warehouse
+                            &nbsp;Magazyn
                         </a>
                     </li>
                 <li sec:authorize="hasRole('ROLE_ADMIN')">
