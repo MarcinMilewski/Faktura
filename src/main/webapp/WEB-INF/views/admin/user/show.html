@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Warehouses</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../../../resources/css/bootstrap.min.css" rel="stylesheet" media="screen" th:href="@{/resources/css/bootstrap.min.css}"/>
+    <link href="../../../resources/css/core.css" rel="stylesheet" media="screen" th:href="@{/resources/css/core.css}" />
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="../../../resources/js/bootstrap.min.js" th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">&nbsp;</div>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th><b>Email</b></th>
+            <th><b>First name</b></th>
+            <th><b>Last name</b></th>
+            <th><b>Street</b></th>
+            <th><b>City</b></th>
+            <th><b>Zip code</b></th>
+            <th><b>Regular</b></th>
+            <th></th>
+        </tr>
+        <tr th:each="u : ${users}">
+            <td th:text="${u.email}"></td>
+            <td th:text="${u.firstName}"></td>
+            <td th:text="${u.lastName}"></td>
+            <td th:text="${u.street}"></td>
+            <td th:text="${u.city}"></td>
+            <td th:text="${u.zip}"></td>
+            <td th:if="${u.regular}">Yes</td>
+            <td th:if="${!u.regular}">No</td>
+            <td th:if="${!u.regular}"><a th:href="@{/admin/users/make(email=${u.email})}">Make regular</a></td>
+            <td th:if="${u.regular}"><a th:href="@{/admin/users/unmake(email=${u.email})}">Make standard</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

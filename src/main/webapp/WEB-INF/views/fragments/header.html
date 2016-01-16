@@ -69,6 +69,11 @@
                             &nbsp;Magazyn
                         </a>
                     </li>
+                <li sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a href="/admin/users" th:href="@{/admin/users}">
+                        &nbsp;Users
+                    </a>
+                </li>
 
                 <!--<li th:if="${#authorization.expression('isAuthenticated()')}">-->
                     <!--<a href="/items" th:href="@{/items}">-->
