@@ -1,2 +1,2 @@
 Simple warehouse/shop ordering system.
-Spring exercise project, set on pattern designs use. 
+Spring project focused on pattern designs use. 
